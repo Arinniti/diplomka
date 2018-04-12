@@ -1,0 +1,89 @@
+{% extends "dp/base.html" %}
+
+{% block title %}
+    <h1>Project overview</h1>
+{% endblock %}
+{% block content %}
+
+    {% load static %}
+
+    <link rel="stylesheet" type="text/css" href="{% static 'dp/css/index.css' %}"/>
+    <div class="limiter">
+
+        <div class="container-table100">
+        <br>
+        <br>
+            <div class="wrap-table100">
+                <div class="table100 ver1 m-b-110">
+                    <table data-vertable="ver1">
+                        <thead>
+                        <tr class="row100 head">
+                            <th class="column100 column1" data-column="column1">Project name</th>
+                            <th class="column100 column2" data-column="column2">Date</th>
+                            <th class="column100 column3" data-column="column3">Manager</th>
+                            <th class="column100 column4" data-column="column4">Risk</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <ul>
+                            <tr class="row100">
+                                <td class="column100 column1" data-column="column1">
+                                    {{ project.project_name }}
+                                </td>
+                                <td class="column100 column2" data-column="column2">
+                                    {{ project.pub_date }}
+                                </td>
+                                <td class="column100 column3" data-column="column3">
+                                    {% if project.project_manager %}
+                                        <a href="{% url 'dp:employee_detail' project.project_manager.id %}">{{ project.project_manager.user.last_name }}</a>
+                                    {% endif %}
+                                </td>
+                                <td class="column100 column6" data-column="column6">
+                                    {{ project.get_risk_display}}
+                                </td>
+                            </tr>
+                        </ul>
+
+                        </tbody>
+
+                    </table>
+                    <br>
+                    <br>
+
+                    Project team:
+                   <table data-vertable="ver1">
+                        <thead>
+                        <tr class="row100 head">
+                            <th class="column100 column1" data-column="column1">Name</th>
+                            <th class="column100 column2" data-column="column2">Username</th>
+                            <th class="column100 column3" data-column="column3">Position</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <ul>
+                        {% for projectmember in project.projectmember_set.all %}
+                            <tr class="row100">
+                                <td class="column100 column1" data-column="column1">
+                                    {{ projectmember.member.user.first_name }} {{ projectmember.member.user.last_name }}
+                                </td>
+                                <td class="column100 column2" data-column="column2">
+                                    <a href="{% url 'dp:employee_detail' projectmember.member_id %}"> {{ projectmember.member.user.username }}</a>
+                                </td>
+                                <td class="column100 column3" data-column="column3">
+                                    {{ projectmember.position }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </ul>
+
+                        </tbody>
+
+                    </table>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+

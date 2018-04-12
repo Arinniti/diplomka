@@ -1,0 +1,110 @@
+.limiter {
+  width: 100%;
+  margin: 0 auto;
+}
+
+
+.container-table100 {
+  width: 100%;
+  min-height: 20px;
+  background: #e6ccb3;
+
+
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 20px 30px;
+}
+
+.wrap-table100 {
+  width: 1300px;
+
+}
+
+
+table {
+  width: 70%;
+  background-color: #fff;
+
+}
+
+th, td {
+  font-weight: unset;
+  padding-right: 10px;
+  text-align: left;
+}
+
+.column100 {
+  width: 70px;
+  padding-left: 25px;
+}
+
+.column100.column1 {
+  width: 70px;
+  padding-left: 42px;
+}
+
+.row100.head th {
+  padding-top: 24px;
+  padding-bottom: 20px;
+  background-color:  #B22222;
+}
+
+.row100 td {
+  padding-top: 18px;
+  padding-bottom: 14px;
+}
+
+
+/*style*/
+
+.table100.ver1 td {
+  font-size: 14px;
+  color: #808080;
+  line-height: 1.4;
+}
+
+.table100.ver1 th {
+  font-size: 12px;
+  color: #fff;
+  line-height: 1.4;
+  text-transform: uppercase;
+
+  background-color:  	#A0522D;
+}
+
+.table100.ver1 .row100:hover {
+  background-color: #f2f2f2;
+}
+
+.table100.ver1 .hov-column-ver1 {
+  background-color: #f2f2f2;
+}
+
+.table100.ver1 .hov-column-head-ver1 {
+  background-color: #484848 !important;
+}
+
+.table100.ver1 .row100 td:hover {
+  background-color: #F4A460;
+  color: #fff;
+}
+
+
+.table-user-information {
+    border-top: 1px solid rgb(221, 221, 221);
+    padding-top: 30px;
+}
+
+.container.row.col-sm-3 img {
+  padding-top: 30px;
+}
+
+.pagetitle h1 {
+  padding-left: 20px;
+}

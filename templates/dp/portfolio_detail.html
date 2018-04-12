@@ -1,0 +1,45 @@
+{% extends "dp/base.html" %}
+
+{% block title %}
+    <h1>Portfolio overview :    {{ portfolio.portfolio_name }}</h1>
+
+{% endblock %}
+{% block content %}
+
+{% load static %}
+
+<a href="{% url 'dp:new_project' portfolio.id %}">Create new project</a>
+
+<link rel="stylesheet" type="text/css" href="{% static 'dp/css/index.css' %}" />
+	<div class="limiter">
+		<div class="container-table100">
+			<div class="wrap-table100">
+				<div class="table100 ver1 m-b-110">
+                     <table data-vertable="ver1">
+                       </thead>
+                          <tr class="row100 head">
+                           <th class="column100 column1" data-column="column1">Projects of portfolio '{{portfolio.portfolio_name }}'</th>
+                        </tr>
+                      </thead>
+                        <tbody>
+
+                                <ul>
+                                {% for project in portfolio.project_set.all %}
+                                   <tr class="row100">
+                                    <td class="column100 column1" data-column="column1">
+                                        <!-- Tu pak ma byt jiny view -->
+                                    <a href="{% url 'dp:project_detail' portfolio.id project.id %}">{{ project.project_name }}</a>
+                                    </td>
+                                    </td>
+                                   </tr>
+                                {% endfor %}
+                                </ul>
+                      </tbody>
+
+                    </table>
+                </div>
+			</div>
+		</div>
+	</div>
+{% endblock content %}
+

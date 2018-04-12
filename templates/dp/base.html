@@ -1,0 +1,42 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'dp/css/bootstrap.min.css' %}"/>
+{% block cssblock %}{% endblock %}
+{% if user.employee.id %}
+
+{% endif %}
+
+{% block nav %}
+    <ul class="nav">
+        {% if user.is_authenticated %}
+            <li>
+                <a href="{% url 'dp:index' %}"> Home </a>
+            </li>
+
+            <li>
+                <a href="{% url 'dp:employee_detail' user.employee.id %}"> My profile </a>
+            </li>
+            {% if user.is_superuser %}
+                <li>
+                    <a href="{% url 'admin:index' %}">Admin panel</a>
+                </li>
+
+            {% endif %}
+
+        {% endif %}
+        <li>
+            {% if user.is_authenticated %}
+                <a href="{% url 'dp:logout' %}"> Sign off </a>
+            {% else %}
+                <a href="{% url 'dp:login_page' %}"> Sign in </a>
+            {% endif %}
+        </li>
+    </ul>
+{% endblock %}
+
+<div class="pagetitle">
+    {% block title %}
+    {% endblock %}
+</div>
+{% block content %}{% endblock %}
+
+{% block nav-global %}{% endblock %}

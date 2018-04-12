@@ -1,0 +1,85 @@
+{% extends "dp/base.html" %}
+{% block nav-home %}<strong class="nav-active">Home</strong>{% endblock %}
+    {% block content %}
+        {% load static %}
+
+        <link rel="stylesheet" type="text/css" href="{% static 'dp/css/index.css' %}"/>
+        <div class="limiter">
+            <div class="container">
+                <div class="container-table100">
+                    <div class="wrap-table100">
+                        <div class="table100 ver1 m-b-110">
+                            <table data-vertable="ver1">
+                                <thead>
+                                <tr class="row100 head">
+                                    <th class="column100 column1" data-column="column1">Portfolio</th>
+                                    <th class="column100 column2" data-column="column2">Date</th>
+                                    <th class="column100 column3" data-column="column3">Manager</th>
+
+                                </tr>
+                                </thead>
+                                <tbody>
+
+
+                                {% if latest_portfolio_list %}
+                                    <ul>
+                                        {% for portfolio in latest_portfolio_list %}
+                                            <tr class="row100">
+                                                <td class="column100 column1" data-column="column1">
+                                                    <a href="{% url 'dp:portfolio_detail' portfolio.id %}">{{ portfolio.portfolio_name }}</a>
+                                                </td>
+                                                <td class="column100 column2" data-column="column2">
+                                                    {{ portfolio.pub_date }}
+                                                </td>
+                                                <td class="column100 column3" data-column="column3">
+                                                    {% if portfolio.portfolio_manager %}
+                                                        <a href="{% url 'dp:employee_detail' portfolio.portfolio_manager.id %}">{{ portfolio.portfolio_manager.user.last_name }}</a>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </ul>
+                                {% else %}
+                                    <p>No portfolios are available.</p>
+                                {% endif %}
+
+                                </tbody>
+
+                            </table>
+
+                            <div class="table100 ver1 m-b-110">
+                                <table data-vertable="ver1">
+                                    <thead>
+                                    <tr class="row100 head">
+                                        <th class="column100 column1" data-column="column1">Name</th>
+                                        <th class="column100 column2" data-column="column2">Username</th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    <ul>
+                                        {% for employee in employee_list %}
+                                            <tr class="row100">
+                                                <td class="column100 column1" data-column="column1">
+                                                    {{ employee.user.first_name }} {{ employee.user.last_name }}
+                                                </td>
+                                                <td class="column100 column2" data-column="column2">
+                                                    <a href="{% url 'dp:employee_detail' employee.id %}">{{ employee.user.username }}</a>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </ul>
+                                    </tbody>
+                                </table>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+
+
