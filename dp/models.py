@@ -71,7 +71,7 @@ class Project(models.Model):
     @classmethod
     def create(cls, name, description, risk, portfolio_id):
         project = cls(project_name=name)
-        project.popis = description
+        project.description = description
         project.risk = risk
         project.portfolio_id = portfolio_id
         return project
@@ -81,7 +81,7 @@ class ProjectMember(models.Model):
     member = models.ForeignKey(Employee, on_delete=models.CASCADE)
     position = models.CharField(max_length=200, null=True)
     def __str__(self):
-        return self.project.project_name
+        return "%s in %s" % (self.member.user.username, self.project.project_name)
 
 
 class Ability(models.Model):
@@ -113,9 +113,23 @@ class Task(models.Model):
     )
     state = models.CharField(max_length=1, choices=STATE_VALUES, null=True)
 
+    @classmethod
+    def create(cls, name, description, project_id):
+        task = cls(in_project=project_id)
+        task.description = description
+        task.name = name
+        return task
+
 class AssignedTask(models.Model):
-    assigned_to = models.ForeignKey(ProjectMember, on_delete=models.CASCADE)
+    assigned_to = models.ForeignKey(Employee, on_delete=models.CASCADE)
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
+
+    @classmethod
+    def create(cls, assigned_to, task):
+        assignTask = cls(assigned_to=assigned_to)
+        assignTask.task = task
+
+        return assignTask
 
 
 class Costumer(models.Model):

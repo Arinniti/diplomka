@@ -15,5 +15,6 @@ urlpatterns = [
     path(r'admin/', admin.site.urls, name='admin_panel'),
     path('portfolio/project/new',views.new_project_handler , name='new_project'),
     path('portfolio/<int:portfolio_id>/project/new',views.new_port_project_handler , name='new_port_project'),
+    path('project/<int:project_id>/task/new',views.new_task_handler , name='new_task'),
 
 ]

@@ -1,0 +1,9 @@
+{% extends "dp/base.html" %}
+
+{% block content %}
+        <form action="{% url "dp:new_task" project_id %}" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Submit" />
+        </form>
+{% endblock %}

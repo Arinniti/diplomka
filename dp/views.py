@@ -1,10 +1,11 @@
 from django.http import HttpResponseRedirect
 from django.views import generic
 from django.shortcuts import get_object_or_404, render, reverse, redirect
-from .models import Portfolio, Project, Employee, ProjectMember
+from .models import Portfolio, Project, Employee, ProjectMember, Task, AssignedTask
 from django.contrib.auth import authenticate, login, logout
+import datetime
+from .forms import LoginForm, NewProjectForm, NewTaskForm
 
-from .forms import LoginForm, NewProjectForm
 
 
 class IndexView(generic.ListView):
@@ -103,9 +104,40 @@ def new_port_project_handler(request, portfolio_id):
             name = form.cleaned_data['name']
             description = form.cleaned_data['description']
             risk = form.cleaned_data['name']
-            project = Project.objects.create(name, description, risk)
+            project = Project.objects.create(project_name=name, description=description, risk=risk, pub_date=datetime.datetime.now())
             project.save()
             # redirect
     else:
         form = NewProjectForm()
     return render(request, 'dp/new_project.html', {'form': form, "portfolio_id": portfolio_id})
+
+def new_task_handler(request, project_id):
+    project = get_object_or_404(Project, pk=project_id)
+
+    if not request.user.is_superuser and project.project_manager.id != request.user.employee.id:
+        return redirect(reverse('dp:project_detail', kwargs={"project_id":project_id}))
+
+    employees = ProjectMember.objects.filter(project_id=project_id).all()
+    employees = [(empl.member_id, empl.member.user.username) for empl in employees]
+    if request.method == 'POST':
+
+        form = NewTaskForm(request.POST, employee_list=employees)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            description = form.cleaned_data['description']
+            assign_to = form.cleaned_data['assigned_to']
+            task = Task.objects.create(name=name, description=description, in_project=project)
+            task.save()
+            for employee_assign_id in assign_to:
+                emp = Employee.objects.get(id=employee_assign_id)
+                assigned_task = AssignedTask.objects.create(assigned_to=emp, task=task)
+                assigned_task.save()
+            # redirect
+    else:
+        form = NewTaskForm(employee_list=employees)
+
+
+    return render(request, 'dp/new_task.html', {'form': form, "project_id": project_id})
+
+
+
