@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 
 from .forms import LoginForm, NewProjectForm
 
+
 class IndexView(generic.ListView):
     # def get_queryset(self):
     #     """Return the last five published questions."""
@@ -13,15 +14,14 @@ class IndexView(generic.ListView):
     template_name = 'dp/index.html'
     context_object_name = 'latest_portfolio_list'
 
-
     def get_queryset(self):
-
         return Portfolio.objects.all()
 
-
     def get_context_data(self, **kwargs):
+        project_list = Project.objects.filter(portfolio_id__isnull=True)
         context = super(IndexView, self).get_context_data(**kwargs)
         context['employee_list'] = Employee.objects.all()
+        context['project_list'] = project_list
         return context
 
 
@@ -31,12 +31,11 @@ def portfolio_detail(request, portfolio_id):
                   {'portfolio': portfolio, 'error_message': "You didn't select a choice."})
 
 
-
 # response = "You're looking at the detail of Portfolio %s."
 # return HttpResponse(response % portfolio_id)
 
 
-def project_detail(request,portfolio_id, project_id):
+def project_detail(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
     return render(request, 'dp/project_detail.html',
                   {'project': project, 'error_message': "You didn't select a choice."})
@@ -49,7 +48,6 @@ def employee_detail(request, employee_id):
 
 
 def login_page(request):
-
     if request.user.is_authenticated:
         return HttpResponseRedirect(reverse("dp:index"))
 
@@ -70,14 +68,15 @@ def login_page(request):
 
     return render(request, 'dp/authentication.html', {'form': form})
 
+
 def logout_handler(request):
     logout(request)
     return HttpResponseRedirect(reverse("dp:login_page"))
 
-def new_project_handler(request, portfolio_id):
-    portfolio = get_object_or_404(Portfolio, pk=portfolio_id)
-    if request.user.employee.id != portfolio.portfolio_manager_id and not request.user.is_superuser:
-        return redirect("dp:portfolio_detail", portfolio_id)
+
+def new_project_handler(request):
+    if not request.user.is_superuser:
+        return redirect(reverse('dp:index'))
 
     if request.method == 'POST':
         form = NewProjectForm(request.POST)
@@ -85,9 +84,28 @@ def new_project_handler(request, portfolio_id):
             name = form.cleaned_data['name']
             description = form.cleaned_data['description']
             risk = form.cleaned_data['name']
-            project = Project.objects.create(name, description, risk, portfolio_id)
+            project = Project.objects.create(name, description, risk)
             project.save()
-            #redirect
+            # redirect
     else:
         form = NewProjectForm()
-    return render(request, 'dp/new_project.html', {'form': form, 'portfolio_id' : portfolio_id})
+    return render(request, 'dp/new_project.html', {'form': form})
+
+
+def new_port_project_handler(request, portfolio_id):
+    portfolio = get_object_or_404(Portfolio, pk=portfolio_id)
+    if request.user.employee.id != portfolio.portfolio_manager_id and not request.user.is_superuser:
+           return redirect(reverse('dp:index'))
+
+    if request.method == 'POST':
+        form = NewProjectForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            description = form.cleaned_data['description']
+            risk = form.cleaned_data['name']
+            project = Project.objects.create(name, description, risk)
+            project.save()
+            # redirect
+    else:
+        form = NewProjectForm()
+    return render(request, 'dp/new_project.html', {'form': form, "portfolio_id": portfolio_id})

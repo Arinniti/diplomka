@@ -173,7 +173,7 @@
                                 {% for project in employee.project_set.all %}
                                     <tr class="row100">
                                         <td class="column100 column1" data-column="column1">
-                                            <a href="{% url 'dp:project_detail' project.portfolio.id project.id %}">{{ project.project_name }}</a>
+                                            <a href="{% url 'dp:project_detail' project.id %}">{{ project.project_name }}</a>
                                         </td>
                                         <td class="column100 column2" data-column="column2">
                                             {{ project.pub_date }}
@@ -206,7 +206,7 @@
                                 {% for projectmember in employee.projectmember_set.all %}
                                     <tr class="row100">
                                         <td class="column100 column1" data-column="column1">
-                                            <a href="{% url 'dp:project_detail' projectmember.project.portfolio.id projectmember.project_id %}">{{ projectmember.project.project_name }}</a>
+                                            <a href="{% url 'dp:project_detail' projectmember.project_id %}">{{ projectmember.project.project_name }}</a>
                                         </td>
                                         <td class="column100 column1" data-column="column1">
                                             {{ projectmember.position }}

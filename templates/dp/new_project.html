@@ -1,9 +1,17 @@
 {% extends "dp/base.html" %}
 
 {% block content %}
-    <form action="{% url "dp:new_project" portfolio_id %}" method="post">
-        {% csrf_token %}
-        {{ form }}
-         <input type="submit" value="Submit" />
-    </form>
+    {% if portfolio_id %}
+        <form action="{% url "dp:new_port_project" portfolio_id %}" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Submit" />
+        </form>
+    {% else %}
+        <form action="{% url "dp:new_project" %}" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Submit" />
+        </form>
+    {% endif %}
 {% endblock %}

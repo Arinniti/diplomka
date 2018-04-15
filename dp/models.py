@@ -16,27 +16,54 @@ class Employee(models.Model):
     def __str__(self):
         return self.user.username
 
+
+
+
 class Portfolio(models.Model):
     portfolio_name = models.CharField(max_length=200)
     pub_date = models.DateTimeField('date published')
     portfolio_manager = models.ForeignKey(Employee, on_delete=models.SET_NULL, null=True)
+    budget = models.DecimalField(max_digits=10, decimal_places=9, null=True)
+    used_budget = models.DecimalField(max_digits=10, decimal_places=9, default=0)
     def __str__(self):
         return self.portfolio_name
 
 
 class Project(models.Model):
-    portfolio = models.ForeignKey(Portfolio, on_delete=models.SET_NULL, null=True)
+    portfolio = models.ForeignKey(Portfolio, on_delete=models.SET_NULL, null=True, blank=True)
     project_name = models.TextField()
-    popis = models.CharField(max_length=200)
+    description = models.CharField(max_length=200)
+    budget = models.DecimalField(max_digits=10, decimal_places=9, null=True, blank=True)
+    used_budget = models.DecimalField(max_digits=10, decimal_places=9, default=0)
     pub_date = models.DateTimeField('date published')
+    deadline = models.DateTimeField('date of deadline', null=True, blank=True)
 
+
+    PRIORITY_VALUES = (
+        ('0.75', 'High '),
+        ('0.50', 'Normal'),
+        ('0.25', 'Low'),
+    )
+
+    urgency = models.CharField(max_length=4, choices=PRIORITY_VALUES, null=True)
+    importance = models.CharField(max_length=4, choices=PRIORITY_VALUES, null=True)
 
     RISK_VALUES = (
         ('0.25', 'Small'),
         ('0.50', 'Medium'),
         ('0.75', 'Large'),
     )
-    risk = models.CharField(max_length=4, choices=RISK_VALUES)
+    risk = models.CharField(max_length=4, choices=RISK_VALUES, null=True)
+
+    STATE_VALUES = (
+        ('1', 'Planned'),
+        ('2', 'Ongoing'),
+        ('3', 'Finished'),
+        ('4', 'Interrupted'),
+        ('5', 'Stopped')
+    )
+
+    state = models.CharField(max_length=1, choices=STATE_VALUES, null=True)
     project_manager = models.ForeignKey(Employee, on_delete=models.SET_NULL, null=True)
     def __str__(self):
         return self.project_name
@@ -72,3 +99,27 @@ class MemberAbility(models.Model):
      )
     def __str__(self):
         return self.member.user.last_name
+
+class Task(models.Model):
+    in_project= models.ForeignKey(Project, on_delete=models.CASCADE)
+    name = models.CharField(max_length=50, null=True)
+    description = models.CharField(max_length=200, null=True)
+
+    STATE_VALUES = (
+        ('1', 'Planned'),
+        ('2', 'Ongoing'),
+        ('3', 'Finished'),
+        ('4', 'Interrupted')
+    )
+    state = models.CharField(max_length=1, choices=STATE_VALUES, null=True)
+
+class AssignedTask(models.Model):
+    assigned_to = models.ForeignKey(ProjectMember, on_delete=models.CASCADE)
+    task = models.ForeignKey(Task, on_delete=models.CASCADE)
+
+
+class Costumer(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    def __str__(self):
+        return self.user.username
