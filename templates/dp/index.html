@@ -1,5 +1,5 @@
 {% extends "dp/base.html" %}
-{% block nav-home %}<strong class="nav-active">Home</strong>{% endblock %}
+
 {% block content %}
     {% load static %}
 
@@ -13,7 +13,7 @@
                         <thead>
                         <tr class="row100 head">
                             <th class="column100 column1" data-column="column1">Portfolio</th>
-                            <th class="column100 column2" data-column="column2">Date</th>
+                            <th class="column100 column2" data-column="column2">Description</th>
                             <th class="column100 column3" data-column="column3">Manager</th>
 
                         </tr>
@@ -29,11 +29,11 @@
                                             <a href="{% url 'dp:portfolio_detail' portfolio.id %}">{{ portfolio.portfolio_name }}</a>
                                         </td>
                                         <td class="column100 column2" data-column="column2">
-                                            {{ portfolio.pub_date }}
+                                            {{ portfolio.description }}
                                         </td>
                                         <td class="column100 column3" data-column="column3">
                                             {% if portfolio.portfolio_manager %}
-                                                <a href="{% url 'dp:employee_detail' portfolio.portfolio_manager.id %}">{{ portfolio.portfolio_manager.user.last_name }}</a>
+                                                <a href="{% url 'dp:employee_detail' portfolio.portfolio_manager.id %}"> {{ portfolio.portfolio_manager.user.first_name }} {{ portfolio.portfolio_manager.user.last_name }}</a>
                                             {% endif %}
                                         </td>
                                     </tr>
@@ -47,42 +47,48 @@
 
                     </table>
 
-                    {% for project_tmp in project_list %}
-                        {% if project_tmp.portfolio is Null %}
-                            <div class="table100 ver1 m-b-110">
-                            <table data-vertable="ver1">
-                                <thead>
-                                <tr class="row100 head">
-                                    <th class="column100 column1" data-column="column1">Name</th>
-                                    <th class="column100 column2" data-column="column2">Manager</th>
 
-                                </tr>
-                                </thead>
-                                <tbody>
+                    {% if project_tmp.portfolio is Null and project_list.all %}
+                        <div class="table100 ver1 m-b-110">
+                        <table data-vertable="ver1">
+                            <thead>
+                            <tr class="row100 head">
+                                <th class="column100 column1" data-column="column1">Name</th>
+                                <th class="column100 column2" data-column="column2">Description</th>
+                                <th class="column100 column3" data-column="column3">Manager</th>
 
-                                <ul>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <ul>
+                                {% for project_tmp in project_list %}
 
                                     <tr class="row100">
                                         <td class="column100 column1" data-column="column1">
                                             <a href="{% url 'dp:project_detail' project_tmp.id %}">{{ project_tmp.project_name }}</a>
                                         </td>
-                                        <td class="column100 column2" data-column="column2">
-                                            <a href="{% url 'dp:employee_detail' project_tmp.project_manager.user.id %}">{{ project_tmp.project_manager.user.username }}</a>
+                                    <td class="column100 column2" data-column="column2">
+                                            {{ project_tmp.description }}
+                                        </td>
+                                        <td class="column100 column3" data-column="column3">
+                                            {% if project_tmp.project_manager.id %}
+                                                <a href="{% url 'dp:employee_detail' project_tmp.project_manager.id %}">{{ project_tmp.project_manager.user.first_name }} {{ project_tmp.project_manager.user.last_name }}</a>
+                                            {% endif %}
                                         </td>
                                     </tr>
+                                {% endfor %}
 
-                                </ul>
-                                </tbody>
-                            </table>
-                        {% endif %}
-                    {% endfor %}
+                            </ul>
+                            </tbody>
+                        </table>
+                    {% endif %}
 
                     <div class="table100 ver1 m-b-110">
                         <table data-vertable="ver1">
                             <thead>
                             <tr class="row100 head">
                                 <th class="column100 column1" data-column="column1">Name</th>
-                                <th class="column100 column2" data-column="column2">Username</th>
 
                             </tr>
                             </thead>
@@ -92,10 +98,7 @@
                                 {% for employee in employee_list %}
                                     <tr class="row100">
                                         <td class="column100 column1" data-column="column1">
-                                            {{ employee.user.first_name }} {{ employee.user.last_name }}
-                                        </td>
-                                        <td class="column100 column2" data-column="column2">
-                                            <a href="{% url 'dp:employee_detail' employee.id %}">{{ employee.user.username }}</a>
+                                            <a href="{% url 'dp:employee_detail' employee.id %}"> {{ employee.user.first_name }} {{ employee.user.last_name }} </a>
                                         </td>
                                     </tr>
                                 {% endfor %}

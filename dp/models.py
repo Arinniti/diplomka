@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.shortcuts import reverse
+
 
 class Employee(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -8,6 +10,7 @@ class Employee(models.Model):
     address = models.CharField(max_length=200)
     birthday = models.DateField()
     photo = models.FileField( blank=True, null=True)
+    salary = models.DecimalField(max_digits =4, decimal_places=3, null=True)
     GENDER_VALUES = (
         ('male', 'Male'),
         ('female', 'Female'),
@@ -21,10 +24,11 @@ class Employee(models.Model):
 
 class Portfolio(models.Model):
     portfolio_name = models.CharField(max_length=200)
-    pub_date = models.DateTimeField('date published')
+    pub_date = models.DateTimeField('date published', editable=False)
     portfolio_manager = models.ForeignKey(Employee, on_delete=models.SET_NULL, null=True)
-    budget = models.DecimalField(max_digits=10, decimal_places=9, null=True)
-    used_budget = models.DecimalField(max_digits=10, decimal_places=9, default=0)
+    description = models.CharField(max_length=200, null=True)
+    budget = models.DecimalField(max_digits=10, decimal_places=0, null=True)
+    used_budget = models.DecimalField(max_digits=10, decimal_places=0, default=0)
     def __str__(self):
         return self.portfolio_name
 
@@ -33,9 +37,9 @@ class Project(models.Model):
     portfolio = models.ForeignKey(Portfolio, on_delete=models.SET_NULL, null=True, blank=True)
     project_name = models.TextField()
     description = models.CharField(max_length=200)
-    budget = models.DecimalField(max_digits=10, decimal_places=9, null=True, blank=True)
-    used_budget = models.DecimalField(max_digits=10, decimal_places=9, default=0)
-    pub_date = models.DateTimeField('date published')
+    budget = models.DecimalField(max_digits=15, decimal_places=0, null=True, blank=True)
+    used_budget = models.DecimalField(max_digits=10, decimal_places=0, default=0)
+    pub_date = models.DateTimeField(auto_now_add=True)
     deadline = models.DateTimeField('date of deadline', null=True, blank=True)
 
 
@@ -76,7 +80,13 @@ class Project(models.Model):
         project.portfolio_id = portfolio_id
         return project
 
+    def get_absolute_url(self):
+        return reverse('dp:project_detail', kwargs={'project_id': self.pk})
+
+
 class ProjectMember(models.Model):
+    class Meta:
+        unique_together = (('project', 'member'),)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     member = models.ForeignKey(Employee, on_delete=models.CASCADE)
     position = models.CharField(max_length=200, null=True)
@@ -91,6 +101,8 @@ class Ability(models.Model):
         return self.name
 
 class MemberAbility(models.Model):
+    class Meta:
+        unique_together = (('member', 'ability'),)
     member = models.ForeignKey(Employee, on_delete=models.CASCADE)
     ability = models.ForeignKey(Ability, on_delete=models.CASCADE)
     experience = models.FloatField(
@@ -104,6 +116,9 @@ class Task(models.Model):
     in_project= models.ForeignKey(Project, on_delete=models.CASCADE)
     name = models.CharField(max_length=50, null=True)
     description = models.CharField(max_length=200, null=True)
+    deadline = models.DateTimeField('date of deadline', null=True, blank=True)
+    pub_date = models.DateTimeField(auto_now_add=True)
+
 
     STATE_VALUES = (
         ('1', 'Planned'),
@@ -111,7 +126,7 @@ class Task(models.Model):
         ('3', 'Finished'),
         ('4', 'Interrupted')
     )
-    state = models.CharField(max_length=1, choices=STATE_VALUES, null=True)
+    state = models.CharField(max_length=1, choices=STATE_VALUES, default=1)
 
     @classmethod
     def create(cls, name, description, project_id):
@@ -120,8 +135,14 @@ class Task(models.Model):
         task.name = name
         return task
 
+    def get_absolute_url(self):
+        return reverse('dp:project_detail', kwargs={'project_id': self.in_project.id})
+
+
 class AssignedTask(models.Model):
-    assigned_to = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    class Meta:
+        unique_together = (('employee', 'task'),)
+    employee = models.ForeignKey(Employee, on_delete=models.CASCADE, blank=True, null=True)
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
 
     @classmethod
@@ -135,5 +156,18 @@ class AssignedTask(models.Model):
 class Costumer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    is_costumer = True
     def __str__(self):
         return self.user.username
+
+class TaskNotes(models.Model):
+    task = models.ForeignKey(Task, on_delete=models.CASCADE)
+    author = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    note = models.CharField(max_length=200)
+    pub_date = models.DateTimeField(auto_now_add=True)
+
+class ProjectNotes(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    author = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    note = models.CharField(max_length=200)
+    pub_date = models.DateTimeField(auto_now_add=True)

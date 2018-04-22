@@ -6,7 +6,7 @@
 {% block content %}
 
     {% load static %}
-    <a href="{% url 'dp:new_task' project.id %}">Create new task</a>
+
 
     <link rel="stylesheet" type="text/css" href="{% static 'dp/css/index.css' %}"/>
     <div class="limiter">
@@ -20,13 +20,20 @@
                         <thead>
                         <tr class="row100 head">
                             <th class="column100 column1" data-column="column1">Project name</th>
-                            <th class="column100 column2" data-column="column2">Deadline</th>
+                            <th class="column100 column2" data-column="column2">Description</th>
                             <th class="column100 column3" data-column="column3">State</th>
                             <th class="column100 column4" data-column="column4">Manager</th>
-                            <th class="column100 column5" data-column="column5">Importance</th>
-                            <th class="column100 column6" data-column="column6">Urgency</th>
-                            <th class="column100 column7" data-column="column7">Risk</th>
-
+                            {% if   user.is_superuser or user.employee.id == project.project_manager.id or is_member %}
+                                <th class="column100 column5" data-column="column5">Deadline</th>
+                                <th class="column100 column6" data-column="column6">Importance</th>
+                                <th class="column100 column7" data-column="column7">Urgency</th>
+                                <th class="column100 column8" data-column="column8">Risk</th>
+                                <th class="column100 column9" data-column="column9">Used budget</th>
+                                <th class="column100 column10" data-column="column10">Budget</th>
+                                {% if user.is_superuser or user.employee.id == project.project_manager.id %}
+                                    <th class="column100 column4" data-column="column3">Edit task</th>
+                                {% endif %}
+                            {% endif %}
 
                         </tr>
                         </thead>
@@ -37,25 +44,43 @@
                                     {{ project.project_name }}
                                 </td>
                                 <td class="column100 column2" data-column="column2">
-                                    {{ project.deadline }}
+                                    {{ project.description }}
                                 </td>
                                 <td class="column100 column3" data-column="column3">
                                     {{ project.get_state_display }}
                                 </td>
                                 <td class="column100 column4" data-column="column4">
                                     {% if project.project_manager %}
-                                        <a href="{% url 'dp:employee_detail' project.project_manager.id %}">{{ project.project_manager.user.last_name }}</a>
+                                        <a href="{% url 'dp:employee_detail' project.project_manager.id %}">{{ project.project_manager.user.first_name }} {{ project.project_manager.user.last_name }}</a>
                                     {% endif %}
                                 </td>
-                                <td class="column100 column5" data-column="column5">
-                                    {{ project.get_importance_display }}
-                                </td>
-                                <td class="column100 column6" data-column="column6">
-                                    {{ project.get_urgency_display }}
-                                </td>
-                                <td class="column100 column7" data-column="column7">
-                                    {{ project.get_risk_display }}
-                                </td>
+                                {% if user.is_superuser or user.employee.id == project.project_manager.id or is_member %}
+
+
+                                    <td class="column100 column5" data-column="column5">
+                                        {{ project.deadline }}
+                                    </td>
+                                    <td class="column100 column6" data-column="column6">
+                                        {{ project.get_importance_display }}
+                                    </td>
+                                    <td class="column100 column7" data-column="column7">
+                                        {{ project.get_urgency_display }}
+                                    </td>
+                                    <td class="column100 column8" data-column="column8">
+                                        {{ project.get_risk_display }}
+                                    </td>
+                                    <td class="column100 column9" data-column="column9">
+                                        {{ project.used_budget }}
+                                    </td>
+                                    <td class="column100 column10" data-column="column10">
+                                        {{ project.budget }}
+                                    </td>
+                                    {% if user.is_superuser or user.employee.id == project.project_manager.id %}
+                                        <td class="column100 column11" data-column="column11">
+                                            <a href="{% url 'dp:project_edit' project.id %}"> edit </a>
+                                        </td>
+                                    {% endif %}
+                                {% endif %}
                             </tr>
                         </ul>
 
@@ -63,15 +88,15 @@
 
                     </table>
                     <br>
+
                     <br>
-                    {% if projectmember_set.all %}
+                    {% if project.projectmember_set.all %}
                         Project team:
                         <table data-vertable="ver1">
                             <thead>
                             <tr class="row100 head">
                                 <th class="column100 column1" data-column="column1">Name</th>
-                                <th class="column100 column2" data-column="column2">Username</th>
-                                <th class="column100 column3" data-column="column3">Position</th>
+                                <th class="column100 column2" data-column="column2">Position</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -79,12 +104,9 @@
                                 {% for projectmember in project.projectmember_set.all %}
                                     <tr class="row100">
                                         <td class="column100 column1" data-column="column1">
-                                            {{ projectmember.member.user.first_name }} {{ projectmember.member.user.last_name }}
+                                            <a href="{% url 'dp:employee_detail' projectmember.member_id %}">{{ projectmember.member.user.first_name }} {{ projectmember.member.user.last_name }} </a>
                                         </td>
                                         <td class="column100 column2" data-column="column2">
-                                            <a href="{% url 'dp:employee_detail' projectmember.member_id %}"> {{ projectmember.member.user.username }}</a>
-                                        </td>
-                                        <td class="column100 column3" data-column="column3">
                                             {{ projectmember.position }}
                                         </td>
                                     </tr>
@@ -95,8 +117,107 @@
 
                         </table>
                     {% endif %}
+                    <br>
+                    <br>
+                    {% if user.is_superuser or user.employee.id == project.project_manager.id %}
+                        <a href="{% url 'dp:new_task' project.id %}">Create new task</a>
+                        <br>
+                        <br>
+                        {% if project.task_set.all %}
+                            Tasks:
+                            <table data-vertable="ver1">
+                                <thead>
+                                <tr class="row100 head">
+                                    <th class="column100 column1" data-column="column1">Name</th>
+                                    <th class="column100 column2" data-column="column2">Description</th>
+                                    <th class="column100 column3" data-column="column3">Employee</th>
+                                    <th class="column100 column4" data-column="column3">State</th>
+                                    <th class="column100 column4" data-column="column3">Edit task</th>
 
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <ul>
+                                    {% for act_task in project.task_set.all %}
+                                        {% if act_task.state != "3" %}
 
+                                            <tr class="row100">
+                                                <td class="column100 column1" data-column="column1">
+                                                    {{ act_task.name }}
+                                                </td>
+                                                <td class="column100 column2" data-column="column2">
+                                                    {{ act_task.description }}
+                                                </td>
+                                                {% if act_task.assignedtask_set %}
+                                                    <td class="column100 column3" data-column="column3">
+                                                        {% for emp in act_task.assignedtask_set.all %}
+
+                                                            <a href="{% url 'dp:employee_detail' emp.employee_id %}"> {{ emp.employee.user.last_name }}</a>
+                                                        {% endfor %}
+                                                    </td>
+                                                {% endif %}
+                                                <td class="column100 column4" data-column="column4">
+                                                    {{ act_task.get_state_display }}
+                                                </td>
+                                                <td class="column100 column5" data-column="column5">
+                                                    <a href="{% url 'dp:task_edit' act_task.id %}"> edit </a>
+                                                </td>
+                                            </tr>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+
+                                </tbody>
+
+                            </table>
+                        {% endif %}
+                    {% endif %}
+                    <br>
+                    <br>
+                    {% if finished_tasks %}
+                        Finished tasks:
+                        <table data-vertable="ver1">
+                            <thead>
+                            <tr class="row100 head">
+                                <th class="column100 column1" data-column="column1">Name</th>
+                                <th class="column100 column2" data-column="column2">Description</th>
+                                <th class="column100 column3" data-column="column3">Employee</th>
+                                <th class="column100 column4" data-column="column4">State</th>
+                                <th class="column100 column5" data-column="column5">Edit-pak pryc</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <ul>
+                                {% for fin_task in finished_tasks %}
+                                    <tr class="row100">
+                                        <td class="column100 column1" data-column="column1">
+                                            {{ fin_task.name }}
+                                        </td>
+                                        <td class="column100 column2" data-column="column2">
+                                            {{ fin_task.description }}
+                                        </td>
+                                        {% if fin_task.assignedtask_set %}
+                                            <td class="column100 column3" data-column="column3">
+                                                {% for emp in fin_task.assignedtask_set.all %}
+
+                                                    <a href="{% url 'dp:employee_detail' emp.employee_id %}"> {{ emp.employee.user.last_name }}</a>
+                                                {% endfor %}
+                                            </td>
+                                        {% endif %}
+                                        <td class="column100 column4" data-column="column4">
+                                            {{ fin_task.get_state_display }}
+                                        </td>
+                                        <td class="column100 column5" data-column="column5">
+                                            <a href="{% url 'dp:task_edit' fin_task.id %}"> edit </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </ul>
+                            </tbody>
+                        </table>
+                    {% endif %}
+                    <br>
+                    <br>
                 </div>
             </div>
         </div>

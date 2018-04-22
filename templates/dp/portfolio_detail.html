@@ -1,44 +1,116 @@
 {% extends "dp/base.html" %}
 
 {% block title %}
-    <h1>Portfolio overview :    {{ portfolio.portfolio_name }}</h1>
+    <h1>Portfolio overview : {{ portfolio.portfolio_name }}</h1>
 
 {% endblock %}
 {% block content %}
 
-{% load static %}
+    {% load static %}
 
-<a href="{% url 'dp:new_port_project' portfolio.id %}">Create new project</a>
 
-<link rel="stylesheet" type="text/css" href="{% static 'dp/css/index.css' %}" />
-	<div class="limiter">
-		<div class="container-table100">
-			<div class="wrap-table100">
-				<div class="table100 ver1 m-b-110">
-                     <table data-vertable="ver1">
-                       </thead>
-                          <tr class="row100 head">
-                           <th class="column100 column1" data-column="column1">Projects of portfolio '{{portfolio.portfolio_name }}'</th>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'dp/css/index.css' %}"/>
+    <div class="limiter">
+        <div class="container-table100">
+
+            <div class="wrap-table100">
+                <div class="table100 ver1 m-b-110">
+                    <table data-vertable="ver1">
+                        <thead>
+                        <tr class="row100 head">
+                            <th class="column100 column1" data-column="column1">Portfolio name</th>
+                            <th class="column100 column2" data-column="column2">Description</th>
+                            <th class="column100 column3" data-column="column3">Manager</th>
+                            <th class="column100 column4" data-column="column4">Used budget</th>
+                            <th class="column100 column5" data-column="column5">Usable budget</th>
+                            <th class="column100 column6" data-column="column6">Budget</th>
+                            <th class="column100 column7" data-column="column7">Edit portfolio</th>
+
                         </tr>
-                      </thead>
+                        </thead>
                         <tbody>
+                        <ul>
+                            <tr class="row100">
+                                <td class="column100 column1" data-column="column1">
+                                    {{ portfolio.portfolio_name }}
+                                </td>
+                                <td class="column100 column2" data-column="column2">
+                                    {{ portfolio.description }}
+                                </td>
+                                <td class="column100 column3" data-column="column3">
+                                    {% if portfolio.portfolio_manager %}
+                                        <a href="{% url 'dp:employee_detail' portfolio.portfolio_manager.id %}">{{ portfolio.portfolio_manager.user.first_name }} {{ portfolio.portfolio_manager.user.last_name }}</a>
+                                    {% endif %}
+                                </td>
+                                <td class="column100 column4" data-column="column4">
+                                    {{ portfolio.used_budget }}
+                                </td>
+                                <td class="column100 column5" data-column="column5">
+                                    {{ usable_budget }}
+                                </td>
+                                <td class="column100 column6" data-column="column6">
+                                    {{ portfolio.budget }}
+                                </td>
+                            <td class="column100 column7" data-column="column7">
+                                    <a href="{% url 'dp:portfolio_edit' portfolio.id %}"> edit </a>
+                                </td>
 
-                                <ul>
-                                {% for project in portfolio.project_set.all %}
-                                   <tr class="row100">
-                                    <td class="column100 column1" data-column="column1">
-                                    <a href="{% url 'dp:project_detail' project.id %}">{{ project.project_name }}</a>
-                                    </td>
-                                    </td>
-                                   </tr>
-                                {% endfor %}
-                                </ul>
-                      </tbody>
+                            </tr>
+                        </ul>
+
+                        </tbody>
 
                     </table>
+                    <br>
+
+                    <br>
+
+
+                    <a href="{% url 'dp:new_port_project' portfolio.id %}">Create new project</a>
+
+
+                    {% if portfolio.project_set.all %}
+                        <br>
+                        <br>
+                        Projects in portfolio
+
+                        <table data-vertable="ver1">
+                            </thead>
+                            <tr class="row100 head">
+                                <th class="column100 column1" data-column="column1">Project name</th>
+                                <th class="column100 column2" data-column="column2">Description</th>
+                                <th class="column100 column3" data-column="column3">Manager</th>
+                                <th class="column100 column4" data-column="column4">State</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <ul>
+                                {% for project in portfolio.project_set.all %}
+                                    <tr class="row100">
+                                        <td class="column100 column1" data-column="column1">
+                                            <a href="{% url 'dp:project_detail' project.id %}">{{ project.project_name }}</a>
+                                        </td>
+                                        <td class="column100 column2" data-column="column2">
+                                            {{ project.description }}
+                                        </td>
+                                        <td class="column100 column3" data-column="column3">
+                                            <a href="{% url 'dp:employee_detail' project.project_manager.id %}"> {{ portfolio.portfolio_manager.user.first_name }} {{ project.project_manager.user.last_name }}</a>
+                                        </td>
+                                        <td class="column100 column4" data-column="column4">
+                                            {{ project.get_state_display }}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </ul>
+                            </tbody>
+
+                        </table>
+                    {% endif %}
                 </div>
-			</div>
-		</div>
-	</div>
+            </div>
+        </div>
+    </div>
 {% endblock content %}
 

@@ -15,13 +15,11 @@ class NewProjectForm(forms.Form):
     risk = forms.ChoiceField(required=True, choices=RISK_VALUES, label="", initial='', widget=forms.Select())
 
 class NewTaskForm(forms.Form):
-
-
     def __init__(self, *args, **kwargs):
         employee_list = kwargs.pop('employee_list')
         super(NewTaskForm, self).__init__(*args, **kwargs)
-        self.fields["assigned_to"] = forms.MultipleChoiceField(
-            required=True,
+        self.fields["employee"] = forms.MultipleChoiceField(
+            required=False,
             initial=True,
             widget=forms.CheckboxSelectMultiple(),
             choices=[] if employee_list is None else employee_list,
@@ -30,9 +28,3 @@ class NewTaskForm(forms.Form):
     name = forms.CharField()
     description = forms.CharField(max_length=200)
 
-    # assigned_to = forms.MultipleChoiceField(
-    #     required=True,
-    #     initial=True,
-    #     widget=forms.CheckboxSelectMultiple(),
-    #     choices=[("test", "ahoj")]
-    # )

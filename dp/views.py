@@ -1,17 +1,16 @@
 from django.http import HttpResponseRedirect
 from django.views import generic
+from django.views.generic.edit import UpdateView
 from django.shortcuts import get_object_or_404, render, reverse, redirect
 from .models import Portfolio, Project, Employee, ProjectMember, Task, AssignedTask
 from django.contrib.auth import authenticate, login, logout
 import datetime
 from .forms import LoginForm, NewProjectForm, NewTaskForm
+from django.contrib import messages
 
 
 
 class IndexView(generic.ListView):
-    # def get_queryset(self):
-    #     """Return the last five published questions."""
-    #     return Portfolio.objects.all()
     template_name = 'dp/index.html'
     context_object_name = 'latest_portfolio_list'
 
@@ -28,18 +27,20 @@ class IndexView(generic.ListView):
 
 def portfolio_detail(request, portfolio_id):
     portfolio = get_object_or_404(Portfolio, pk=portfolio_id)
+    usable_budget = "No budget"
+    if portfolio.budget is not None:
+        usable_budget =  portfolio.budget - portfolio.used_budget
     return render(request, 'dp/portfolio_detail.html',
-                  {'portfolio': portfolio, 'error_message': "You didn't select a choice."})
-
-
-# response = "You're looking at the detail of Portfolio %s."
-# return HttpResponse(response % portfolio_id)
-
+                  {'portfolio': portfolio, 'usable_budget':usable_budget, 'error_message': "You didn't select a choice."})
 
 def project_detail(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
+    is_member = len(request.user.employee.projectmember_set.filter(project_id=project_id)) > 0
+    #finished_tasks = Task.objects.get(in_project=project_id, state__in=['3', '4'])
+    finished_tasks = Task.objects.filter(in_project=project_id, state='3').all()
+
     return render(request, 'dp/project_detail.html',
-                  {'project': project, 'error_message': "You didn't select a choice."})
+                  {'project': project, 'is_member': is_member, 'finished_tasks' : finished_tasks,  'error_message': "You didn't select a choice."})
 
 
 def employee_detail(request, employee_id):
@@ -103,7 +104,7 @@ def new_port_project_handler(request, portfolio_id):
         if form.is_valid():
             name = form.cleaned_data['name']
             description = form.cleaned_data['description']
-            risk = form.cleaned_data['name']
+            risk = form.cleaned_data['risk']
             project = Project.objects.create(project_name=name, description=description, risk=risk, pub_date=datetime.datetime.now())
             project.save()
             # redirect
@@ -125,19 +126,35 @@ def new_task_handler(request, project_id):
         if form.is_valid():
             name = form.cleaned_data['name']
             description = form.cleaned_data['description']
-            assign_to = form.cleaned_data['assigned_to']
+            assign_to = form.cleaned_data["employee"]
             task = Task.objects.create(name=name, description=description, in_project=project)
             task.save()
             for employee_assign_id in assign_to:
                 emp = Employee.objects.get(id=employee_assign_id)
                 assigned_task = AssignedTask.objects.create(assigned_to=emp, task=task)
                 assigned_task.save()
+            messages.success(request, 'Form submission successful')
             # redirect
     else:
         form = NewTaskForm(employee_list=employees)
-
-
     return render(request, 'dp/new_task.html', {'form': form, "project_id": project_id})
+
+
+class ProjectUpdateView(UpdateView):
+    model = Project
+    fields = ['state', 'used_budget', 'project_name']
+    template_name = "dp/project_update_form.html"
+
+class PortfolioUpdateView(UpdateView):
+    model = Portfolio
+    fields = ['portfolio_name', 'description', 'used_budget']
+    template_name = "dp/portfolio_update_form.html"
+
+class TaskUpdateView(UpdateView):
+    model = Task
+    fields = ['name', 'description', 'state']
+    template_name = "dp/task_update_form.html"
+
 
 
 
