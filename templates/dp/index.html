@@ -2,117 +2,273 @@
 
 {% block content %}
     {% load static %}
+        {% if user.employee.position == "manager" or user.is_superuser %}
 
-    <link rel="stylesheet" type="text/css" href="{% static 'dp/css/index.css' %}"/>
-    <div class="limiter">
-    <div class="container">
-        <div class="container-table100">
-            <div class="wrap-table100">
-                <div class="table100 ver1 m-b-110">
-                    <table data-vertable="ver1">
-                        <thead>
-                        <tr class="row100 head">
-                            <th class="column100 column1" data-column="column1">Portfolio</th>
-                            <th class="column100 column2" data-column="column2">Description</th>
-                            <th class="column100 column3" data-column="column3">Manager</th>
-
-                        </tr>
-                        </thead>
-                        <tbody>
-
-
-                        {% if latest_portfolio_list %}
-                            <ul>
-                                {% for portfolio in latest_portfolio_list %}
-                                    <tr class="row100">
-                                        <td class="column100 column1" data-column="column1">
-                                            <a href="{% url 'dp:portfolio_detail' portfolio.id %}">{{ portfolio.portfolio_name }}</a>
-                                        </td>
-                                        <td class="column100 column2" data-column="column2">
-                                            {{ portfolio.description }}
-                                        </td>
-                                        <td class="column100 column3" data-column="column3">
-                                            {% if portfolio.portfolio_manager %}
-                                                <a href="{% url 'dp:employee_detail' portfolio.portfolio_manager.id %}"> {{ portfolio.portfolio_manager.user.first_name }} {{ portfolio.portfolio_manager.user.last_name }}</a>
-                                            {% endif %}
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                            </ul>
-                        {% else %}
-                            <p>No portfolios are available.</p>
-                        {% endif %}
-
-                        </tbody>
-
-                    </table>
-
-
-                    {% if project_tmp.portfolio is Null and project_list.all %}
+            <link rel="stylesheet" type="text/css" href="{% static 'dp/css/index.css' %}"/>
+            <div class="limiter">
+            <div class="container">
+                <div class="container-table100">
+                    <div class="wrap-table100">
                         <div class="table100 ver1 m-b-110">
-                        <table data-vertable="ver1">
-                            <thead>
-                            <tr class="row100 head">
-                                <th class="column100 column1" data-column="column1">Name</th>
-                                <th class="column100 column2" data-column="column2">Description</th>
-                                <th class="column100 column3" data-column="column3">Manager</th>
+                            <table data-vertable="ver1">
+                                <thead>
+                                <tr class="row100 head">
+                                    <th class="column100 column1" data-column="column1">Portfolio</th>
+                                    <th class="column100 column2" data-column="column2">Description</th>
+                                    <th class="column100 column3" data-column="column3">Manager</th>
 
-                            </tr>
-                            </thead>
-                            <tbody>
+                                </tr>
+                                </thead>
+                                <tbody>
 
-                            <ul>
-                                {% for project_tmp in project_list %}
 
-                                    <tr class="row100">
-                                        <td class="column100 column1" data-column="column1">
-                                            <a href="{% url 'dp:project_detail' project_tmp.id %}">{{ project_tmp.project_name }}</a>
-                                        </td>
-                                    <td class="column100 column2" data-column="column2">
-                                            {{ project_tmp.description }}
-                                        </td>
-                                        <td class="column100 column3" data-column="column3">
-                                            {% if project_tmp.project_manager.id %}
-                                                <a href="{% url 'dp:employee_detail' project_tmp.project_manager.id %}">{{ project_tmp.project_manager.user.first_name }} {{ project_tmp.project_manager.user.last_name }}</a>
-                                            {% endif %}
-                                        </td>
+                                {% if latest_portfolio_list %}
+                                    <ul>
+                                        {% for portfolio in latest_portfolio_list %}
+                                            <tr class="row100">
+                                                <td class="column100 column1" data-column="column1">
+                                                    <a href="{% url 'dp:portfolio_detail' portfolio.id %}">{{ portfolio.portfolio_name }}</a>
+                                                </td>
+                                                <td class="column100 column2" data-column="column2">
+                                                    {{ portfolio.description }}
+                                                </td>
+                                                <td class="column100 column3" data-column="column3">
+                                                    {% if portfolio.portfolio_manager %}
+                                                        <a href="{% url 'dp:employee_detail' portfolio.portfolio_manager.id %}"> {{ portfolio.portfolio_manager.user.first_name }} {{ portfolio.portfolio_manager.user.last_name }}</a>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </ul>
+                                {% else %}
+                                    <p>No portfolios are available.</p>
+                                {% endif %}
+
+                                </tbody>
+
+                            </table>
+
+
+                            {% if project_tmp.portfolio is Null and project_list.all %}
+                                <div class="table100 ver1 m-b-110">
+                                <table data-vertable="ver1">
+                                    <thead>
+                                    <tr class="row100 head">
+                                        <th class="column100 column1" data-column="column1">Name</th>
+                                        <th class="column100 column2" data-column="column2">Description</th>
+                                        <th class="column100 column3" data-column="column3">Manager</th>
+
                                     </tr>
-                                {% endfor %}
+                                    </thead>
+                                    <tbody>
 
-                            </ul>
-                            </tbody>
-                        </table>
-                    {% endif %}
+                                    <ul>
+                                        {% for project_tmp in project_list %}
 
-                    <div class="table100 ver1 m-b-110">
-                        <table data-vertable="ver1">
-                            <thead>
-                            <tr class="row100 head">
-                                <th class="column100 column1" data-column="column1">Name</th>
+                                            <tr class="row100">
+                                                <td class="column100 column1" data-column="column1">
+                                                    <a href="{% url 'dp:project_detail' project_tmp.id %}">{{ project_tmp.project_name }}</a>
+                                                </td>
+                                                <td class="column100 column2" data-column="column2">
+                                                    {{ project_tmp.description }}
+                                                </td>
+                                                <td class="column100 column3" data-column="column3">
+                                                    {% if project_tmp.project_manager.id %}
+                                                        <a href="{% url 'dp:employee_detail' project_tmp.project_manager.id %}">{{ project_tmp.project_manager.user.first_name }} {{ project_tmp.project_manager.user.last_name }}</a>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
 
-                            </tr>
-                            </thead>
-                            <tbody>
+                                    </ul>
+                                    </tbody>
+                                </table>
+                            {% endif %}
 
-                            <ul>
-                                {% for employee in employee_list %}
-                                    <tr class="row100">
-                                        <td class="column100 column1" data-column="column1">
-                                            <a href="{% url 'dp:employee_detail' employee.id %}"> {{ employee.user.first_name }} {{ employee.user.last_name }} </a>
-                                        </td>
+                            <div class="table100 ver1 m-b-110">
+                                <table data-vertable="ver1">
+                                    <thead>
+                                    <tr class="row100 head">
+                                        <th class="column100 column1" data-column="column1">Name</th>
+
                                     </tr>
-                                {% endfor %}
-                            </ul>
-                            </tbody>
-                        </table>
+                                    </thead>
+                                    <tbody>
 
-
-                    </div>
+                                    <ul>
+                                        {% for employee in employee_list %}
+                                            <tr class="row100">
+                                                <td class="column100 column1" data-column="column1">
+                                                    <a href="{% url 'dp:employee_detail' employee.id %}"> {{ employee.user.first_name }} {{ employee.user.last_name }} </a>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </ul>
+                                    </tbody>
+                                </table>
+                            </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+        {% endif %}
+
+
+        MY WORK
+
+        {% if user.user.employee.portfolio_set.all %}
+            <br>
+            <br>
+            Manager of following portfolios
+
+            <div class="table100 ver1 m-b-110">
+                <table data-vertable="ver1">
+                    <thead>
+                    <tr class="row100 head">
+                        <th class="column100 column1" data-column="column1">Portfolio</th>
+                        <th class="column100 column2" data-column="column2">Active from</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <ul>
+                        {% for portfolio in user.employee.portfolio_set.all %}
+                            <tr class="row100">
+                                <td class="column100 column1" data-column="column1">
+                                    <a href="{% url 'dp:portfolio_detail' portfolio.id %}">{{ portfolio.portfolio_name }}</a>
+                                </td>
+                                <td class="column100 column2" data-column="column2">
+                                    {{ portfolio.pub_date }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </ul>
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+        {% if user.employee.project_set.all %}
+            <br>
+            <br>
+            Is manager of following projects
+
+            <div class="table100 ver1 m-b-110">
+                <table data-vertable="ver1">
+                    <thead>
+                    <tr class="row100 head">
+                        <th class="column100 column1" data-column="column1">Project</th>
+                        <th class="column100 column2" data-column="column2">Active from</th>
+                        <th class="column100 column3" data-column="column3">State</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <ul>
+                        {% for project in user.employee.project_set.all %}
+                            <tr class="row100">
+                                <td class="column100 column1" data-column="column1">
+                                    <a href="{% url 'dp:project_detail' project.id %}">{{ project.project_name }}</a>
+                                </td>
+                                <td class="column100 column2" data-column="column2">
+                                    {{ project.pub_date }}
+                                </td>
+                                <td class="column100 column3" data-column="column3">
+                                    {{ project.get_state_display }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </ul>
+                    </tbody>
+
+                </table>
+            </div>
+        {% endif %}
+
+
+        {% if user.employee.projectmember_set.all %}
+            <br>
+            <br>
+            Is part of following projects
+
+            <div class="table100 ver1 m-b-110">
+                <table data-vertable="ver1">
+                    <thead>
+                    <tr class="row100 head">
+                        <th class="column100 column1" data-column="column1">Project</th>
+                        <th class="column100 column2" data-column="column2">Position</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <ul>
+                        {% for projectmember in user.employee.projectmember_set.all %}
+                            <tr class="row100">
+                                <td class="column100 column1" data-column="column1">
+                                    <a href="{% url 'dp:project_detail' projectmember.project_id %}">{{ projectmember.project.project_name }}</a>
+                                </td>
+                                <td class="column100 column1" data-column="column1">
+                                    {{ projectmember.position }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </ul>
+                    </tbody>
+
+                </table>
+            </div>
+        {% endif %}
+
+
+
+        {% if employee.assignedtask_set.all %}
+            <br>
+            <br>
+            Have of following tasks to do
+
+            <div class="table100 ver1 m-b-110">
+                <table data-vertable="ver1">
+                    <thead>
+                    <tr class="row100 head">
+                        <th class="column100 column1" data-column="column1">Task name</th>
+                        <th class="column100 column2" data-column="column2">Description</th>
+                        <th class="column100 column3" data-column="column3">State</th>
+                        <th class="column100 column4" data-column="column4">Project name</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <ul>
+                        {% for asstask in employee.assignedtask_set.all %}
+                            <tr class="row100">
+                                <td class="column100 column1" data-column="column1">
+                                    {{ asstask.task.name }}
+                                </td>
+                                <td class="column100 column2" data-column="column2">
+                                    {{ asstask.task.description }}
+                                </td>
+                                <td class="column100 column3" data-column="column3">
+                                    {{ asstask.task.get_state_display }}
+                                </td>
+                                <td class="column100 column4" data-column="column4">
+                                    <a href="{% url 'dp:project_detail' asstask.task.in_project_id %}">{{ asstask.task.in_project.project_name }}</a>
+                                </td>
+
+                            </tr>
+                        {% endfor %}
+                    </ul>
+                    </tbody>
+
+                </table>
+
+
+            </div>
+        {% endif %}
 {% endblock %}
+
+
 
 

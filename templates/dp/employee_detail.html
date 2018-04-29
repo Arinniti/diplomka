@@ -83,54 +83,54 @@
     <div class="limiter">
         <div class="container-table100">
             <div class="wrap-table100">
-                <div class="table100 ver1 m-b-110">
 
-                    {% if employee.memberability_set.all and user.is_authenticated %}
-                        {% if user.is_superuser or user.employee.position == "manager" %}
-                            <br>
-                            <br>
-                            User have next abilities:
 
-                            <table data-vertable="ver1">
-                                <thead>
-                                <tr class="row100 head">
-                                    <th class="column100 column1" data-column="column1">Ability</th>
-                                    <th class="column100 column2" data-column="column2">Experience</th>
-                                    <th class="column100 column3" data-column="column3">Description</th>
-                                </tr>
-                                </thead>
-                                <tbody>
+                {% if employee.memberability_set.all and user.is_authenticated %}
+                    {% if user.is_superuser or user.employee.position == "manager" %}
+                        <br>
+                        <br>
+                        User have next abilities:
 
-                                <ul>
-                                    {% for abilitymem in employee.memberability_set.all %}
-                                        <tr class="row100">
-                                            <td class="column100 column1" data-column="column1">
-                                                {{ abilitymem.ability.name }}
-                                            </td>
-                                            <td class="column100 column2" data-column="column2">
-                                                {{ abilitymem.experience }}
-                                            </td>
-                                            <td class="column100 column3" data-column="column3">
-                                                {{ abilitymem.ability.description }}
-                                            </td>
+                        <table data-vertable="ver1">
+                            <thead>
+                            <tr class="row100 head">
+                                <th class="column100 column1" data-column="column1">Ability</th>
+                                <th class="column100 column2" data-column="column2">Experience</th>
+                                <th class="column100 column3" data-column="column3">Description</th>
+                            </tr>
+                            </thead>
+                            <tbody>
 
-                                        </tr>
-                                    {% endfor %}
-                                </ul>
-                                </tbody>
+                            <ul>
+                                {% for abilitymem in employee.memberability_set.all %}
+                                    <tr class="row100">
+                                        <td class="column100 column1" data-column="column1">
+                                            {{ abilitymem.ability.name }}
+                                        </td>
+                                        <td class="column100 column2" data-column="column2">
+                                            {{ abilitymem.experience }}
+                                        </td>
+                                        <td class="column100 column3" data-column="column3">
+                                            {{ abilitymem.ability.description }}
+                                        </td>
 
-                            </table>
-                        {% endif %}
+                                    </tr>
+                                {% endfor %}
+                            </ul>
+                            </tbody>
+
+                        </table>
                     {% endif %}
+                {% endif %}
 
 
 
-                    {% if employee.portfolio_set.all %}
-                        <br>
-                        <br>
-                        Is manager of following portfolios
+                {% if employee.portfolio_set.all %}
+                    <br>
+                    <br>
+                    Is manager of following portfolios
 
-                        <div class="table100 ver1 m-b-110">
+                    <div class="table100 ver1 m-b-110">
                         <table data-vertable="ver1">
                             <thead>
                             <tr class="row100 head">
@@ -155,13 +155,14 @@
                             </ul>
                             </tbody>
                         </table>
-                    {% endif %}
-                    {% if employee.project_set.all %}
-                        <br>
-                        <br>
-                        Is manager of following projects
+                    </div>
+                {% endif %}
+                {% if employee.project_set.all %}
+                    <br>
+                    <br>
+                    Is manager of following projects
 
-                        <div class="table100 ver1 m-b-110">
+                    <div class="table100 ver1 m-b-110">
                         <table data-vertable="ver1">
                             <thead>
                             <tr class="row100 head">
@@ -191,15 +192,16 @@
                             </tbody>
 
                         </table>
-                    {% endif %}
+                    </div>
+                {% endif %}
 
 
-                    {% if employee.projectmember_set.all %}
-                        <br>
-                        <br>
-                        Is part of following projects
+                {% if employee.projectmember_set.all %}
+                    <br>
+                    <br>
+                    Is part of following projects
 
-                        <div class="table100 ver1 m-b-110">
+                    <div class="table100 ver1 m-b-110">
                         <table data-vertable="ver1">
                             <thead>
                             <tr class="row100 head">
@@ -224,16 +226,17 @@
                             </tbody>
 
                         </table>
-                    {% endif %}
+                    </div>
+                {% endif %}
 
 
 
-                    {% if employee.assignedtask_set.all %}
-                        <br>
-                        <br>
-                        Have of following tasks to do
+                {% if employee.assignedtask_set.all %}
+                    <br>
+                    <br>
+                    Have of following tasks to do
 
-                        <div class="table100 ver1 m-b-110">
+                    <div class="table100 ver1 m-b-110">
                         <table data-vertable="ver1">
                             <thead>
                             <tr class="row100 head">
@@ -268,13 +271,12 @@
                             </tbody>
 
                         </table>
-                    {% endif %}
-
 
 
                     </div>
-                    </div>
-                    </div>
-                    </div>
+                {% endif %}
 
+            </div>
+        </div>
+    </div>
 {% endblock %}

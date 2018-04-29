@@ -10,7 +10,7 @@ class Employee(models.Model):
     address = models.CharField(max_length=200)
     birthday = models.DateField()
     photo = models.FileField( blank=True, null=True)
-    salary = models.DecimalField(max_digits =4, decimal_places=3, null=True)
+    salary = models.DecimalField(max_digits =9, decimal_places=3, null=True)
     GENDER_VALUES = (
         ('male', 'Male'),
         ('female', 'Female'),
@@ -37,17 +37,30 @@ class Project(models.Model):
     portfolio = models.ForeignKey(Portfolio, on_delete=models.SET_NULL, null=True, blank=True)
     project_name = models.TextField()
     description = models.CharField(max_length=200)
-    budget = models.DecimalField(max_digits=15, decimal_places=0, null=True, blank=True)
+    plan_budget = models.DecimalField(max_digits=15, decimal_places=0, null=True, blank=True)
     used_budget = models.DecimalField(max_digits=10, decimal_places=0, default=0)
+    manhours = models.DecimalField(max_digits=15, decimal_places=0, null=True, blank=True)
     pub_date = models.DateTimeField(auto_now_add=True)
     deadline = models.DateTimeField('date of deadline', null=True, blank=True)
 
+    COMPLEXITY_VALUES = (
+        ('1', 'Complicated'),
+        ('0', 'Easy'),
+    )
+    complexity = models.CharField(max_length=1, choices=COMPLEXITY_VALUES, null=True)
 
     PRIORITY_VALUES = (
         ('0.75', 'High '),
         ('0.50', 'Normal'),
         ('0.25', 'Low'),
     )
+
+    TYPE_VALUES = (
+        ('1', 'Public'),
+        ('2', 'Private'),
+        ('3', 'Mixed'),
+    )
+    type = models.CharField(max_length=1, choices=TYPE_VALUES, null=True)
 
     urgency = models.CharField(max_length=4, choices=PRIORITY_VALUES, null=True)
     importance = models.CharField(max_length=4, choices=PRIORITY_VALUES, null=True)
@@ -59,12 +72,18 @@ class Project(models.Model):
     )
     risk = models.CharField(max_length=4, choices=RISK_VALUES, null=True)
 
+    RISK_TYPE_VALUES = (
+        ('0', 'project'),
+        ('1', 'portfolio')
+    )
+    risk_type = models.CharField(max_length=1, choices=RISK_TYPE_VALUES, null=True)
+
     STATE_VALUES = (
         ('1', 'Planned'),
         ('2', 'Ongoing'),
         ('3', 'Finished'),
         ('4', 'Interrupted'),
-        ('5', 'Stopped')
+        ('5', 'Stopped'),
     )
 
     state = models.CharField(max_length=1, choices=STATE_VALUES, null=True)
@@ -118,6 +137,7 @@ class Task(models.Model):
     description = models.CharField(max_length=200, null=True)
     deadline = models.DateTimeField('date of deadline', null=True, blank=True)
     pub_date = models.DateTimeField(auto_now_add=True)
+    final_manhours = models.DecimalField(max_digits=15, decimal_places=0, null=True, blank=True)
 
 
     STATE_VALUES = (
