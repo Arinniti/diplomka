@@ -10,7 +10,7 @@ class Employee(models.Model):
     address = models.CharField(max_length=200)
     birthday = models.DateField()
     photo = models.FileField( blank=True, null=True)
-    salary = models.DecimalField(max_digits =9, decimal_places=3, null=True)
+    salary = models.DecimalField(max_digits =9, decimal_places=2, null=True)
     GENDER_VALUES = (
         ('male', 'Male'),
         ('female', 'Female'),
@@ -19,16 +19,11 @@ class Employee(models.Model):
     def __str__(self):
         return self.user.username
 
-
-
-
 class Portfolio(models.Model):
     portfolio_name = models.CharField(max_length=200)
     pub_date = models.DateTimeField('date published', editable=False)
     portfolio_manager = models.ForeignKey(Employee, on_delete=models.SET_NULL, null=True)
     description = models.CharField(max_length=200, null=True)
-    budget = models.DecimalField(max_digits=10, decimal_places=0, null=True)
-    used_budget = models.DecimalField(max_digits=10, decimal_places=0, default=0)
     def __str__(self):
         return self.portfolio_name
 
@@ -37,8 +32,8 @@ class Project(models.Model):
     portfolio = models.ForeignKey(Portfolio, on_delete=models.SET_NULL, null=True, blank=True)
     project_name = models.TextField()
     description = models.CharField(max_length=200)
-    plan_budget = models.DecimalField(max_digits=15, decimal_places=0, null=True, blank=True)
-    used_budget = models.DecimalField(max_digits=10, decimal_places=0, default=0)
+    plan_budget = models.DecimalField(max_digits=15, decimal_places=2, null=True, blank=True)
+    used_budget = models.DecimalField(max_digits=15, decimal_places=2, default=0)
     manhours = models.DecimalField(max_digits=15, decimal_places=0, null=True, blank=True)
     pub_date = models.DateTimeField(auto_now_add=True)
     deadline = models.DateTimeField('date of deadline', null=True, blank=True)
@@ -61,32 +56,9 @@ class Project(models.Model):
         ('3', 'Mixed'),
     )
     type = models.CharField(max_length=1, choices=TYPE_VALUES, null=True)
-
     urgency = models.CharField(max_length=4, choices=PRIORITY_VALUES, null=True)
     importance = models.CharField(max_length=4, choices=PRIORITY_VALUES, null=True)
 
-    RISK_VALUES = (
-        ('0.25', 'Small'),
-        ('0.50', 'Medium'),
-        ('0.75', 'Large'),
-    )
-    risk = models.CharField(max_length=4, choices=RISK_VALUES, null=True)
-
-    RISK_TYPE_VALUES = (
-        ('0', 'project'),
-        ('1', 'portfolio')
-    )
-    risk_type = models.CharField(max_length=1, choices=RISK_TYPE_VALUES, null=True)
-
-    STATE_VALUES = (
-        ('1', 'Planned'),
-        ('2', 'Ongoing'),
-        ('3', 'Finished'),
-        ('4', 'Interrupted'),
-        ('5', 'Stopped'),
-    )
-
-    state = models.CharField(max_length=1, choices=STATE_VALUES, null=True)
     project_manager = models.ForeignKey(Employee, on_delete=models.SET_NULL, null=True)
     def __str__(self):
         return self.project_name
@@ -102,6 +74,17 @@ class Project(models.Model):
     def get_absolute_url(self):
         return reverse('dp:project_detail', kwargs={'project_id': self.pk})
 
+class ProjectState(models.Model):
+    project = models.OneToOneField(Project, on_delete=models.CASCADE)
+    STATE_VALUES = (
+        ('1', 'Planned'),
+        ('2', 'Ongoing'),
+        ('3', 'Finished'),
+        ('4', 'Interrupted'),
+        ('5', 'Stopped'),
+    )
+    state = models.CharField(max_length=1, choices=STATE_VALUES, default=1)
+    progress = models.DecimalField(max_digits=3, decimal_places=2, null=True, blank=True, validators=[MaxValueValidator(1.00), MinValueValidator(0.00)])
 
 class ProjectMember(models.Model):
     class Meta:
@@ -111,7 +94,6 @@ class ProjectMember(models.Model):
     position = models.CharField(max_length=200, null=True)
     def __str__(self):
         return "%s in %s" % (self.member.user.username, self.project.project_name)
-
 
 class Ability(models.Model):
     name = models.CharField(max_length=50, null=True)
@@ -137,16 +119,7 @@ class Task(models.Model):
     description = models.CharField(max_length=200, null=True)
     deadline = models.DateTimeField('date of deadline', null=True, blank=True)
     pub_date = models.DateTimeField(auto_now_add=True)
-    final_manhours = models.DecimalField(max_digits=15, decimal_places=0, null=True, blank=True)
-
-
-    STATE_VALUES = (
-        ('1', 'Planned'),
-        ('2', 'Ongoing'),
-        ('3', 'Finished'),
-        ('4', 'Interrupted')
-    )
-    state = models.CharField(max_length=1, choices=STATE_VALUES, default=1)
+    final_manhours = models.DecimalField(max_digits=15, decimal_places=2, null=True, blank=True)
 
     @classmethod
     def create(cls, name, description, project_id):
@@ -158,6 +131,16 @@ class Task(models.Model):
     def get_absolute_url(self):
         return reverse('dp:project_detail', kwargs={'project_id': self.in_project.id})
 
+class TaskState(models.Model):
+    task = models.OneToOneField(Task, on_delete=models.CASCADE)
+    STATE_VALUES = (
+        ('1', 'Planned'),
+        ('2', 'Ongoing'),
+        ('3', 'Finished'),
+        ('4', 'Interrupted')
+    )
+    state = models.CharField(max_length=1, choices=STATE_VALUES, default=1)
+    progress = models.DecimalField(max_digits=3, decimal_places=2, null=True, blank=True, validators=[MaxValueValidator(1.00), MinValueValidator(0.00)])
 
 class AssignedTask(models.Model):
     class Meta:
@@ -169,9 +152,7 @@ class AssignedTask(models.Model):
     def create(cls, assigned_to, task):
         assignTask = cls(assigned_to=assigned_to)
         assignTask.task = task
-
         return assignTask
-
 
 class Costumer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -191,3 +172,37 @@ class ProjectNotes(models.Model):
     author = models.ForeignKey(Employee, on_delete=models.CASCADE)
     note = models.CharField(max_length=200)
     pub_date = models.DateTimeField(auto_now_add=True)
+
+class Risk (models.Model):
+    name = models.CharField(max_length=50, null=True)
+    description = models.CharField(max_length=200, null=True)
+
+class ProjectRisk (models.Model):
+    class Meta:
+        unique_together = (('project', 'risk'),)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, blank=True, null=True)
+    risk = models.ForeignKey(Risk, on_delete=models.CASCADE)
+    probability = models.DecimalField(max_digits=3, decimal_places=2, null=True, blank=True, validators=[MaxValueValidator(1.00), MinValueValidator(0.00)])
+    risk_appetite = models.DecimalField(max_digits=3, decimal_places=2, null=True, blank=True, validators=[MaxValueValidator(1.00), MinValueValidator(0.00)])
+
+    RIST_STATE_VALUES = (
+        ('0', 'Can happen'),
+        ('1', 'Happening'),
+        ('2', 'Resolved'),
+        ('3', 'Wont happen')
+    )
+    risk_state = models.CharField(max_length=1, choices=RIST_STATE_VALUES, null=True)
+
+    RISK_IMPACT_TYPE_VALUES = (
+        ('0', 'project'),
+        ('1', 'portfolio')
+    )
+    risk_has_impact_on = models.CharField(max_length=1, choices=RISK_IMPACT_TYPE_VALUES, null=True)
+
+    RISK_IMPACT_VALUES = (
+        ('0.25', 'Small'),
+        ('0.50', 'Medium'),
+        ('0.75', 'Large'),
+    )
+    risk_impact = models.CharField(max_length=4, choices=RISK_IMPACT_VALUES, null=True)
+

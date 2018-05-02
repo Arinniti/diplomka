@@ -5,6 +5,16 @@ class LoginForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput())
 
 class NewProjectForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        employee_list = kwargs.pop('employee_list')
+        super(NewProjectForm, self).__init__(*args, **kwargs)
+        self.fields["project_manager"] = forms.ChoiceField(
+            required=False,
+            initial=True,
+            widget=forms.Select(),
+            choices=[] if employee_list is None else employee_list,
+        )
+        super(NewProjectForm, self).full_clean()
     name = forms.CharField()
     description = forms.CharField(max_length=200)
     RISK_VALUES = (
@@ -13,6 +23,11 @@ class NewProjectForm(forms.Form):
         ('0.75', 'Large'),
     )
     risk = forms.ChoiceField(required=True, choices=RISK_VALUES, label="", initial='', widget=forms.Select())
+    full_budget = forms.DecimalField(max_digits=15, decimal_places=2)
+    plan_budget = forms.DecimalField(max_digits=15, decimal_places=2)
+    add_to_used_budget = forms.DecimalField(max_digits=15, decimal_places=2)
+
+
 
 class NewTaskForm(forms.Form):
     def __init__(self, *args, **kwargs):

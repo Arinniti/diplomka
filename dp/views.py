@@ -2,7 +2,7 @@ from django.http import HttpResponseRedirect
 from django.views import generic
 from django.views.generic.edit import UpdateView
 from django.shortcuts import get_object_or_404, render, reverse, redirect
-from .models import Portfolio, Project, Employee, ProjectMember, Task, AssignedTask
+from .models import Portfolio, Project, Employee, ProjectMember, Task, AssignedTask, MemberAbility
 from django.contrib.auth import authenticate, login, logout
 import datetime
 from .forms import LoginForm, NewProjectForm, NewTaskForm
@@ -24,10 +24,10 @@ class IndexView(generic.ListView):
         context['project_list'] = project_list
         return context
 
+
 def index(request):
     context = {
         'latest_portfolio_list': Portfolio.objects.all(),
-
     }
     project_list = Project.objects.filter(portfolio_id__isnull=True)
     context['employee_list'] = Employee.objects.all()
@@ -35,36 +35,39 @@ def index(request):
 
     return render(request, "dp/index.html", context)
 
+
 @login_required
 def portfolio_detail(request, portfolio_id):
-
     portfolio = get_object_or_404(Portfolio, pk=portfolio_id)
-    usable_budget = "No budget"
-    if portfolio.budget is not None:
-        usable_budget =  portfolio.budget - portfolio.used_budget
     return render(request, 'dp/portfolio_detail.html',
-                  {'portfolio': portfolio, 'usable_budget':usable_budget, 'error_message': "You didn't select a choice."})
+                  {'portfolio': portfolio,
+                   'error_message': "You didn't select a choice."})
+
 
 @login_required
 def project_detail(request, project_id):
-
     project = get_object_or_404(Project, pk=project_id)
     is_member = len(request.user.employee.projectmember_set.filter(project_id=project_id)) > 0
-    #finished_tasks = Task.objects.get(in_project=project_id, state__in=['3', '4'])
-    finished_tasks = Task.objects.filter(in_project=project_id, state='3').all()
+    # finished_tasks = Task.objects.get(in_project=project_id, state__in=['3', '4'])
+    finished_tasks = Task.objects.filter(taskstate__state='3' ,in_project=project_id).all()
+    useable_budget = None
+    if  project.plan_budget is not None:
+        useable_budget = project.plan_budget - project.used_budget
 
     return render(request, 'dp/project_detail.html',
-                  {'project': project, 'is_member': is_member, 'finished_tasks' : finished_tasks,  'error_message': "You didn't select a choice."})
+                  {'project': project, 'is_member': is_member, 'useable_budget': useable_budget,
+                   'finished_tasks': finished_tasks, 'error_message': "You didn't select a choice."})
+
 
 @login_required
 def employee_detail(request, employee_id):
-
     employee = get_object_or_404(Employee, pk=employee_id)
     return render(request, 'dp/employee_detail.html',
                   {'employee': employee, 'error_message': "You didn't select a choice."})
 
 
 def login_page(request):
+    current_url = request.resolver_match.url_name
     if request.user.is_authenticated:
         return HttpResponseRedirect(reverse("dp:index"))
 
@@ -78,7 +81,7 @@ def login_page(request):
             if user is not None:
                 login(request, user)
                 return redirect(reverse('dp:index'))
-                #return HttpResponseRedirect(reverse("dp:employee_detail", kwargs={"employee_id": user.employee.id}))
+                # return HttpResponseRedirect(reverse("dp:employee_detail", kwargs={"employee_id": user.employee.id}))
 
     # if a GET (or any other method) we'll create a blank form
     else:
@@ -86,56 +89,68 @@ def login_page(request):
 
     return render(request, 'dp/authentication.html', {'form': form})
 
+
 @login_required
 def logout_handler(request):
     logout(request)
     return HttpResponseRedirect(reverse("dp:login_page"))
 
+
 @login_required
 def new_project_handler(request):
     if not request.user.is_superuser or request.user.is_authenticated:
         return redirect(reverse('dp:index'))
-
+    employees = Employee.objects.all()
+    employees = [(empl.id, empl.user.username) for empl in employees]
     if request.method == 'POST':
-        form = NewProjectForm(request.POST)
+        form = NewProjectForm(request.POST, employee_list = employees)
         if form.is_valid():
             name = form.cleaned_data['name']
             description = form.cleaned_data['description']
-            risk = form.cleaned_data['name']
-            project = Project.objects.create(name, description, risk)
+            plan_budget = form.cleaned_data['plan_budget']
+            project_manager = form.cleaned_data['project_manager']
+
+            project = Project.objects.create(project_name=name, description=description,
+                                             plan_budget=plan_budget, project_manager=project_manager)
             project.save()
             # redirect
     else:
-        form = NewProjectForm()
+        form = NewProjectForm(employee_list= employees)
     return render(request, 'dp/new_project.html', {'form': form})
+
 
 @login_required
 def new_port_project_handler(request, portfolio_id):
-
     portfolio = get_object_or_404(Portfolio, pk=portfolio_id)
     if request.user.employee.id != portfolio.portfolio_manager_id and not request.user.is_superuser:
-           return redirect(reverse('dp:index'))
+        return redirect(reverse('dp:index'))
+    employees = Employee.objects.all()
+    employees = [(empl.id, empl.user.username) for empl in employees]
 
     if request.method == 'POST':
-        form = NewProjectForm(request.POST)
+        form = NewProjectForm(request.POST, employee_list =employees)
         if form.is_valid():
             name = form.cleaned_data['name']
             description = form.cleaned_data['description']
-            risk = form.cleaned_data['risk']
-            project = Project.objects.create(project_name=name, description=description, risk=risk, pub_date=datetime.datetime.now())
+            project = Project.objects.create(project_name=name, description=description,
+                                             pub_date=datetime.datetime.now())
             project.save()
             # redirect
     else:
-        form = NewProjectForm()
+        form = NewProjectForm(employee_list =employees )
     return render(request, 'dp/new_project.html', {'form': form, "portfolio_id": portfolio_id})
+
 
 @login_required
 def new_task_handler(request, project_id):
-
     project = get_object_or_404(Project, pk=project_id)
-
-    if not request.user.is_superuser and project.project_manager.id != request.user.employee.id:
-        return redirect(reverse('dp:project_detail', kwargs={"project_id":project_id}))
+    if project.project_manager is None:
+        if not request.user.is_superuser and not (
+                project.portfolio is None and request.user.employee.position == 'manager') and not (project.portfolio.portfolio_manager_id == request.user.employee.id):
+            return redirect(reverse('dp:project_detail', kwargs={"project_id": project_id}))
+    elif project.project_manager_id != request.user.employee.id and request.user.is_superuser and not (
+                project.portfolio is None and request.user.employee.position == 'manager') and not (project.portfolio.portfolio_manager_id == request.user.employee.id):
+        return redirect(reverse('dp:project_detail', kwargs={"project_id": project_id}))
 
     employees = ProjectMember.objects.filter(project_id=project_id).all()
     employees = [(empl.member_id, empl.member.user.username) for empl in employees]
@@ -162,21 +177,18 @@ def new_task_handler(request, project_id):
 class ProjectUpdateView(UpdateView):
     model = Project
     if model.project_manager is None:
-        fields = ['state', 'used_budget', 'project_name', 'project_manager']
+        fields = ['project_name',  'used_budget', 'plan_budget', 'urgency', 'project_manager']
     else:
-        fields = ['state', 'used_budget', 'project_name']
+        fields = ['project_name', 'used_budget', 'plan_budget', 'urgency' ]
     template_name = "dp/project_update_form.html"
 
 class PortfolioUpdateView(UpdateView):
     model = Portfolio
-    fields = ['portfolio_name', 'description', 'used_budget']
+    fields = ['portfolio_name', 'description']
     template_name = "dp/portfolio_update_form.html"
+
 
 class TaskUpdateView(UpdateView):
     model = Task
-    fields = ['name', 'description', 'state']
+    fields = ['name', 'description' ]
     template_name = "dp/task_update_form.html"
-
-
-
-
