@@ -49,7 +49,7 @@ def project_detail(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
     is_member = len(request.user.employee.projectmember_set.filter(project_id=project_id)) > 0
     # finished_tasks = Task.objects.get(in_project=project_id, state__in=['3', '4'])
-    finished_tasks = Task.objects.filter(taskstate__state='3' ,in_project=project_id).all()
+    finished_tasks = Task.objects.filter(in_project=project_id, state='3').all()
     useable_budget = None
     if  project.plan_budget is not None:
         useable_budget = project.plan_budget - project.used_budget

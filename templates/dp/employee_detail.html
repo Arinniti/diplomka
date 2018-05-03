@@ -184,7 +184,7 @@
                                             {{ project.pub_date }}
                                         </td>
                                         <td class="column100 column3" data-column="column3">
-                                            {{ project.projectstate.get_state_display }}
+                                            {{ project.get_state_display }}
                                         </td>
                                     </tr>
                                 {% endfor %}
@@ -259,7 +259,7 @@
                                             {{ asstask.task.description }}
                                         </td>
                                         <td class="column100 column3" data-column="column3">
-                                            {{ asstask.task.taskstate.get_state_display }}
+                                            {{ asstask.task.get_state_display }}
                                         </td>
                                         <td class="column100 column4" data-column="column4">
                                             <a href="{% url 'dp:project_detail' asstask.task.in_project_id %}">{{ asstask.task.in_project.project_name }}</a>

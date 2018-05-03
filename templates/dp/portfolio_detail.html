@@ -92,7 +92,7 @@
                                             <a href="{% url 'dp:employee_detail' project.project_manager.id %}"> {{ portfolio.portfolio_manager.user.first_name }} {{ project.project_manager.user.last_name }}</a>
                                         </td>
                                         <td class="column100 column4" data-column="column4">
-                                            {{ project.projectstate.state }}
+                                            {{ project.get_state_display }}
                                         </td>
                                         <td class="column100 column5" data-column="column5">
                                             {{ project.used_budget }}

@@ -45,7 +45,7 @@
                                     {{ project.description }}
                                 </td>
                                 <td class="column100 column3" data-column="column3">
-                                    {{ project.projectstate.get_state_display }}
+                                    {{ project.get_state_display }}
                                 </td>
                                 <td class="column100 column4" data-column="column4">
                                     {% if project.project_manager %}
@@ -172,7 +172,7 @@
                                 <tbody>
                                 <ul>
                                     {% for act_task in project.task_set.all %}
-                                        {% if act_task.taskstate.state != "3" %}
+                                        {% if act_task.state != "3" %}
 
                                             <tr class="row100">
                                                 <td class="column100 column1" data-column="column1">
@@ -190,7 +190,7 @@
                                                     </td>
                                                 {% endif %}
                                                 <td class="column100 column4" data-column="column4">
-                                                    {{ act_task.taskstate.get_state_display }}
+                                                    {{ act_task.get_state_display }}
                                                 </td>
                                                 <td class="column100 column5" data-column="column5">
                                                     <a href="{% url 'dp:task_edit' act_task.id %}"> edit </a>
@@ -238,7 +238,7 @@
                                                 </td>
                                             {% endif %}
                                             <td class="column100 column4" data-column="column4">
-                                                {{ fin_task.taskstate.get_state_display }}
+                                                {{ fin_task.get_state_display }}
                                             </td>
                                         </tr>
                                     {% endfor %}

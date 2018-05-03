@@ -59,7 +59,19 @@ class Project(models.Model):
     urgency = models.CharField(max_length=4, choices=PRIORITY_VALUES, null=True)
     importance = models.CharField(max_length=4, choices=PRIORITY_VALUES, null=True)
 
+    STATE_VALUES = (
+        ('1', 'Planned'),
+        ('2', 'Ongoing'),
+        ('3', 'Finished'),
+        ('4', 'Interrupted'),
+        ('5', 'Stopped'),
+    )
+    state = models.CharField(max_length=1, choices=STATE_VALUES, default=1)
+    progress = models.DecimalField(max_digits=3, decimal_places=2, default=0,
+                                   validators=[MaxValueValidator(1.00), MinValueValidator(0.00)])
+
     project_manager = models.ForeignKey(Employee, on_delete=models.SET_NULL, null=True)
+
     def __str__(self):
         return self.project_name
 
@@ -73,18 +85,6 @@ class Project(models.Model):
 
     def get_absolute_url(self):
         return reverse('dp:project_detail', kwargs={'project_id': self.pk})
-
-class ProjectState(models.Model):
-    project = models.OneToOneField(Project, on_delete=models.CASCADE)
-    STATE_VALUES = (
-        ('1', 'Planned'),
-        ('2', 'Ongoing'),
-        ('3', 'Finished'),
-        ('4', 'Interrupted'),
-        ('5', 'Stopped'),
-    )
-    state = models.CharField(max_length=1, choices=STATE_VALUES, default=1)
-    progress = models.DecimalField(max_digits=3, decimal_places=2, null=True, blank=True, validators=[MaxValueValidator(1.00), MinValueValidator(0.00)])
 
 class ProjectMember(models.Model):
     class Meta:
@@ -121,6 +121,15 @@ class Task(models.Model):
     pub_date = models.DateTimeField(auto_now_add=True)
     final_manhours = models.DecimalField(max_digits=15, decimal_places=2, null=True, blank=True)
 
+    STATE_VALUES = (
+        ('1', 'Planned'),
+        ('2', 'Ongoing'),
+        ('3', 'Finished'),
+        ('4', 'Interrupted')
+    )
+    state = models.CharField(max_length=1, choices=STATE_VALUES, default=1)
+    progress = models.DecimalField(max_digits=3, decimal_places=2, default=0, validators=[MaxValueValidator(1.00), MinValueValidator(0.00)])
+
     @classmethod
     def create(cls, name, description, project_id):
         task = cls(in_project=project_id)
@@ -131,16 +140,6 @@ class Task(models.Model):
     def get_absolute_url(self):
         return reverse('dp:project_detail', kwargs={'project_id': self.in_project.id})
 
-class TaskState(models.Model):
-    task = models.OneToOneField(Task, on_delete=models.CASCADE)
-    STATE_VALUES = (
-        ('1', 'Planned'),
-        ('2', 'Ongoing'),
-        ('3', 'Finished'),
-        ('4', 'Interrupted')
-    )
-    state = models.CharField(max_length=1, choices=STATE_VALUES, default=1)
-    progress = models.DecimalField(max_digits=3, decimal_places=2, null=True, blank=True, validators=[MaxValueValidator(1.00), MinValueValidator(0.00)])
 
 class AssignedTask(models.Model):
     class Meta:

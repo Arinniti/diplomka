@@ -1,31 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2231d7ed-1c45-4d21-9195-70a8a53dd2f2" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dp/migrations/0026_auto_20180417_2304.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dp/migrations/0027_auto_20180418_2029.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dp/migrations/0028_auto_20180418_2037.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dp/migrations/0029_auto_20180418_2324.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dp/migrations/0030_auto_20180420_0017.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dp/migrations/0031_auto_20180420_0019.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dp/migrations/0032_portfolio_description.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dp/migrations/0033_auto_20180422_2122.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dp/migrations/0034_auto_20180422_2201.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dp/migrations/0035_auto_20180422_2217.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/templates/dp/portfolio_update_form.html" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/templates/dp/project_update_form.html" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/templates/dp/task_update_form.html" />
-      <change beforePath="$PROJECT_DIR$/.idea/diplomka.iml" afterPath="$PROJECT_DIR$/.idea/diplomka.iml" />
+    <list default="true" id="2231d7ed-1c45-4d21-9195-70a8a53dd2f2" name="Default" comment="commit">
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/dataSources/1cde3ea4-660f-43f7-aee4-359678a3b32f.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dp/migrations/0040_auto_20180503_1227.py" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/dp/migrations/0041_auto_20180503_1234.py" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
       <change beforePath="$PROJECT_DIR$/dp/admin.py" afterPath="$PROJECT_DIR$/dp/admin.py" />
-      <change beforePath="$PROJECT_DIR$/dp/forms.py" afterPath="$PROJECT_DIR$/dp/forms.py" />
       <change beforePath="$PROJECT_DIR$/dp/models.py" afterPath="$PROJECT_DIR$/dp/models.py" />
-      <change beforePath="$PROJECT_DIR$/dp/urls.py" afterPath="$PROJECT_DIR$/dp/urls.py" />
       <change beforePath="$PROJECT_DIR$/dp/views.py" afterPath="$PROJECT_DIR$/dp/views.py" />
       <change beforePath="$PROJECT_DIR$/templates/dp/employee_detail.html" afterPath="$PROJECT_DIR$/templates/dp/employee_detail.html" />
       <change beforePath="$PROJECT_DIR$/templates/dp/index.html" afterPath="$PROJECT_DIR$/templates/dp/index.html" />
-      <change beforePath="$PROJECT_DIR$/templates/dp/new_task.html" afterPath="$PROJECT_DIR$/templates/dp/new_task.html" />
       <change beforePath="$PROJECT_DIR$/templates/dp/portfolio_detail.html" afterPath="$PROJECT_DIR$/templates/dp/portfolio_detail.html" />
       <change beforePath="$PROJECT_DIR$/templates/dp/project_detail.html" afterPath="$PROJECT_DIR$/templates/dp/project_detail.html" />
     </list>
@@ -75,11 +61,9 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dp/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2325">
-              <caret line="148" column="21" lean-forward="false" selection-start-line="148" selection-start-column="21" selection-end-line="148" selection-end-column="21" />
-              <folding>
-                <element signature="e#0#44#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="221">
+              <caret line="51" column="73" lean-forward="false" selection-start-line="51" selection-start-column="73" selection-end-line="51" selection-end-column="73" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -87,28 +71,18 @@
       <file leaf-file-name="project_detail.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/templates/dp/project_detail.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-372">
-              <caret line="185" column="97" lean-forward="false" selection-start-line="185" selection-start-column="97" selection-end-line="185" selection-end-column="97" />
+            <state relative-caret-position="-357">
+              <caret line="174" column="54" lean-forward="false" selection-start-line="174" selection-start-column="54" selection-end-line="174" selection-end-column="54" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="project_update_form.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/dp/project_update_form.html">
+      <file leaf-file-name="employee_detail.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/dp/employee_detail.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dp/models.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="176">
-              <caret line="164" column="65" lean-forward="false" selection-start-line="164" selection-start-column="65" selection-end-line="164" selection-end-column="65" />
+            <state relative-caret-position="2550">
+              <caret line="186" column="54" lean-forward="false" selection-start-line="186" selection-start-column="54" selection-end-line="186" selection-end-column="54" />
               <folding />
             </state>
           </provider>
@@ -119,6 +93,16 @@
           <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
             <state>
               <filtering enabled="true" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dp/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="170">
+              <caret line="69" column="77" lean-forward="false" selection-start-line="69" selection-start-column="77" selection-end-line="69" selection-end-column="77" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -161,26 +145,26 @@
         <option value="$PROJECT_DIR$/templates/dp/detail.html" />
         <option value="$PROJECT_DIR$/templates/dp/user_detail.html" />
         <option value="$PROJECT_DIR$/dp/static/dp/index.css" />
-        <option value="$PROJECT_DIR$/diplomka/settings.py" />
         <option value="$PROJECT_DIR$/diplomka/urls.py" />
-        <option value="$PROJECT_DIR$/dp/static/dp/css/index.css" />
         <option value="$PROJECT_DIR$/templates/dp/authentication.html" />
         <option value="$PROJECT_DIR$/templates/dp/new_project.html" />
-        <option value="$PROJECT_DIR$/templates/dp/base.html" />
         <option value="$PROJECT_DIR$/templates/dp/new_task.html" />
-        <option value="$PROJECT_DIR$/templates/dp/employee_detail.html" />
-        <option value="$PROJECT_DIR$/templates/dp/index.html" />
         <option value="$PROJECT_DIR$/templates/dp/project_update.html" />
-        <option value="$PROJECT_DIR$/dp/forms.py" />
         <option value="$PROJECT_DIR$/templates/dp/tast_update_form.html" />
         <option value="$PROJECT_DIR$/templates/dp/project_update_form.html" />
         <option value="$PROJECT_DIR$/templates/dp/portfolio_update_form.html" />
+        <option value="$PROJECT_DIR$/diplomka/settings.py" />
+        <option value="$PROJECT_DIR$/dp/static/dp/css/index.css" />
         <option value="$PROJECT_DIR$/dp/urls.py" />
-        <option value="$PROJECT_DIR$/dp/views.py" />
-        <option value="$PROJECT_DIR$/templates/dp/portfolio_detail.html" />
-        <option value="$PROJECT_DIR$/templates/dp/project_detail.html" />
+        <option value="$PROJECT_DIR$/dp/forms.py" />
+        <option value="$PROJECT_DIR$/templates/dp/base.html" />
         <option value="$PROJECT_DIR$/dp/admin.py" />
+        <option value="$PROJECT_DIR$/templates/dp/index.html" />
+        <option value="$PROJECT_DIR$/templates/dp/portfolio_detail.html" />
+        <option value="$PROJECT_DIR$/templates/dp/employee_detail.html" />
         <option value="$PROJECT_DIR$/dp/models.py" />
+        <option value="$PROJECT_DIR$/dp/views.py" />
+        <option value="$PROJECT_DIR$/templates/dp/project_detail.html" />
       </list>
     </option>
   </component>
@@ -191,8 +175,7 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-55" />
-    <option name="y" value="-16" />
+    <option name="x" value="-8" />
     <option name="width" value="1346" />
     <option name="height" value="685" />
   </component>
@@ -222,7 +205,33 @@
             <path>
               <item name="diplomka" type="b2602c69:ProjectViewProjectNode" />
               <item name="diplomka" type="462c0819:PsiDirectoryNode" />
+              <item name="diplomka" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="diplomka" type="b2602c69:ProjectViewProjectNode" />
+              <item name="diplomka" type="462c0819:PsiDirectoryNode" />
               <item name="dp" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="diplomka" type="b2602c69:ProjectViewProjectNode" />
+              <item name="diplomka" type="462c0819:PsiDirectoryNode" />
+              <item name="dp" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="diplomka" type="b2602c69:ProjectViewProjectNode" />
+              <item name="diplomka" type="462c0819:PsiDirectoryNode" />
+              <item name="dp" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="dp" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="diplomka" type="b2602c69:ProjectViewProjectNode" />
+              <item name="diplomka" type="462c0819:PsiDirectoryNode" />
+              <item name="dp" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="dp" type="462c0819:PsiDirectoryNode" />
+              <item name="css" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="diplomka" type="b2602c69:ProjectViewProjectNode" />
@@ -239,8 +248,8 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scratches" />
       <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -358,7 +367,28 @@
       <option name="project" value="LOCAL" />
       <updated>1523829746229</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="commit">
+      <created>1524429330716</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1524429330716</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Update model - salary etc. Project, EMployee update">
+      <created>1525045003058</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1525045003058</updated>
+    </task>
+    <task id="LOCAL-00006" summary="commit">
+      <created>1525288656972</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1525288656972</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -369,12 +399,12 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.66456693" sideWeight="0.3623719" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2031496" sideWeight="0.46778917" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19685039" sideWeight="0.46778917" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="manage.py@diplomka" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31181103" sideWeight="0.4941435" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="manage.py@diplomka" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31181103" sideWeight="0.4941435" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15885799" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16837482" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17057101" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="SciView" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
@@ -396,21 +426,16 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="initial commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="initial commit" />
+    <MESSAGE value="Update model - salary etc. Project, EMployee update" />
+    <MESSAGE value="commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="commit" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/dp/views.py</url>
-          <line>37</line>
-          <option name="timeStamp" value="56" />
-        </line-breakpoint>
-      </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="58" />
+      <option name="time" value="68" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="Python.DjangoServer">
@@ -421,55 +446,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/Desktop/Table_Highlight_Vertical_Horizontal/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="11577">
-          <caret line="681" column="7" lean-forward="true" selection-start-line="681" selection-start-column="7" selection-end-line="681" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/1cde3ea4-660f-43f7-aee4-359678a3b32f/console.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Desktop/Table_Highlight_Vertical_Horizontal/css/main.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="96" column="1" lean-forward="false" selection-start-line="96" selection-start-column="1" selection-end-line="96" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Program Files/Python37/Lib/site-packages/django/template/loader_tags.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="228" column="0" lean-forward="false" selection-start-line="228" selection-start-column="0" selection-end-line="228" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/diplomka/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/diplomka/wsgi.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dp/static/dp/css/bootstrap.min.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-408">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dp/apps.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -485,27 +461,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/diplomka/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="122" column="11" lean-forward="false" selection-start-line="122" selection-start-column="11" selection-end-line="122" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="das://table:/a5e2eef7/1cde3ea4-660f-43f7-aee4-359678a3b32f/main.dp_projectmember" />
     <entry file="file://C:/Program Files/Python37/Lib/site-packages/django/urls/resolvers.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1506">
           <caret line="631" column="0" lean-forward="false" selection-start-line="631" selection-start-column="0" selection-end-line="631" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dp/static/dp/css/index.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="110" column="0" lean-forward="false" selection-start-line="110" selection-start-column="0" selection-end-line="110" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -570,33 +531,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://C:/Program Files/Python37/Lib/site-packages/django/db/models/manager.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="81" column="0" lean-forward="false" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Program Files/Python37/Lib/site-packages/django/core/handlers/base.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="370">
-          <caret line="125" column="0" lean-forward="false" selection-start-line="125" selection-start-column="0" selection-end-line="125" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/dp/new_project.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="10" column="18" lean-forward="true" selection-start-line="10" selection-start-column="18" selection-end-line="10" selection-end-column="18" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://table:/7ca40007/1cde3ea4-660f-43f7-aee4-359678a3b32f/main.dp_portfolio">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
         </state>
       </provider>
     </entry>
@@ -607,89 +546,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="das://table:/7ca40007/1cde3ea4-660f-43f7-aee4-359678a3b32f/main.dp_assignedtask">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://table:/7ca40007/1cde3ea4-660f-43f7-aee4-359678a3b32f/main.dp_employee">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://table:/7ca40007/1cde3ea4-660f-43f7-aee4-359678a3b32f/main.dp_projectmember">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/dp/base.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="14" column="16" lean-forward="false" selection-start-line="14" selection-start-column="16" selection-end-line="14" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/dp/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="38" column="41" lean-forward="true" selection-start-line="38" selection-start-column="41" selection-end-line="38" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/dp/employee_detail.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="88" column="89" lean-forward="true" selection-start-line="88" selection-start-column="23" selection-end-line="88" selection-end-column="89" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/dp/authentication.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://table:/7ca40007/1cde3ea4-660f-43f7-aee4-359678a3b32f/main.dp_project">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dp/forms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="20" lean-forward="false" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/dp/task_update_form.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dp/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="21" column="93" lean-forward="false" selection-start-line="21" selection-start-column="93" selection-end-line="21" selection-end-column="93" />
-          <folding>
-            <element signature="e#0#37#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -709,20 +570,188 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dp/admin.py">
+    <entry file="file://$PROJECT_DIR$/templates/dp/project_update_form.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="20" lean-forward="false" selection-start-line="15" selection-start-column="20" selection-end-line="15" selection-end-column="20" />
-          <folding>
-            <element signature="e#0#32#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="170">
+          <caret line="10" column="0" lean-forward="true" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dp/models.py">
+    <entry file="das://table:/7ca40007/1cde3ea4-660f-43f7-aee4-359678a3b32f/main.dp_projectnotes">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://table:/7ca40007/1cde3ea4-660f-43f7-aee4-359678a3b32f/main.dp_costumer">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Program Files/Python37/Lib/site-packages/django/db/models/manager.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="164" column="65" lean-forward="false" selection-start-line="164" selection-start-column="65" selection-end-line="164" selection-end-column="65" />
+        <state relative-caret-position="117">
+          <caret line="176" column="0" lean-forward="false" selection-start-line="176" selection-start-column="0" selection-end-line="176" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/diplomka/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="126" column="25" lean-forward="false" selection-start-line="126" selection-start-column="25" selection-end-line="126" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Program Files/Python37/Lib/site-packages/django/core/handlers/base.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="109">
+          <caret line="125" column="0" lean-forward="false" selection-start-line="125" selection-start-column="0" selection-end-line="125" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dp/static/dp/css/index.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="159">
+          <caret line="54" column="31" lean-forward="false" selection-start-line="54" selection-start-column="31" selection-end-line="54" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://table:/7ca40007/1cde3ea4-660f-43f7-aee4-359678a3b32f/main.dp_portfolio">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://table:/7ca40007/1cde3ea4-660f-43f7-aee4-359678a3b32f/main.dp_projectmember">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dp/forms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" column="19" lean-forward="false" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://table:/7ca40007/1cde3ea4-660f-43f7-aee4-359678a3b32f/main.dp_memberability">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/dp/authentication.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/dp/base.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="23" column="12" lean-forward="false" selection-start-line="23" selection-start-column="12" selection-end-line="23" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://table:/7ca40007/1cde3ea4-660f-43f7-aee4-359678a3b32f/main.dp_taskstate">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://table:/7ca40007/1cde3ea4-660f-43f7-aee4-359678a3b32f/main.dp_projectstate">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://table:/7ca40007/1cde3ea4-660f-43f7-aee4-359678a3b32f/main.dp_risk">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://table:/7ca40007/1cde3ea4-660f-43f7-aee4-359678a3b32f/main.dp_projectrisk">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://table:/7ca40007/1cde3ea4-660f-43f7-aee4-359678a3b32f/main.dp_employee">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://table:/7ca40007/1cde3ea4-660f-43f7-aee4-359678a3b32f/main.dp_assignedtask">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dp/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="21" column="111" lean-forward="false" selection-start-line="21" selection-start-column="111" selection-end-line="21" selection-end-column="111" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dp/admin.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="24" lean-forward="false" selection-start-line="2" selection-start-column="24" selection-end-line="2" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://table:/7ca40007/1cde3ea4-660f-43f7-aee4-359678a3b32f/main.dp_project">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/dp/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1396">
+          <caret line="216" column="72" lean-forward="false" selection-start-line="216" selection-start-column="72" selection-end-line="216" selection-end-column="72" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/dp/portfolio_detail.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="94" column="72" lean-forward="false" selection-start-line="94" selection-start-column="72" selection-end-line="94" selection-end-column="72" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/dp/employee_detail.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2550">
+          <caret line="186" column="54" lean-forward="false" selection-start-line="186" selection-start-column="54" selection-end-line="186" selection-end-column="54" />
           <folding />
         </state>
       </provider>
@@ -734,36 +763,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/dp/project_update_form.html">
+    <entry file="file://$PROJECT_DIR$/dp/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/dp/portfolio_detail.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-698">
-          <caret line="55" column="81" lean-forward="false" selection-start-line="55" selection-start-column="81" selection-end-line="55" selection-end-column="81" />
+        <state relative-caret-position="170">
+          <caret line="69" column="77" lean-forward="false" selection-start-line="69" selection-start-column="77" selection-end-line="69" selection-end-column="77" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/dp/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2325">
-          <caret line="148" column="21" lean-forward="false" selection-start-line="148" selection-start-column="21" selection-end-line="148" selection-end-column="21" />
-          <folding>
-            <element signature="e#0#44#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="221">
+          <caret line="51" column="73" lean-forward="false" selection-start-line="51" selection-start-column="73" selection-end-line="51" selection-end-column="73" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/dp/project_detail.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-372">
-          <caret line="185" column="97" lean-forward="false" selection-start-line="185" selection-start-column="97" selection-end-line="185" selection-end-column="97" />
+        <state relative-caret-position="-357">
+          <caret line="174" column="54" lean-forward="false" selection-start-line="174" selection-start-column="54" selection-end-line="174" selection-end-column="54" />
           <folding />
         </state>
       </provider>
