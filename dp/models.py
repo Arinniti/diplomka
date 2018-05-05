@@ -1,3 +1,5 @@
+import decimal
+
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
@@ -36,6 +38,7 @@ class Project(models.Model):
     used_budget = models.DecimalField(max_digits=15, decimal_places=2, default=0)
     manhours = models.DecimalField(max_digits=15, decimal_places=0, null=True, blank=True)
     pub_date = models.DateTimeField(auto_now_add=True)
+    start_date = models.DateTimeField('date of start', null=True, blank=True)
     deadline = models.DateTimeField('date of deadline', null=True, blank=True)
 
     COMPLEXITY_VALUES = (
@@ -79,12 +82,18 @@ class Project(models.Model):
     def create(cls, name, description, risk, portfolio_id):
         project = cls(project_name=name)
         project.description = description
-        project.risk = risk
         project.portfolio_id = portfolio_id
         return project
 
     def get_absolute_url(self):
         return reverse('dp:project_detail', kwargs={'project_id': self.pk})
+
+    def risk(self):
+        project_risk = 0
+        for risk in self.projectrisk_set.all():
+            project_risk += (decimal.Decimal(risk.probability) * decimal.Decimal(risk.risk_impact))
+        project_risk = "Not set" if project_risk == 0 else project_risk / len(self.projectrisk_set.all())
+        return project_risk
 
 class ProjectMember(models.Model):
     class Meta:
@@ -175,14 +184,13 @@ class ProjectNotes(models.Model):
 class Risk (models.Model):
     name = models.CharField(max_length=50, null=True)
     description = models.CharField(max_length=200, null=True)
+    consequence = models.CharField(max_length=200, null=True)
 
 class ProjectRisk (models.Model):
     class Meta:
         unique_together = (('project', 'risk'),)
     project = models.ForeignKey(Project, on_delete=models.CASCADE, blank=True, null=True)
     risk = models.ForeignKey(Risk, on_delete=models.CASCADE)
-    probability = models.DecimalField(max_digits=3, decimal_places=2, null=True, blank=True, validators=[MaxValueValidator(1.00), MinValueValidator(0.00)])
-    risk_appetite = models.DecimalField(max_digits=3, decimal_places=2, null=True, blank=True, validators=[MaxValueValidator(1.00), MinValueValidator(0.00)])
 
     RIST_STATE_VALUES = (
         ('0', 'Can happen'),
@@ -199,9 +207,18 @@ class ProjectRisk (models.Model):
     risk_has_impact_on = models.CharField(max_length=1, choices=RISK_IMPACT_TYPE_VALUES, null=True)
 
     RISK_IMPACT_VALUES = (
-        ('0.25', 'Small'),
-        ('0.50', 'Medium'),
-        ('0.75', 'Large'),
+        ('1', 'Insignificant'),
+        ('2', 'Minor'),
+        ('3', 'Important'),
+        ('4', 'Catastrophic'),
     )
-    risk_impact = models.CharField(max_length=4, choices=RISK_IMPACT_VALUES, null=True)
+    risk_impact = models.CharField(max_length=1, choices=RISK_IMPACT_VALUES, null=True)
+
+    RISK_PROBABILITY_VALUES = (
+        ('1', 'Low'),
+        ('2', 'Moderate'),
+        ('3', 'High'),
+        ('4', 'Very high'),
+    )
+    probability = models.CharField(max_length=1, choices=RISK_PROBABILITY_VALUES, null=True)
 

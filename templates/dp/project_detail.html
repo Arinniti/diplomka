@@ -27,6 +27,7 @@
                                 <th class="column100 column1" data-column="column1">Plan budget</th>
                                 <th class="column100 column2" data-column="column2">Used budget</th>
                                 <th class="column100 column3" data-column="column3">Usable budget</th>
+                                <th class="column100 column9" data-column="column9">Risk (1-16)</th>
 
                                 {% if user.is_superuser or user.employee.id == project.project_manager.id or user.employee.id == project.portfolio.portfolio_manager.id or project.portfolio is Null and user.employee.position == 'manager' %}
                                     <th class="column100 column4" data-column="column3">Edit project</th>
@@ -67,7 +68,9 @@
                                     <td class="column100 column4" data-column="column4">
                                         {{ useable_budget }}
                                     </td>
-
+                                    <td class="column100 column4" data-column="column4">
+                                        {{ project_risk }}
+                                    </td>
                                     {% if user.is_superuser or user.employee.id == project.project_manager.id or user.employee.id == project.portfolio.portfolio_manager.id or project.portfolio is Null and user.employee.position == 'manager' %}
                                         <td class="column100 column9" data-column="column9">
                                             <a href="{% url 'dp:project_edit' project.id %}"> edit </a>
@@ -81,44 +84,65 @@
 
                     </table>
                     <br>
-                    <table data-vertable="ver1">
-                        <thead>
-                        <tr class="row100 head">
+                    {% if project.projectrisk_set.all %}
+                        <table data-vertable="ver1">
+                            <thead>
+                            <tr class="row100 head">
 
-                            <th class="column100 column6" data-column="column6">Importance</th>
-                            <th class="column100 column7" data-column="column7">Urgency</th>
-                            <th class="column100 column8" data-column="column8">Risk</th>
+                                <th class="column100 column6" data-column="column6">Name</th>
+                            <th class="column100 column8" data-column="column8">Description</th>
+                                <th class="column100 column7" data-column="column7">Probability</th>
+                                <th class="column100 column8" data-column="column8">Impact</th>
+                                <th class="column100 column8" data-column="column8">Has impact on</th>
+                                <th class="column100 column8" data-column="column8">State</th>
 
 
-                            {% if user.is_superuser or user.employee.id == project.project_manager.id or user.employee.id == project.portfolio.portfolio_manager.id or project.portfolio is Null and user.employee.position == 'manager' %}
-                                <th class="column100 column6" data-column="column6">Edit project</th>
-                            {% endif %}
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <ul>
-                            <tr class="row100">
-                                <td class="column100 column6" data-column="column6">
-                                    {{ project.get_importance_display }}
-                                </td>
-                                <td class="column100 column7" data-column="column7">
-                                    {{ project.get_urgency_display }}
-                                </td>
-                                <td class="column100 column8" data-column="column8">
-                                    {{ project.projectrisk.risk.name }}
-                                </td>
                                 {% if user.is_superuser or user.employee.id == project.project_manager.id or user.employee.id == project.portfolio.portfolio_manager.id or project.portfolio is Null and user.employee.position == 'manager' %}
-                                    <td class="column100 column6" data-column="column6">
-                                        <a href="{% url 'dp:project_edit' project.id %}"> edit </a>
-                                    </td>
+                                    <th class="column100 column6" data-column="column6">Edit Risk</th>
                                 {% endif %}
                             </tr>
-                        </ul>
+                            </thead>
+                            <tbody>
+                            <ul>
+                                {% for pr_risk in project.projectrisk_set.all %}
+                                    <tr class="row100">
+                                        <td class="column100 column6" data-column="column6">
+                                            {{ pr_risk.risk.name }}
+                                        </td>
+                                        <td class="column100 column7" data-column="column7">
+                                            {{ pr_risk.risk.description }}
+                                        </td>
+                                        <td class="column100 column8" data-column="column8">
+                                            {{ pr_risk.get_probability_display }}
+                                        </td>
+                                    <td class="column100 column8" data-column="column8">
+                                            {{ pr_risk.get_risk_impact_display }}
+                                        </td>
+                                    <td class="column100 column8" data-column="column8">
+                                            {{ pr_risk.get_risk_has_impact_on_display }}
+                                        </td>
+                                    <td class="column100 column8" data-column="column8">
+                                            {{ pr_risk.get_risk_state_display }}
+                                        </td>
 
-                        </tbody>
+                                        {% if user.is_superuser or user.employee.id == project.project_manager.id or user.employee.id == project.portfolio.portfolio_manager.id or project.portfolio is Null and user.employee.position == 'manager' %}
+                                            <td class="column100 column6" data-column="column6">
+                                                <a href="{% url 'dp:project_edit' project.id %}"> edit </a>
+                                            </td>
+                                        {% endif %}
+                                    </tr>
+                                {% endfor %}
 
-                    </table>
-                    <br>
+
+                            </ul>
+
+                            </tbody>
+
+                        </table>
+                        <br>
+                    {% endif %}
+
+
                     {% if project.projectmember_set.all %}
                         Project team:
                         <table data-vertable="ver1">

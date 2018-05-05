@@ -4,11 +4,12 @@ from django.views.generic.edit import UpdateView
 from django.shortcuts import get_object_or_404, render, reverse, redirect
 from .models import Portfolio, Project, Employee, ProjectMember, Task, AssignedTask, MemberAbility
 from django.contrib.auth import authenticate, login, logout
-import datetime
+import datetime, decimal
 from .forms import LoginForm, NewProjectForm, NewTaskForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
+RISK_APETTITE = 15
 
 class IndexView(generic.ListView):
     template_name = 'dp/index.html'
@@ -39,10 +40,19 @@ def index(request):
 @login_required
 def portfolio_detail(request, portfolio_id):
     portfolio = get_object_or_404(Portfolio, pk=portfolio_id)
+    more_projects = portfolio.project_set.count
     return render(request, 'dp/portfolio_detail.html',
-                  {'portfolio': portfolio,
+                  {'portfolio': portfolio, 'more_projects': more_projects,
                    'error_message': "You didn't select a choice."})
 
+
+def calculate_project_risk(project_id):
+    project = get_object_or_404(Project, pk=project_id)
+    project_risk = 0
+    for risk in project.projectrisk_set.all():
+        project_risk += (decimal.Decimal(risk.probability) * decimal.Decimal(risk.risk_impact))
+    project_risk = "Not set" if project_risk == 0 else project_risk / len(project.projectrisk_set.all())
+    return project_risk
 
 @login_required
 def project_detail(request, project_id):
@@ -50,13 +60,14 @@ def project_detail(request, project_id):
     is_member = len(request.user.employee.projectmember_set.filter(project_id=project_id)) > 0
     # finished_tasks = Task.objects.get(in_project=project_id, state__in=['3', '4'])
     finished_tasks = Task.objects.filter(in_project=project_id, state='3').all()
+    project_risk = calculate_project_risk(project_id)
     useable_budget = None
     if  project.plan_budget is not None:
         useable_budget = project.plan_budget - project.used_budget
 
     return render(request, 'dp/project_detail.html',
                   {'project': project, 'is_member': is_member, 'useable_budget': useable_budget,
-                   'finished_tasks': finished_tasks, 'error_message': "You didn't select a choice."})
+                   'finished_tasks': finished_tasks, 'project_risk': project_risk, 'error_message': "You didn't select a choice."})
 
 
 @login_required

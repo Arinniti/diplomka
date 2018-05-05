@@ -65,32 +65,40 @@
                     {% if portfolio.project_set.all %}
 
                         Projects in portfolio
+                    {% if more_projects > 10 %}
+                        <table id="example">
+                        {% else %}
+                        <table>
+                    {% endif %}
 
-                        <table data-vertable="ver1">
-                            </thead>
+                            <thead>
                             <tr class="row100 head">
                                 <th class="column100 column1" data-column="column1">Project name</th>
                                 <th class="column100 column2" data-column="column2">Description</th>
                                 <th class="column100 column3" data-column="column3">Manager</th>
-                                <th class="column100 column4" data-column="column4">State</th>
-                                <th class="column100 column5" data-column="column5">Used budget</th>
-                                <th class="column100 column6" data-column="column6">Plan budget</th>
+                                {% if user.is_superuser or user.employee.id == portfolio.portfolio_manager_id %}
+                                    <th class="column100 column4" data-column="column4">State</th>
+                                    <th class="column100 column5" data-column="column5">Used budget</th>
+                                    <th class="column100 column6" data-column="column6">Plan budget</th>
+                                    <th class="column100 column7" data-column="column7">Risk</th>
+                                {% endif %}
                             </tr>
                             </thead>
                             <tbody>
 
-                            <ul>
-                                {% for project in portfolio.project_set.all %}
-                                    <tr class="row100">
-                                        <td class="column100 column1" data-column="column1">
-                                            <a href="{% url 'dp:project_detail' project.id %}">{{ project.project_name }}</a>
-                                        </td>
-                                        <td class="column100 column2" data-column="column2">
-                                            {{ project.description }}
-                                        </td>
-                                        <td class="column100 column3" data-column="column3">
-                                            <a href="{% url 'dp:employee_detail' project.project_manager.id %}"> {{ portfolio.portfolio_manager.user.first_name }} {{ project.project_manager.user.last_name }}</a>
-                                        </td>
+
+                            {% for project in portfolio.project_set.all %}
+                                <tr class="row100">
+                                    <td class="column100 column1" data-column="column1">
+                                        <a href="{% url 'dp:project_detail' project.id %}">{{ project.project_name }}</a>
+                                    </td>
+                                    <td class="column100 column2" data-column="column2">
+                                        {{ project.description }}
+                                    </td>
+                                    <td class="column100 column3" data-column="column3">
+                                        <a href="{% url 'dp:employee_detail' project.project_manager.id %}"> {{ portfolio.portfolio_manager.user.first_name }} {{ project.project_manager.user.last_name }}</a>
+                                    </td>
+                                    {% if user.is_superuser or user.employee.id == portfolio.portfolio_manager_id %}
                                         <td class="column100 column4" data-column="column4">
                                             {{ project.get_state_display }}
                                         </td>
@@ -100,39 +108,45 @@
                                         <td class="column100 column6" data-column="column6">
                                             {{ project.plan_budget }}
                                         </td>
-                                    </tr>
-                                {% endfor %}
-                            </ul>
+                                        <td class="column100 column7" data-column="column7">
+                                            {{ project.risk }}
+                                        </td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+
                             </tbody>
 
                         </table>
 
                         <br>
-                        Analytická tabulka nákladů samostatných projektů
-                        <table data-vertable="ver1">
-                            <thead>
-                            <tr class="row100 head">
-                                <th class="column100 column1" data-column="column1">Project</th>
-                                <th class="column100 column2" data-column="column2">Reality</th>
-                                <th class="column100 column3" data-column="column3">Plan</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for project in portfolio.project_set.all %}
-                                <tr class="row100">
-                                    <td class="column100 column1" data-column="column1">
-                                        <a href="{% url 'dp:project_detail' project.id %}"> {{ project.project_name }} </a>
-                                    </td>
-                                    <td class="column100 column2" data-column="column2">
-                                        {{ project.used_budget }}
-                                    </td>
-                                    <td class="column100 column3" data-column="column3">
-                                        {{ project.plan_budget }}
-                                    </td>
+                        {% if user.is_superuser or user.employee.id == portfolio.portfolio_manager_id %}
+                            Analytická tabulka nákladů samostatných projektů
+                            <table data-vertable="ver1">
+                                <thead>
+                                <tr class="row100 head">
+                                    <th class="column100 column1" data-column="column1">Project</th>
+                                    <th class="column100 column2" data-column="column2">Reality</th>
+                                    <th class="column100 column3" data-column="column3">Plan</th>
                                 </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                {% for project in portfolio.project_set.all %}
+                                    <tr class="row100">
+                                        <td class="column100 column1" data-column="column1">
+                                            <a href="{% url 'dp:project_detail' project.id %}"> {{ project.project_name }} </a>
+                                        </td>
+                                        <td class="column100 column2" data-column="column2">
+                                            {{ project.used_budget }}
+                                        </td>
+                                        <td class="column100 column3" data-column="column3">
+                                            {{ project.plan_budget }}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        {% endif %}
                     {% endif %}
                 </div>
             </div>
@@ -140,3 +154,11 @@
     </div>
 {% endblock content %}
 
+{% block javascript %}
+    <script>
+
+        $(document).ready(function () {
+            $('#example').DataTable();
+        });
+    </script>
+{% endblock %}

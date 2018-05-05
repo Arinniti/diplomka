@@ -121,7 +121,7 @@
                         <br>
                         <br>
                         All employees
-                        <table data-vertable="ver1">
+                        <table id="example" data-vertable="ver1">
                             <thead>
                             <tr class="row100 head">
                                 <th class="column100 column1" data-column="column1">Name</th>
@@ -310,5 +310,12 @@
 {% endblock %}
 
 
+{% block javascript %}
+    <script>
 
+        $(document).ready(function () {
+            $('#example').DataTable();
+        });
+    </script>
+{% endblock %}
 

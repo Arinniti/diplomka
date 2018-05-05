@@ -1,6 +1,10 @@
 {% load static %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'dp/css/bootstrap.min.css' %}"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.0/bootstrap-table.min.css" rel="stylesheet"/>
+<link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet"/>
+
+
 {% block cssblock %}{% endblock %}
 
 {% block nav %}
@@ -38,3 +42,11 @@
 {% block content %}{% endblock %}
 
 {% block nav-global %}{% endblock %}
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.0/bootstrap-table.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+
+
+
+{% block javascript %}{% endblock %}
