@@ -54,7 +54,11 @@
 
                         {% if project_tmp.portfolio is Null and project_list.all %}
                             Projects outside of portfolio
-                            <table data-vertable="ver1">
+                            {% if project_count > 10 %}
+                                <table id="example" data-vertable="ver1">
+                            {% else %}
+                                <table data-vertable="ver1">
+                            {% endif %}
                                 <thead>
                                 <tr class="row100 head">
                                     <th class="column100 column1" data-column="column1">Name</th>

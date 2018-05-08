@@ -95,8 +95,9 @@
                             <thead>
                             <tr class="row100 head">
                                 <th class="column100 column1" data-column="column1">Ability</th>
-                                <th class="column100 column2" data-column="column2">Experience</th>
+                                <th class="column100 column2" data-column="column2">Experience (1-10)</th>
                                 <th class="column100 column3" data-column="column3">Description</th>
+                                <th class="column100 column3" data-column="column3">Edit</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -112,6 +113,9 @@
                                         </td>
                                         <td class="column100 column3" data-column="column3">
                                             {{ abilitymem.ability.description }}
+                                        </td>
+                                        <td class="column100 column3" data-column="column3">
+                                            <a href="{% url 'dp:memability_edit' abilitymem.id %}"> edit </a>
                                         </td>
 
                                     </tr>

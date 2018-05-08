@@ -2,13 +2,16 @@ from django.http import HttpResponseRedirect
 from django.views import generic
 from django.views.generic.edit import UpdateView
 from django.shortcuts import get_object_or_404, render, reverse, redirect
-from .models import Portfolio, Project, Employee, ProjectMember, Task, AssignedTask, MemberAbility
+from .models import Portfolio, Project, Employee, ProjectMember, Task, AssignedTask, ProjectRisk, MemberAbility, Risk
 from django.contrib.auth import authenticate, login, logout
 import datetime, decimal
-from .forms import LoginForm, NewProjectForm, NewTaskForm
+from .forms import LoginForm, NewProjectForm, NewTaskForm, NewRiskForm, NewProjRiskForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from datetime import datetime, date
+from .analytics import EVM
 
+strategy = [1,3,6,8]
 RISK_APETTITE = 15
 
 class IndexView(generic.ListView):
@@ -25,14 +28,16 @@ class IndexView(generic.ListView):
         context['project_list'] = project_list
         return context
 
-
+@login_required
 def index(request):
     context = {
         'latest_portfolio_list': Portfolio.objects.all(),
     }
     project_list = Project.objects.filter(portfolio_id__isnull=True)
+    project_count = project_list.count()
     context['employee_list'] = Employee.objects.all()
     context['project_list'] = project_list
+    context['project_count'] = project_count
 
     return render(request, "dp/index.html", context)
 
@@ -40,34 +45,38 @@ def index(request):
 @login_required
 def portfolio_detail(request, portfolio_id):
     portfolio = get_object_or_404(Portfolio, pk=portfolio_id)
-    more_projects = portfolio.project_set.count
+    projects_count = portfolio.project_set.count
+    final_state = {}
+    for project in portfolio.project_set.all():
+        number = portfolio_optimization(project)
+        final_state[project.id] = number
     return render(request, 'dp/portfolio_detail.html',
-                  {'portfolio': portfolio, 'more_projects': more_projects,
+                  {'portfolio': portfolio, 'final_state':final_state, 'projects_count': projects_count,
                    'error_message': "You didn't select a choice."})
 
-
-def calculate_project_risk(project_id):
-    project = get_object_or_404(Project, pk=project_id)
-    project_risk = 0
-    for risk in project.projectrisk_set.all():
-        project_risk += (decimal.Decimal(risk.probability) * decimal.Decimal(risk.risk_impact))
-    project_risk = "Not set" if project_risk == 0 else project_risk / len(project.projectrisk_set.all())
-    return project_risk
+def portfolio_optimization(project):
+    is_strategic = {}
+    is_strategic_tmp = project.key_word in strategy
+    if is_strategic_tmp:
+        is_strategic[project.id] = 1
+    else:
+        is_strategic[project.id] = 0
+    number = 5
+    return number
 
 @login_required
 def project_detail(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
     is_member = len(request.user.employee.projectmember_set.filter(project_id=project_id)) > 0
-    # finished_tasks = Task.objects.get(in_project=project_id, state__in=['3', '4'])
     finished_tasks = Task.objects.filter(in_project=project_id, state='3').all()
-    project_risk = calculate_project_risk(project_id)
+    is_strategic = project.key_word in strategy
     useable_budget = None
     if  project.plan_budget is not None:
         useable_budget = project.plan_budget - project.used_budget
 
     return render(request, 'dp/project_detail.html',
-                  {'project': project, 'is_member': is_member, 'useable_budget': useable_budget,
-                   'finished_tasks': finished_tasks, 'project_risk': project_risk, 'error_message': "You didn't select a choice."})
+                  {'project': project,  'is_strategic': is_strategic, 'is_member': is_member, 'useable_budget': useable_budget,
+                   'finished_tasks': finished_tasks,  'error_message': "You didn't select a choice."})
 
 
 @login_required
@@ -120,11 +129,11 @@ def new_project_handler(request):
             description = form.cleaned_data['description']
             plan_budget = form.cleaned_data['plan_budget']
             project_manager = form.cleaned_data['project_manager']
-
+            used_budget = form.cleaned_data['used_budget']
             project = Project.objects.create(project_name=name, description=description,
-                                             plan_budget=plan_budget, project_manager=project_manager)
+                                             plan_budget=plan_budget, used_budget=used_budget, project_manager=project_manager)
             project.save()
-            # redirect
+            return redirect(reverse('dp:index'))
     else:
         form = NewProjectForm(employee_list= employees)
     return render(request, 'dp/new_project.html', {'form': form})
@@ -146,7 +155,7 @@ def new_port_project_handler(request, portfolio_id):
             project = Project.objects.create(project_name=name, description=description,
                                              pub_date=datetime.datetime.now())
             project.save()
-            # redirect
+            return redirect(reverse('dp:portfolio_detail', kwargs={"portfolio_id": portfolio_id}))
     else:
         form = NewProjectForm(employee_list =employees )
     return render(request, 'dp/new_project.html', {'form': form, "portfolio_id": portfolio_id})
@@ -172,34 +181,82 @@ def new_task_handler(request, project_id):
             name = form.cleaned_data['name']
             description = form.cleaned_data['description']
             assign_to = form.cleaned_data["employee"]
-            task = Task.objects.create(name=name, description=description, in_project=project)
+            task = Task.objects.create(name=name, description=description, in_project=project_id)
             task.save()
             for employee_assign_id in assign_to:
                 emp = Employee.objects.get(id=employee_assign_id)
                 assigned_task = AssignedTask.objects.create(assigned_to=emp, task=task)
                 assigned_task.save()
             messages.success(request, 'Form submission successful')
-            # redirect
+            return redirect(reverse('dp:project_detail', kwargs={"project_id": project_id}))
     else:
         form = NewTaskForm(employee_list=employees)
     return render(request, 'dp/new_task.html', {'form': form, "project_id": project_id})
 
 
+
+
+@login_required
+def new_risk_handler(request, project_id):
+    if request.method == 'POST':
+        form = NewRiskForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            description = form.cleaned_data['description']
+            consequence = form.cleaned_data["consequence"]
+            risk = Risk.objects.create(name=name, description=description, consequence=consequence)
+            risk.save()
+            messages.success(request, 'Form submission successful')
+            return redirect(reverse('dp:project_detail', kwargs={"project_id": project_id}))
+    else:
+        form = NewRiskForm()
+    return render(request, 'dp/new_risk.html', {'project_id': project_id, 'form': form})
+
+@login_required
+def new_proj_risk_handler(request, project_id):
+
+    available_risk_list = Risk.objects.exclude(projectrisk__project_id=project_id).all()
+    available_risk_list = [(risk.id, risk.name) for risk in available_risk_list]
+
+    if request.method == 'POST':
+        form = NewProjRiskForm(request.POST, available_risk_list = available_risk_list)
+        if form.is_valid():
+            risk = form.cleaned_data['risk']
+            risk_id = int(risk)
+            risk_state = form.cleaned_data['risk_state']
+            risk_has_impact_on = form.cleaned_data["risk_has_impact_on"]
+            risk_impact = form.cleaned_data['risk_impact']
+            probability = form.cleaned_data['probability']
+            projrisk = ProjectRisk.objects.create(risk_id = risk_id, risk_state=risk_state, risk_has_impact_on=risk_has_impact_on,
+                                              risk_impact=risk_impact, probability=probability, project_id=project_id )
+            projrisk.save()
+            messages.success(request, 'Form submission successful')
+            return redirect(reverse('dp:project_detail', kwargs={"project_id": project_id}))
+    else:
+        form = NewProjRiskForm(available_risk_list  = available_risk_list)
+    return render(request, 'dp/new_proj_risk.html', {'project_id': project_id, 'form': form, "available_risk_list":available_risk_list})
+
 class ProjectUpdateView(UpdateView):
     model = Project
-    if model.project_manager is None:
-        fields = ['project_name',  'used_budget', 'plan_budget', 'urgency', 'project_manager']
-    else:
-        fields = ['project_name', 'used_budget', 'plan_budget', 'urgency' ]
+    fields = ['progress', 'state', 'start_date', 'used_budget', 'plan_budget', 'urgency', 'importance', 'project_manager']
     template_name = "dp/project_update_form.html"
 
 class PortfolioUpdateView(UpdateView):
     model = Portfolio
-    fields = ['portfolio_name', 'description']
+    fields = ['portfolio_name', 'description', 'portfolio_manager']
     template_name = "dp/portfolio_update_form.html"
-
 
 class TaskUpdateView(UpdateView):
     model = Task
-    fields = ['name', 'description' ]
+    fields = ['name', 'description', 'state', 'progress', 'deadline', 'final_manhours' ]
     template_name = "dp/task_update_form.html"
+
+class ProjRiskUpdateView(UpdateView):
+    model = ProjectRisk
+    fields = ['risk_state', 'risk_impact', 'probability' ]
+    template_name = "dp/projrisk_update_form.html"
+
+class MemAbilityUpdateView(UpdateView):
+    model = MemberAbility
+    fields = ['ability', 'experience' ]
+    template_name = "dp/ability_update_form.html"
