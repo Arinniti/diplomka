@@ -65,12 +65,7 @@
                     {% if portfolio.project_set.all %}
 
                         Projects in portfolio
-                    {% if projects_count > 10 %}
                         <table id="example">
-                        {% else %}
-                        <table>
-                    {% endif %}
-
                             <thead>
                             <tr class="row100 head">
                                 <th class="column100 column1" data-column="column1">Project name</th>
@@ -82,6 +77,8 @@
                                     <th class="column100 column6" data-column="column6">Plan budget</th>
                                     <th class="column100 column7" data-column="column7">Risk</th>
                                     <th class="column100 column8" data-column="column8">Key word</th>
+                                    <th class="column100 column9" data-column="column9">OPT</th>
+
                                 {% endif %}
                             </tr>
                             </thead>
@@ -113,7 +110,12 @@
                                             {{ project.risk  }}
                                         </td>
                                          <td class="column100 column8" data-column="column8">
-                                            {{ project.get_key_word_display }}
+                                            {% for key_word in project.projectstrategy_set.all %}
+                                                {{ key_word.strategy.name }}<br>
+                                            {% endfor %}
+                                        </td>
+                                        <td class="column100 column9" data-column="column9">
+                                            {{ project.optimalization  }}
                                         </td>
                                     {% endif %}
                                 </tr>
@@ -160,9 +162,14 @@
 
 {% block javascript %}
     <script>
-
+    {% if user.is_superuser or user.employee.id == portfolio.portfolio_manager_id %}
         $(document).ready(function () {
-            $('#example').DataTable();
+            $('#example').DataTable(
+                {
+                    "order": [[ 8, "desc" ]]
+                }
+            );
         });
+    {% endif %}
     </script>
 {% endblock %}

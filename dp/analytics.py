@@ -1,4 +1,5 @@
 from datetime import date
+from dp.analytic_settings import *
 
 class EVM:
     def __init__(self):
@@ -42,3 +43,64 @@ class EVM:
         ins = EVM()
         ins.calculate_for_project(project_instance)
         return ins
+
+def optimization(project, org_strategy):
+    result = 0
+    result += RISK_OK_POINTS if project.risk() < RISK_APPETITE else RISK_NOT_OK_POINTS
+    result += COMPLEXITY_LOW_POINTS if project.complexity == '0' else COMPLEXITY_HIGH_POINTS
+    is_strategic = check_if_strategic(project, org_strategy)
+    result += IS_STRATEGIC_POINTS if is_strategic else ISNT_STRATEGIC_POINTS
+
+    if project.progress >= PROGRESS_HIGH:
+        result += PROGRESS_HIGH_POINTS
+    elif project.progress <= PROGRESS_MODERATE:
+        result += PROGRESS_LOW_POINTS
+    else:
+        result += PROGRESS_MODERATE_POINTS
+
+    if project.state == '2' or project.state == '4':
+        res_tmp = calculate_ongoing_proj_score(project)
+        result += res_tmp
+    return result
+
+
+def calculate_ongoing_proj_score(project):
+    result = 0
+    if project.importance == '1':
+        if project.urgency == '1':
+            result += URG_IMP_POINTS
+        else:
+            result += NOT_URG_IMP_POINTS
+    else:
+        if project.urgency == '1':
+            result += URG_NOT_IMP_POINTS
+        else:
+            result += NOT_URG_NOT_IMP_POINTS
+
+    project_evm = project.evm()
+    if project_evm.cpi > CPI_POSITIVE_HIGH:
+        result += CPI_POSITIVE_HIGH_POINTS
+    elif project_evm.cpi > CPI_POSITIVE:
+        result += CPI_POSITIVE_POINTS
+    elif project_evm.cpi > CPI_NEGATIVE:
+        result += CPI_NEGATIVE_POINTS
+    else:
+        result += CPI_NEGATIVE_HIGH_POINTS
+
+
+    return result
+
+def check_if_strategic(project, org_strategy):
+    if not project.portfolio:
+        for value in project.projectstrategy_set.all():
+            res = org_strategy.filter(strategy=value.strategy.id).all()
+            if res:
+                return True
+    else:
+        for value in project.projectstrategy_set.all():
+            res = project.portfolio.portfoliostrategy_set.filter(strategy=value.strategy.id).all()
+            if res:
+                return True
+    return False
+
+

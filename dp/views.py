@@ -2,17 +2,20 @@ from django.http import HttpResponseRedirect
 from django.views import generic
 from django.views.generic.edit import UpdateView
 from django.shortcuts import get_object_or_404, render, reverse, redirect
-from .models import Portfolio, Project, Employee, ProjectMember, Task, AssignedTask, ProjectRisk, MemberAbility, Risk
+from .models import Portfolio, Project, Employee, ProjectMember, Task, \
+    AssignedTask, ProjectRisk, MemberAbility, Risk, Ability, PortfolioStrategy, OrganizationStrategy, ProjectStrategy
 from django.contrib.auth import authenticate, login, logout
 import datetime, decimal
-from .forms import LoginForm, NewProjectForm, NewTaskForm, NewRiskForm, NewProjRiskForm
+from .forms import LoginForm, NewProjectForm, NewTaskForm, NewRiskForm, NewProjRiskForm, NewAbilityForm, NewMemAbilityForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from datetime import datetime, date
-from .analytics import EVM
+from .analytics import *
+from collections import OrderedDict
+from operator import itemgetter
 
-strategy = [1,3,6,8]
-RISK_APETTITE = 15
+
+
 
 class IndexView(generic.ListView):
     template_name = 'dp/index.html'
@@ -46,36 +49,23 @@ def index(request):
 def portfolio_detail(request, portfolio_id):
     portfolio = get_object_or_404(Portfolio, pk=portfolio_id)
     projects_count = portfolio.project_set.count
-    final_state = {}
-    for project in portfolio.project_set.all():
-        number = portfolio_optimization(project)
-        final_state[project.id] = number
     return render(request, 'dp/portfolio_detail.html',
-                  {'portfolio': portfolio, 'final_state':final_state, 'projects_count': projects_count,
+                  {'portfolio': portfolio, 'projects_count': projects_count,
                    'error_message': "You didn't select a choice."})
 
-def portfolio_optimization(project):
-    is_strategic = {}
-    is_strategic_tmp = project.key_word in strategy
-    if is_strategic_tmp:
-        is_strategic[project.id] = 1
-    else:
-        is_strategic[project.id] = 0
-    number = 5
-    return number
+
 
 @login_required
 def project_detail(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
     is_member = len(request.user.employee.projectmember_set.filter(project_id=project_id)) > 0
     finished_tasks = Task.objects.filter(in_project=project_id, state='3').all()
-    is_strategic = project.key_word in strategy
     useable_budget = None
     if  project.plan_budget is not None:
         useable_budget = project.plan_budget - project.used_budget
 
     return render(request, 'dp/project_detail.html',
-                  {'project': project,  'is_strategic': is_strategic, 'is_member': is_member, 'useable_budget': useable_budget,
+                  {'project': project, 'is_member': is_member, 'useable_budget': useable_budget,
                    'finished_tasks': finished_tasks,  'error_message': "You didn't select a choice."})
 
 
@@ -129,9 +119,14 @@ def new_project_handler(request):
             description = form.cleaned_data['description']
             plan_budget = form.cleaned_data['plan_budget']
             project_manager = form.cleaned_data['project_manager']
-            used_budget = form.cleaned_data['used_budget']
+            type = form.cleaned_data['type']
+            complexity = form.cleaned_data['complexity']
+            urgency = form.cleaned_data['description']
+            importance = form.cleaned_data['importance']
             project = Project.objects.create(project_name=name, description=description,
-                                             plan_budget=plan_budget, used_budget=used_budget, project_manager=project_manager)
+                                             plan_budget=plan_budget,
+                                             project_manager=project_manager, complexity=complexity,
+                                             urgency=urgency, importance=importance,type=type)
             project.save()
             return redirect(reverse('dp:index'))
     else:
@@ -224,17 +219,55 @@ def new_proj_risk_handler(request, project_id):
             risk = form.cleaned_data['risk']
             risk_id = int(risk)
             risk_state = form.cleaned_data['risk_state']
-            risk_has_impact_on = form.cleaned_data["risk_has_impact_on"]
             risk_impact = form.cleaned_data['risk_impact']
             probability = form.cleaned_data['probability']
-            projrisk = ProjectRisk.objects.create(risk_id = risk_id, risk_state=risk_state, risk_has_impact_on=risk_has_impact_on,
-                                              risk_impact=risk_impact, probability=probability, project_id=project_id )
+            projrisk = ProjectRisk.objects.create(risk_id = risk_id, risk_state=risk_state,
+                                                  risk_impact=risk_impact, probability=probability, project_id=project_id )
             projrisk.save()
             messages.success(request, 'Form submission successful')
             return redirect(reverse('dp:project_detail', kwargs={"project_id": project_id}))
     else:
         form = NewProjRiskForm(available_risk_list  = available_risk_list)
     return render(request, 'dp/new_proj_risk.html', {'project_id': project_id, 'form': form, "available_risk_list":available_risk_list})
+
+
+
+@login_required
+def new_ability_handler(request, employee_id):
+    if request.method == 'POST':
+        form = NewAbilityForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            description = form.cleaned_data['description']
+            ability = Ability.objects.create(name=name, description=description)
+            ability.save()
+            messages.success(request, 'Form submission successful')
+            return redirect(reverse('dp:employee_detail', kwargs={"employee_id": employee_id}))
+    else:
+        form = NewAbilityForm()
+    return render(request, 'dp/new_ability.html', {'employee_id': employee_id, 'form': form})
+
+@login_required
+def new_emp_ability_handler(request, employee_id):
+    available_ability_list = Ability.objects.exclude(memberability__member_id=employee_id).all()
+    available_ability_list = [(ability.id, ability.name) for ability in available_ability_list]
+
+    if request.method == 'POST':
+        form = NewMemAbilityForm(request.POST, available_ability_list=available_ability_list)
+        if form.is_valid():
+            ability = form.cleaned_data['ability']
+            ability_id = int(ability)
+            experience = form.cleaned_data['experience']
+            mem_ability = MemberAbility.objects.create(ability_id=ability_id, experience=experience,
+                                                  member_id=employee_id)
+            mem_ability.save()
+            messages.success(request, 'Form submission successful')
+            return redirect(reverse('dp:employee_detail', kwargs={"employee_id": employee_id}))
+    else:
+        form = NewMemAbilityForm(available_ability_list=available_ability_list)
+    return render(request, 'dp/new_mem_ability.html',
+                  {'employee_id': employee_id, 'form': form, "available_ability_list": available_ability_list})
+
 
 class ProjectUpdateView(UpdateView):
     model = Project

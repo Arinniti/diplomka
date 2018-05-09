@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Portfolio, Project, Employee, ProjectMember, Ability, MemberAbility, Task, AssignedTask, ProjectNotes, \
-    TaskNotes, Costumer, ProjectRisk, Risk
+    TaskNotes, Costumer, ProjectRisk, Risk, PortfolioStrategy, ProjectStrategy, OrganizationStrategy
 
 # Register your models here.
 admin.site.register(Employee)
@@ -13,6 +13,11 @@ admin.site.register(MemberAbility)
 admin.site.register(Task)
 admin.site.register(AssignedTask)
 admin.site.register(Risk)
+
+admin.site.register(PortfolioStrategy)
+admin.site.register(ProjectStrategy)
+admin.site.register(OrganizationStrategy)
+
 
 
 

@@ -85,9 +85,15 @@
             <div class="wrap-table100">
 
 
-                {% if employee.memberability_set.all and user.is_authenticated   and not user.employee.id == employee.id%}
+                {% if employee.memberability_set.all and user.is_authenticated   and not user.employee.id == employee.id %}
                     {% if user.is_superuser or user.employee.position == "manager" %}
+                        If ability doesn't exist :
+                        <a href="{% url 'dp:new_ability' employee.id %}">Create new ability</a>
                         <br>
+                        <br>
+
+                        <a href="{% url 'dp:new_emp_ability' employee.id %}">Add new ability to employee</a>
+
                         <br>
                         User have next abilities:
 
