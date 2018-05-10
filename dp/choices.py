@@ -10,8 +10,8 @@ TYPE_VALUES = (
     ('3', 'Mixed'),
 )
 COMPLEXITY_VALUES = (
-    ('1', 'Complicated'),
-    ('0', 'Easy'),
+    ('1', 'High'),
+    ('0', 'Low'),
 )
 
 

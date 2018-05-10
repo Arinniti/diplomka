@@ -62,29 +62,33 @@
                     </tr>
                     <tr>
                         <td>Email</td>
-
                         <td>
-                            {{ employee.user.email }}
-                            <br>
-                            <a href="mailto:info@support.com">info@support.com</a>
+                            <a href="mailto:{{ employee.user.email }}">{{ employee.user.email }}</a>
                         </td>
                     </tr>
-                    <td>Phone Number</td>
-                    <td>123-4567-890(Landline)<br><br>555-4567-890(Mobile)
-                    </td>
+                    {% if not user.employee.id == employee.id and user.is_superuser %}
 
-                    </tr>
+                        <tr>
+                            <td>Salary /hour</td>
+                            <td>
+                                {{ employee.salary }}
+                            </td>
+                        </tr>
+                    {% endif %}
 
                     </tbody>
                 </table>
+                <br>
+                <br>
             </div>
+
         </div>
     </div>
     <div class="limiter">
         <div class="container-table100">
             <div class="wrap-table100">
-
-
+                <br>
+                <br>
                 {% if employee.memberability_set.all and user.is_authenticated   and not user.employee.id == employee.id %}
                     {% if user.is_superuser or user.employee.position == "manager" %}
                         If ability doesn't exist :
@@ -97,7 +101,7 @@
                         <br>
                         User have next abilities:
 
-                        <table data-vertable="ver1">
+                        <table id="ability">
                             <thead>
                             <tr class="row100 head">
                                 <th class="column100 column1" data-column="column1">Ability</th>
@@ -107,28 +111,24 @@
                             </tr>
                             </thead>
                             <tbody>
+                            {% for abilitymem in employee.memberability_set.all %}
+                                <tr class="row100">
+                                    <td class="column100 column1" data-column="column1">
+                                        {{ abilitymem.ability.name }}
+                                    </td>
+                                    <td class="column100 column2" data-column="column2">
+                                        {{ abilitymem.experience }}
+                                    </td>
+                                    <td class="column100 column3" data-column="column3">
+                                        {{ abilitymem.ability.description }}
+                                    </td>
+                                    <td class="column100 column3" data-column="column3">
+                                        <a href="{% url 'dp:memability_edit' abilitymem.id %}"> edit </a>
+                                    </td>
 
-                            <ul>
-                                {% for abilitymem in employee.memberability_set.all %}
-                                    <tr class="row100">
-                                        <td class="column100 column1" data-column="column1">
-                                            {{ abilitymem.ability.name }}
-                                        </td>
-                                        <td class="column100 column2" data-column="column2">
-                                            {{ abilitymem.experience }}
-                                        </td>
-                                        <td class="column100 column3" data-column="column3">
-                                            {{ abilitymem.ability.description }}
-                                        </td>
-                                        <td class="column100 column3" data-column="column3">
-                                            <a href="{% url 'dp:memability_edit' abilitymem.id %}"> edit </a>
-                                        </td>
-
-                                    </tr>
-                                {% endfor %}
-                            </ul>
+                                </tr>
+                            {% endfor %}
                             </tbody>
-
                         </table>
                     {% endif %}
                 {% endif %}
@@ -289,4 +289,17 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+
+{% block javascript %}
+    <script>
+        $(document).ready(function () {
+            $('#ability').DataTable(
+                {
+                    "order": [[1, "desc"]]
+                }
+            );
+        });
+    </script>
 {% endblock %}

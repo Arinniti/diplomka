@@ -46,7 +46,9 @@ class EVM:
 
 def optimization(project, org_strategy):
     result = 0
-    result += RISK_OK_POINTS if project.risk() < RISK_APPETITE else RISK_NOT_OK_POINTS
+
+    result += RISK_OK_POINTS if project.risk(zero_if_not_set=True) < RISK_APPETITE else RISK_NOT_OK_POINTS
+
     result += COMPLEXITY_LOW_POINTS if project.complexity == '0' else COMPLEXITY_HIGH_POINTS
     is_strategic = check_if_strategic(project, org_strategy)
     result += IS_STRATEGIC_POINTS if is_strategic else ISNT_STRATEGIC_POINTS

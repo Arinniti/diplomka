@@ -52,80 +52,122 @@
                         <br>
                         <br>
 
-                        {% if project_tmp.portfolio is Null and project_list.all %}
+                        {% if project_tmp.portfolio is Null and actual_projects %}
                             Projects outside of portfolio
-                            {% if project_count > 10 %}
-                                <table id="example" data-vertable="ver1">
-                            {% else %}
-                                <table data-vertable="ver1">
-                            {% endif %}
+                            <table id="projects_outside_a">
                                 <thead>
                                 <tr class="row100 head">
                                     <th class="column100 column1" data-column="column1">Name</th>
                                     <th class="column100 column2" data-column="column2">Description</th>
                                     <th class="column100 column3" data-column="column3">Manager</th>
-
+                                    <th class="column100 column4" data-column="column4">State</th>
+                                    <th class="column100 column5" data-column="column5">Used budget</th>
+                                    <th class="column100 column6" data-column="column6">Plan budget</th>
+                                    <th class="column100 column7" data-column="column7">Risk</th>
+                                    <th class="column100 column8" data-column="column8">Key word</th>
+                                    <th class="column100 column9" data-column="column9">Analysis value</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-
-                                <ul>
-                                    {% for project_tmp in project_list %}
-
-                                        <tr class="row100">
-                                            <td class="column100 column1" data-column="column1">
-                                                <a href="{% url 'dp:project_detail' project_tmp.id %}">{{ project_tmp.project_name }}</a>
-                                            </td>
-                                            <td class="column100 column2" data-column="column2">
-                                                {{ project_tmp.description }}
-                                            </td>
-                                            <td class="column100 column3" data-column="column3">
-                                                {% if project_tmp.project_manager.id %}
-                                                    <a href="{% url 'dp:employee_detail' project_tmp.project_manager.id %}">{{ project_tmp.project_manager.user.first_name }} {{ project_tmp.project_manager.user.last_name }}</a>
-                                                {% endif %}
-                                            </td>
-                                        </tr>
-                                    {% endfor %}
-
-                                </ul>
+                                {% for project_tmp in actual_projects %}
+                                    <tr class="row100">
+                                        <td class="column100 column1" data-column="column1">
+                                            <a href="{% url 'dp:project_detail' project_tmp.id %}">{{ project_tmp.project_name }}</a>
+                                        </td>
+                                        <td class="column100 column2" data-column="column2">
+                                            {{ project_tmp.description }}
+                                        </td>
+                                        <td class="column100 column3" data-column="column3">
+                                            {% if project_tmp.project_manager.id %}
+                                                <a href="{% url 'dp:employee_detail' project_tmp.project_manager.id %}">{{ project_tmp.project_manager.user.first_name }} {{ project_tmp.project_manager.user.last_name }}</a>
+                                            {% endif %}
+                                        </td>
+                                        <td class="column100 column4" data-column="column4">
+                                            {{ project_tmp.get_state_display }}
+                                        </td>
+                                        <td class="column100 column5" data-column="column5">
+                                            {{ project_tmp.used_budget }}
+                                        </td>
+                                        <td class="column100 column6" data-column="column6">
+                                            {{ project_tmp.plan_budget }}
+                                        </td>
+                                        <td class="column100 column7" data-column="column7">
+                                            {{ project_tmp.risk }}
+                                        </td>
+                                        <td class="column100 column8" data-column="column8">
+                                            {% for key_word in project_tmp.projectstrategy_set.all %}
+                                                {{ key_word.strategy.name }}<br>
+                                            {% endfor %}
+                                        </td>
+                                        <td class="column100 column9" data-column="column9">
+                                            {{ project_tmp.optimalization }}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
                                 </tbody>
                             </table>
                         {% endif %}
                         <br>
                         <br>
-                        Analytická tabulka nákladů samostatných projektů
-                        <table data-vertable="ver1">
-                            <thead>
-                            <tr class="row100 head">
-                                <th class="column100 column1" data-column="column1">Project</th>
-                                <th class="column100 column2" data-column="column2">Reality</th>
-                                <th class="column100 column3" data-column="column3">Plan</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for project in project_list %}
-                                <tr class="row100">
-                                    <td class="column100 column1" data-column="column1">
-                                        <a href="{% url 'dp:project_detail' project.id %}"> {{ project.project_name }} </a>
-                                    </td>
-                                    <td class="column100 column2" data-column="column2">
-                                        {{ project.used_budget }}
-                                    </td>
-                                    <td class="column100 column3" data-column="column3">
-                                        {{ project.plan_budget }}
-                                    </td>
+                    {% if project_tmp.portfolio is Null and finished_projects %}
+                            Projects outside of portfolio
+                            <table id="projects_outside">
+                                <thead>
+                                <tr class="row100 head">
+                                    <th class="column100 column1" data-column="column1">Name</th>
+                                    <th class="column100 column2" data-column="column2">Description</th>
+                                    <th class="column100 column3" data-column="column3">Manager</th>
+                                    <th class="column100 column4" data-column="column4">State</th>
+                                    <th class="column100 column5" data-column="column5">Used budget</th>
+                                    <th class="column100 column6" data-column="column6">Plan budget</th>
+                                    <th class="column100 column7" data-column="column7">Risk</th>
+                                    <th class="column100 column8" data-column="column8">Key word</th>
+                                    <th class="column100 column9" data-column="column9">Analysis value</th>
                                 </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                {% for project_tmp in finished_projects %}
+                                    <tr class="row100">
+                                        <td class="column100 column1" data-column="column1">
+                                            <a href="{% url 'dp:project_detail' project_tmp.id %}">{{ project_tmp.project_name }}</a>
+                                        </td>
+                                        <td class="column100 column2" data-column="column2">
+                                            {{ project_tmp.description }}
+                                        </td>
+                                        <td class="column100 column3" data-column="column3">
+                                            {% if project_tmp.project_manager.id %}
+                                                <a href="{% url 'dp:employee_detail' project_tmp.project_manager.id %}">{{ project_tmp.project_manager.user.first_name }} {{ project_tmp.project_manager.user.last_name }}</a>
+                                            {% endif %}
+                                        </td>
+                                        <td class="column100 column4" data-column="column4">
+                                            {{ project_tmp.get_state_display }}
+                                        </td>
+                                        <td class="column100 column5" data-column="column5">
+                                            {{ project_tmp.used_budget }}
+                                        </td>
+                                        <td class="column100 column6" data-column="column6">
+                                            {{ project_tmp.plan_budget }}
+                                        </td>
+                                        <td class="column100 column7" data-column="column7">
+                                            {{ project_tmp.risk }}
+                                        </td>
+                                        <td class="column100 column8" data-column="column8">
+                                            {% for key_word in project_tmp.projectstrategy_set.all %}
+                                                {{ key_word.strategy.name }}<br>
+                                            {% endfor %}
+                                        </td>
+                                        <td class="column100 column9" data-column="column9">
+                                            {{ project_tmp.optimalization }}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        {% endif %}
+                        <br>
 
-
-                        <br>
-                        <br>
-                        <br>
-                        <br>
                         All employees
-                        <table id="example" data-vertable="ver1">
+                        <table id="employees">
                             <thead>
                             <tr class="row100 head">
                                 <th class="column100 column1" data-column="column1">Name</th>
@@ -134,15 +176,14 @@
                             </thead>
                             <tbody>
 
-                            <ul>
-                                {% for employee in employee_list %}
-                                    <tr class="row100">
-                                        <td class="column100 column1" data-column="column1">
-                                            <a href="{% url 'dp:employee_detail' employee.id %}"> {{ employee.user.first_name }} {{ employee.user.last_name }} </a>
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                            </ul>
+                            {% for employee in employee_list %}
+                                <tr class="row100">
+                                    <td class="column100 column1" data-column="column1">
+                                        <a href="{% url 'dp:employee_detail' employee.id %}"> {{ employee.user.first_name }} {{ employee.user.last_name }} </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+
                             </tbody>
                         </table>
                     </div>
@@ -305,8 +346,8 @@
 
                         </table>
                     {% endif %}
-                <br>
-                        <br>
+                    <br>
+                    <br>
                 </div>
             </div>
         </div>
@@ -318,8 +359,11 @@
     <script>
 
         $(document).ready(function () {
-            $('#example').DataTable();
+            $('#employees').DataTable();
+            $('#projects_outside').DataTable();
+            $('#projects_outside_a').DataTable();
         });
+
     </script>
 {% endblock %}
 

@@ -11,12 +11,19 @@ class LoginForm(forms.Form):
 class NewProjectForm(forms.Form):
     def __init__(self, *args, **kwargs):
         employee_list = kwargs.pop('employee_list')
+        key_words = kwargs.pop('key_word_list')
         super(NewProjectForm, self).__init__(*args, **kwargs)
         self.fields["project_manager"] = forms.ChoiceField(
             required=False,
             initial=True,
             widget=forms.Select(),
             choices=[] if employee_list is None else employee_list,
+        )
+        self.fields["key_words"] = forms.MultipleChoiceField(
+            required=False,
+            initial=True,
+            widget=forms.CheckboxSelectMultiple(),
+            choices=[] if key_words is None else key_words,
         )
         super(NewProjectForm, self).full_clean()
     name = forms.CharField()

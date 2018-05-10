@@ -36,6 +36,8 @@ class Portfolio(models.Model):
 class Strategy(models.Model):
     name = models.CharField(max_length=50)
 
+
+
 class PortfolioStrategy(models.Model):
     class Meta:
         unique_together = (('portfolio', 'strategy'),)
@@ -81,21 +83,29 @@ class Project(models.Model):
         return self.project_name
 
     @classmethod
-    def create(cls, name, description, complexity, key_word, type, urgency, importance, portfolio_id):
+    def create(cls, name, description, complexity, type, urgency, importance, project_manager, portfolio_id):
         project = cls(project_name=name)
         project.description = description
         project.portfolio_id = portfolio_id
+        project.complexity = complexity
+        project.type = type
+        project.urgency = urgency
+        project.importance = importance
+        project.project_manager = project_manager
         return project
 
     def get_absolute_url(self):
         return reverse('dp:project_detail', kwargs={'project_id': self.pk})
 
-    def risk(self):
+    def risk(self, zero_if_not_set=False):
         project_risk = 0
         for risk in self.projectrisk_set.all():
             if risk.risk_state == 0 or risk.risk_state == 1:
                 project_risk += (decimal.Decimal(risk.probability) * decimal.Decimal(risk.risk_impact))
-        project_risk = "Not set" if project_risk == 0 else (round(project_risk / len(self.projectrisk_set.all()), 0))
+        project_risk_count = self.projectrisk_set.filter(risk_state__in=[0, 1])
+        if project_risk != 0:
+            project_risk = (round(project_risk / len(project_risk_count), 0))
+
         return project_risk
 
     def evm(self):
@@ -143,7 +153,6 @@ class Task(models.Model):
     description = models.CharField(max_length=200, null=True)
     deadline = models.DateField('date of deadline', null=True, blank=True)
     pub_date = models.DateTimeField(auto_now_add=True)
-    final_manhours = models.DecimalField(max_digits=15, decimal_places=2, null=True, blank=True)
 
     STATE_VALUES = (
         ('1', 'Planned'),
@@ -213,3 +222,6 @@ class ProjectRisk (models.Model):
 
     def get_absolute_url(self):
         return reverse('dp:project_detail', kwargs={'project_id': self.project.id})
+
+    def get_risk_value(self):
+        return self.probability * self.risk_impact

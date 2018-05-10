@@ -16,30 +16,18 @@ from operator import itemgetter
 
 
 
-
-class IndexView(generic.ListView):
-    template_name = 'dp/index.html'
-    context_object_name = 'latest_portfolio_list'
-
-    def get_queryset(self):
-        return Portfolio.objects.all()
-
-    def get_context_data(self, **kwargs):
-        project_list = Project.objects.filter(portfolio_id__isnull=True)
-        context = super(IndexView, self).get_context_data(**kwargs)
-        context['employee_list'] = Employee.objects.all()
-        context['project_list'] = project_list
-        return context
-
 @login_required
 def index(request):
     context = {
         'latest_portfolio_list': Portfolio.objects.all(),
     }
     project_list = Project.objects.filter(portfolio_id__isnull=True)
-    project_count = project_list.count()
+    finished_projects = project_list.filter(state__in=['3','5'])
+    actual_projects = project_list.filter(state__in=['1','2','4'])
+    project_count = actual_projects.count()
     context['employee_list'] = Employee.objects.all()
-    context['project_list'] = project_list
+    context['finished_projects'] = finished_projects
+    context['actual_projects'] = actual_projects
     context['project_count'] = project_count
 
     return render(request, "dp/index.html", context)
@@ -60,13 +48,18 @@ def project_detail(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
     is_member = len(request.user.employee.projectmember_set.filter(project_id=project_id)) > 0
     finished_tasks = Task.objects.filter(in_project=project_id, state='3').all()
+    actual_tasks = Task.objects.filter(in_project=project_id)
+    actual_tasks = actual_tasks.filter(state__in=[1,2,4])
+    risks_tmp = ProjectRisk.objects.filter(project_id = project_id)
+    finished_risks = risks_tmp.filter(risk_state__in=[2,3])
+    actual_risks =  risks_tmp.filter(risk_state__in=[0,1])
     useable_budget = None
     if  project.plan_budget is not None:
         useable_budget = project.plan_budget - project.used_budget
 
     return render(request, 'dp/project_detail.html',
-                  {'project': project, 'is_member': is_member, 'useable_budget': useable_budget,
-                   'finished_tasks': finished_tasks,  'error_message': "You didn't select a choice."})
+                  {'project': project, 'is_member': is_member, 'actual_tasks': actual_tasks, 'useable_budget': useable_budget,
+                   'finished_tasks': finished_tasks, 'finished_risks': finished_risks,'actual_risks': actual_risks, 'error_message': "You didn't select a choice."})
 
 
 @login_required
@@ -91,8 +84,6 @@ def login_page(request):
             if user is not None:
                 login(request, user)
                 return redirect(reverse('dp:index'))
-                # return HttpResponseRedirect(reverse("dp:employee_detail", kwargs={"employee_id": user.employee.id}))
-
     # if a GET (or any other method) we'll create a blank form
     else:
         form = LoginForm()
@@ -147,8 +138,15 @@ def new_port_project_handler(request, portfolio_id):
         if form.is_valid():
             name = form.cleaned_data['name']
             description = form.cleaned_data['description']
-            project = Project.objects.create(project_name=name, description=description,
-                                             pub_date=datetime.datetime.now())
+            complexity = form.cleaned_data['complexity']
+            type = form.cleaned_data['type']
+            urgency = form.cleaned_data['urgency']
+            importance = form.cleaned_data['importance']
+            project_manager = form.cleaned_data['project_manager']
+            project_manager = Employee.objects.get(pk=int(project_manager))
+            project = Project.objects.create(project_name=name, description=description, complexity=complexity,
+                                             type=type, project_manager=project_manager, urgency=urgency, importance=importance, portfolio_id=portfolio_id,
+                                             pub_date=datetime.now())
             project.save()
             return redirect(reverse('dp:portfolio_detail', kwargs={"portfolio_id": portfolio_id}))
     else:
@@ -281,7 +279,7 @@ class PortfolioUpdateView(UpdateView):
 
 class TaskUpdateView(UpdateView):
     model = Task
-    fields = ['name', 'description', 'state', 'progress', 'deadline', 'final_manhours' ]
+    fields = ['name', 'description', 'state', 'progress', 'deadline']
     template_name = "dp/task_update_form.html"
 
 class ProjRiskUpdateView(UpdateView):

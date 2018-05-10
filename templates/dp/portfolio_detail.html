@@ -77,7 +77,7 @@
                                     <th class="column100 column6" data-column="column6">Plan budget</th>
                                     <th class="column100 column7" data-column="column7">Risk</th>
                                     <th class="column100 column8" data-column="column8">Key word</th>
-                                    <th class="column100 column9" data-column="column9">OPT</th>
+                                    <th class="column100 column9" data-column="column9">Analysis value</th>
 
                                 {% endif %}
                             </tr>
@@ -94,7 +94,9 @@
                                         {{ project.description }}
                                     </td>
                                     <td class="column100 column3" data-column="column3">
-                                        <a href="{% url 'dp:employee_detail' project.project_manager.id %}"> {{ portfolio.portfolio_manager.user.first_name }} {{ project.project_manager.user.last_name }}</a>
+                                        {% if project.project_manager %}
+                                            <a href="{% url 'dp:employee_detail' project.project_manager.id %}"> {{ portfolio.portfolio_manager.user.first_name }} {{ project.project_manager.user.last_name }}</a>
+                                        {% endif %}
                                     </td>
                                     {% if user.is_superuser or user.employee.id == portfolio.portfolio_manager_id %}
                                         <td class="column100 column4" data-column="column4">
@@ -107,15 +109,15 @@
                                             {{ project.plan_budget }}
                                         </td>
                                         <td class="column100 column7" data-column="column7">
-                                            {{ project.risk  }}
+                                            {{ project.risk }}
                                         </td>
-                                         <td class="column100 column8" data-column="column8">
+                                        <td class="column100 column8" data-column="column8">
                                             {% for key_word in project.projectstrategy_set.all %}
                                                 {{ key_word.strategy.name }}<br>
                                             {% endfor %}
                                         </td>
                                         <td class="column100 column9" data-column="column9">
-                                            {{ project.optimalization  }}
+                                            {{ project.optimalization }}
                                         </td>
                                     {% endif %}
                                 </tr>
@@ -126,33 +128,6 @@
                         </table>
 
                         <br>
-                        {% if user.is_superuser or user.employee.id == portfolio.portfolio_manager_id %}
-                            Analytická tabulka nákladů samostatných projektů
-                            <table data-vertable="ver1">
-                                <thead>
-                                <tr class="row100 head">
-                                    <th class="column100 column1" data-column="column1">Project</th>
-                                    <th class="column100 column2" data-column="column2">Reality</th>
-                                    <th class="column100 column3" data-column="column3">Plan</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {% for project in portfolio.project_set.all %}
-                                    <tr class="row100">
-                                        <td class="column100 column1" data-column="column1">
-                                            <a href="{% url 'dp:project_detail' project.id %}"> {{ project.project_name }} </a>
-                                        </td>
-                                        <td class="column100 column2" data-column="column2">
-                                            {{ project.used_budget }}
-                                        </td>
-                                        <td class="column100 column3" data-column="column3">
-                                            {{ project.plan_budget }}
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                                </tbody>
-                            </table>
-                        {% endif %}
                     {% endif %}
                 </div>
             </div>
@@ -162,14 +137,14 @@
 
 {% block javascript %}
     <script>
-    {% if user.is_superuser or user.employee.id == portfolio.portfolio_manager_id %}
-        $(document).ready(function () {
-            $('#example').DataTable(
-                {
-                    "order": [[ 8, "desc" ]]
-                }
-            );
-        });
-    {% endif %}
+        {% if user.is_superuser or user.employee.id == portfolio.portfolio_manager.id %}
+            $(document).ready(function () {
+                $('#example').DataTable(
+                    {
+                        "order": [[8, "desc"]]
+                    }
+                );
+            });
+        {% endif %}
     </script>
 {% endblock %}
