@@ -25,6 +25,7 @@
                             <th class="column100 column4" data-column="column4">Manager</th>
                             {% if   user.is_superuser or user.employee.id == project.project_manager.id or is_member or user.employee.id == project.portfolio.portfolio_manager.id or user.employee.position == 'manager' %}
                                 <th class="column100 column1" data-column="column1">Deadline</th>
+                                <th class="column100 column1" data-column="column1">Key Words</th>
                                 {% if user.is_superuser or user.employee.id == project.project_manager.id or user.employee.id == project.portfolio.portfolio_manager.id or project.portfolio is Null and user.employee.position == 'manager' %}
                                     <th class="column100 column4" data-column="column3">Edit project</th>
                                 {% endif %}
@@ -54,6 +55,11 @@
                             {% if   user.is_superuser or user.employee.id == project.project_manager.id or is_member or user.employee.id == project.portfolio.portfolio_manager.id or user.employee.position == 'manager' %}
                                 <td class="column100 column9" data-column="column9">
                                     {{ project.deadline }}
+                                </td>
+                                <td class="column100 column9" data-column="column9">
+                                    {% for key_word in project.projectstrategy_set.all %}
+                                        {{ key_word.strategy.name }}<br>
+                                    {% endfor %}
                                 </td>
                                 {% if user.is_superuser or user.employee.id == project.project_manager.id or user.employee.id == project.portfolio.portfolio_manager.id or project.portfolio is Null and user.employee.position == 'manager' %}
                                     <td class="column100 column9" data-column="column9">

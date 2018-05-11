@@ -3,7 +3,8 @@ from django.views import generic
 from django.views.generic.edit import UpdateView
 from django.shortcuts import get_object_or_404, render, reverse, redirect
 from .models import Portfolio, Project, Employee, ProjectMember, Task, \
-    AssignedTask, ProjectRisk, MemberAbility, Risk, Ability, PortfolioStrategy, OrganizationStrategy, ProjectStrategy
+    AssignedTask, ProjectRisk, MemberAbility, Risk, Ability, PortfolioStrategy, \
+    OrganizationStrategy, ProjectStrategy, Strategy
 from django.contrib.auth import authenticate, login, logout
 import datetime, decimal
 from .forms import LoginForm, NewProjectForm, NewTaskForm, NewRiskForm, NewProjRiskForm, NewAbilityForm, NewMemAbilityForm
@@ -103,8 +104,10 @@ def new_project_handler(request):
         return redirect(reverse('dp:index'))
     employees = Employee.objects.all()
     employees = [(empl.id, empl.user.username) for empl in employees]
+    key_words = Strategy.objects.all()
+    key_words = [(key_w.id, key_w.name) for key_w in key_words]
     if request.method == 'POST':
-        form = NewProjectForm(request.POST, employee_list = employees)
+        form = NewProjectForm(request.POST, employee_list = employees, key_word_list = key_words)
         if form.is_valid():
             name = form.cleaned_data['name']
             description = form.cleaned_data['description']
@@ -114,14 +117,18 @@ def new_project_handler(request):
             complexity = form.cleaned_data['complexity']
             urgency = form.cleaned_data['description']
             importance = form.cleaned_data['importance']
-            project = Project.objects.create(project_name=name, description=description,
-                                             plan_budget=plan_budget,
-                                             project_manager=project_manager, complexity=complexity,
-                                             urgency=urgency, importance=importance,type=type)
+            strat = form.cleaned_data['key_words']
+            project = Project.objects.create(project_name=name, description=description, complexity=complexity,
+                                             type=type, plan_budget=plan_budget, project_manager=project_manager, urgency=urgency, importance=importance,
+                                             pub_date=datetime.now())
             project.save()
+            for strat_id in strat:
+                strat_tmp = Strategy.objects.get(id=strat_id)
+                proj_strategy = ProjectStrategy.objects.create(strategy=strat_tmp, project=project)
+                proj_strategy.save()
             return redirect(reverse('dp:index'))
     else:
-        form = NewProjectForm(employee_list= employees)
+        form = NewProjectForm(employee_list= employees, key_word_list = key_words)
     return render(request, 'dp/new_project.html', {'form': form})
 
 
@@ -132,25 +139,33 @@ def new_port_project_handler(request, portfolio_id):
         return redirect(reverse('dp:index'))
     employees = Employee.objects.all()
     employees = [(empl.id, empl.user.username) for empl in employees]
+    key_words = Strategy.objects.all()
+    key_words = [(key_w.id, key_w.name) for key_w in key_words]
 
     if request.method == 'POST':
-        form = NewProjectForm(request.POST, employee_list =employees)
+        form = NewProjectForm(request.POST, employee_list =employees, key_word_list = key_words)
         if form.is_valid():
             name = form.cleaned_data['name']
             description = form.cleaned_data['description']
             complexity = form.cleaned_data['complexity']
+            plan_budget = form.cleaned_data['plan_budget']
             type = form.cleaned_data['type']
             urgency = form.cleaned_data['urgency']
             importance = form.cleaned_data['importance']
             project_manager = form.cleaned_data['project_manager']
+            strat = form.cleaned_data['key_words']
             project_manager = Employee.objects.get(pk=int(project_manager))
             project = Project.objects.create(project_name=name, description=description, complexity=complexity,
-                                             type=type, project_manager=project_manager, urgency=urgency, importance=importance, portfolio_id=portfolio_id,
+                                             type=type, plan_budget=plan_budget, project_manager=project_manager, urgency=urgency, importance=importance, portfolio_id=portfolio_id,
                                              pub_date=datetime.now())
             project.save()
+            for strat_id in strat:
+                strat_tmp = Strategy.objects.get(id=strat_id)
+                proj_strategy = ProjectStrategy.objects.create(strategy=strat_tmp, project=project)
+                proj_strategy.save()
             return redirect(reverse('dp:portfolio_detail', kwargs={"portfolio_id": portfolio_id}))
     else:
-        form = NewProjectForm(employee_list =employees )
+        form = NewProjectForm(employee_list =employees, key_word_list = key_words)
     return render(request, 'dp/new_project.html', {'form': form, "portfolio_id": portfolio_id})
 
 

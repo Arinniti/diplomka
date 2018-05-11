@@ -1,22 +1,29 @@
 {% load static %}
+{% load extratags %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'dp/css/bootstrap.min.css' %}"/>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.0/bootstrap-table.min.css" rel="stylesheet"/>
-<link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet"/>
-
-
+<link rel="stylesheet" type="text/css" href="{% static 'dp/css/bootstrap-table.min.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'dp/css/jquery.dataTables.min.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'dp/css/nav.css' %}"/>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css">
 {% block cssblock %}{% endblock %}
 
-{% block nav %}
-    <ul class="nav">
+<div id='cssmenu'>
+
+  <ul>
         {% if user.is_authenticated %}
-            <li>
+            <li {% if request.path == "/dp/" %} class='active' {% endif %}>
                 <a href="{% url 'dp:index' %}"> Home </a>
             </li>
 
-            <li>
-                <a href="{% url 'dp:employee_detail' user.employee.id %}"> My profile </a>
-            </li>
+            {% with user.employee.id|stringformat:"s" as user_id_str %}
+            {% with  "/dp/employee/"|add:user_id_str as user_profile %}
+
+                <li {% if user_profile == request.path  %} class='active' {% endif %}>
+                    <a href="{% url 'dp:employee_detail' user.employee.id %}"> My profile </a>
+                </li>
+                {% endwith %}
+            {% endwith %}
             {% if user.is_superuser %}
                 <li>
                     <a href="{% url 'admin:index' %}">Admin panel</a>
@@ -25,28 +32,54 @@
             {% endif %}
 
         {% endif %}
+
+
         <li>
             {% if user.is_authenticated %}
-                <a href="{% url 'dp:logout' %}"> Sign off </a>
+                <i class="fas fa-sign-out" aria-hidden="true"> </i>
+                    <a href="{% url 'dp:logout' %}"> Sign off </a>
+
             {% else %}
                 <a href="{% url 'dp:login_page' %}"> Sign in </a>
             {% endif %}
         </li>
     </ul>
-{% endblock %}
+</div>
+
+
 
 <div class="pagetitle">
     {% block title %}
     {% endblock %}
 </div>
+
+
+
 {% block content %}{% endblock %}
 
 {% block nav-global %}{% endblock %}
 
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<div class="footer">
+    {% add_admin_to_context %}
+    <li>
+        Administrator
+    </li>
+    <li>
+        <a href="{% url 'dp:employee_detail' admin_info.id %}"> {{ admin_info.first_name }} {{ admin_info.last_name }} </a>
+    </li>
+    <li>
+        <a href="mailto:{{ admin_info.email }}">{{ admin_info.email }}</a>
+    </li>
+</div>
+
+
+
+
+
+<script src="{% static 'dp/js/jquery-1.12.4.js' %}"></script>
+<script src="{% static 'dp/js/nav.js' %}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.0/bootstrap-table.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-
 
 
 {% block javascript %}{% endblock %}
