@@ -167,11 +167,11 @@
 
 
                     {% if user.is_superuser or user.employee.id == project.project_manager.id or project.portfolio is Null and user.employee.position == 'manager' or project.portfolio.portfolio_manager_id == user.employee.id %}
-                        If risk doesn't exist :
-                        <a href="{% url 'dp:new_risk' project.id %}">Create new risk</a>
-                        <br>
-                        <br>
-                        <a href="{% url 'dp:new_proj_risk' project.id %}">Add new risk to project</a>
+                        <div style="float:right">
+                            If risk doesn't exist :
+                            <a href="{% url 'dp:new_risk' project.id %}"  class="btn-gradient orange">Create new risk</a>
+                        </div>
+                        <a href="{% url 'dp:new_proj_risk' project.id %}" class="btn-gradient orange"> Add new risk to project</a>
                         <br>
                     {% endif %}
 
@@ -280,7 +280,7 @@
                     <br>
                     <br>
                     {% if user.is_superuser or user.employee.id == project.project_manager.id or project.portfolio is Null and user.employee.position == 'manager' or project.portfolio.portfolio_manager_id == user.employee.id %}
-                        <a href="{% url 'dp:new_task' project.id %}">Create new task</a>
+                        <a href="{% url 'dp:new_task' project.id %}" class="btn-gradient orange" >Create new task</a>
                         <br>
                         <br>
                     {% endif %}

@@ -1,0 +1,40 @@
+#myFooter {
+    background-color: #3c3d41;
+    color: white;
+    padding-top: 20px;
+    bottom:0;
+    height: 150px;
+}
+
+
+
+#myFooter ul {
+    list-style-type: none;
+    padding-left: 0;
+    line-height: 1.7;
+    padding-top: 8px;
+}
+
+#myFooter h5 {
+    font-size: 18px;
+    color: white;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+#myFooter h2 a{
+    font-size: 40px;
+    text-align: center;
+    color: #e89618;
+}
+
+#myFooter a {
+    color: #d2d1d1;
+    text-decoration: none;
+}
+
+#myFooter a:hover,
+#myFooter a:focus {
+    text-decoration: none;
+    color: white;
+}

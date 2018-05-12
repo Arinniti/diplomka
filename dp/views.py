@@ -85,7 +85,10 @@ def login_page(request):
             if user is not None:
                 login(request, user)
                 return redirect(reverse('dp:index'))
+            else:
+                form.add_error(None, "Username or password is incorrect!")
     # if a GET (or any other method) we'll create a blank form
+
     else:
         form = LoginForm()
 
@@ -100,7 +103,7 @@ def logout_handler(request):
 
 @login_required
 def new_project_handler(request):
-    if not request.user.is_superuser or request.user.is_authenticated:
+    if not request.user.is_superuser:
         return redirect(reverse('dp:index'))
     employees = Employee.objects.all()
     employees = [(empl.id, empl.user.username) for empl in employees]
@@ -172,13 +175,21 @@ def new_port_project_handler(request, portfolio_id):
 @login_required
 def new_task_handler(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
-    if project.project_manager is None:
-        if not request.user.is_superuser and not (
-                project.portfolio is None and request.user.employee.position == 'manager') and not (project.portfolio.portfolio_manager_id == request.user.employee.id):
-            return redirect(reverse('dp:project_detail', kwargs={"project_id": project_id}))
-    elif project.project_manager_id != request.user.employee.id and request.user.is_superuser and not (
-                project.portfolio is None and request.user.employee.position == 'manager') and not (project.portfolio.portfolio_manager_id == request.user.employee.id):
-        return redirect(reverse('dp:project_detail', kwargs={"project_id": project_id}))
+    if project.portfolio is None:
+        if project.project_manager is None:
+            if not request.user.is_superuser and not (request.user.employee.position == 'manager'):
+                return redirect(reverse('dp:project_detail', kwargs={"project_id": project_id}))
+        else:
+            if not request.user.is_superuser and not (request.user.employee.id == project.project_manager):
+                return redirect(reverse('dp:project_detail', kwargs={"project_id": project_id}))
+    else:
+        if project.project_manager is None:
+            if not request.user.is_superuser and not (request.user.employee.id == project.portfolio.portfolio_manager.id):
+                return redirect(reverse('dp:project_detail', kwargs={"project_id": project_id}))
+        else:
+            if not request.user.is_superuser and not (request.user.employee.id == project.project_manager) \
+                    and not (request.user.employee.id == project.portfolio.portfolio_manager.id):
+                return redirect(reverse('dp:project_detail', kwargs={"project_id": project_id}))
 
     employees = ProjectMember.objects.filter(project_id=project_id).all()
     employees = [(empl.member_id, empl.member.user.username) for empl in employees]

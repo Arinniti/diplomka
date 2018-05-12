@@ -1,294 +1,293 @@
 {% extends "dp/base.html" %}
-
+   {% load static %}
 {% block title %}
     <h1>Employee information</h1>
 {% endblock %}
+
+{% block cssblock %}
+   <link rel="stylesheet" type="text/css" href="{% static 'dp/css/index.css' %}"/>
+{% endblock %}
+
 {% block content %}
-
-    {% load static %}
-
-    <link rel="stylesheet" type="text/css" href="{% static 'dp/css/index.css' %}"/>
     <div class="container">
-        <div class="row">
-            <div class="col-sm-3">
-                {% if employee.photo %}
-                    <img style="width: auto; height: 300px; padding-top: 50px;" alt="image"
-                         src="{{ employee.photo.url }}"/>
-                {% else %}
-                    <img style="width: auto; height: 300px; padding-top: 50px;" alt="image"
-                         src="/media/male-profile-user-shadow_318-40244.jpg"/>
-                {% endif %}
+    <div class="info">
+         <div class="row">
+                <div class="col-sm-3">
+                    {% if employee.photo %}
+                        <img class="image" alt="image" src="{{ employee.photo.url }}"/>
+                    {% else %}
+                        <img class="noimage" alt="noimage" src="/media/male-profile-user-shadow_318-40244.jpg"/>
+                    {% endif %}
 
 
-            </div>
-            <div class="col-sm-5">
-                <table class="table table-user-information">
-                    <tbody>
-                    <tr>
-                        <td>Name:</td>
-                        <td>
-                            {{ employee.user.first_name }} {{ employee.user.last_name }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Position:</td>
-                        <td>
-                            {{ employee.position }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Hire date:</td>
-                        <td>
-                            {{ employee.user.date_joined }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Date of Birth</td>
-                        <td>
-                            {{ employee.birthday }}
-                        </td>
-                    </tr>
-
-                    <tr>
-                    <tr>
-                        <td>Gender</td>
-                        <td>{{ employee.gender }}</td>
-                    </tr>
-                    <tr>
-                        <td>Address</td>
-                        <td>
-                            {{ employee.address }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Email</td>
-                        <td>
-                            <a href="mailto:{{ employee.user.email }}">{{ employee.user.email }}</a>
-                        </td>
-                    </tr>
-                    {% if not user.employee.id == employee.id and user.is_superuser %}
-
+                </div>
+                <div class="col-sm-5">
+                    <table class="table table-user-information">
+                        <tbody>
                         <tr>
-                            <td>Salary /hour</td>
+                            <td>Name:</td>
                             <td>
-                                {{ employee.salary }}
+                                {{ employee.user.first_name }} {{ employee.user.last_name }}
                             </td>
                         </tr>
-                    {% endif %}
+                        <tr>
+                            <td>Position:</td>
+                            <td>
+                                {{ employee.position }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Hire date:</td>
+                            <td>
+                                {{ employee.user.date_joined }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Date of Birth</td>
+                            <td>
+                                {{ employee.birthday }}
+                            </td>
+                        </tr>
 
-                    </tbody>
-                </table>
-                <br>
-                <br>
+                        <tr>
+                        <tr>
+                            <td>Gender</td>
+                            <td>{{ employee.gender }}</td>
+                        </tr>
+                        <tr>
+                            <td>Address</td>
+                            <td>
+                                {{ employee.address }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td>
+                                <a href="mailto:{{ employee.user.email }}">{{ employee.user.email }}</a>
+                            </td>
+                        </tr>
+                        {% if not user.employee.id == employee.id and user.is_superuser %}
+
+                            <tr>
+                                <td>Salary /hour</td>
+                                <td>
+                                    {{ employee.salary }}
+                                </td>
+                            </tr>
+                        {% endif %}
+
+                        </tbody>
+                    </table>
+                </div>
+
             </div>
-
         </div>
     </div>
-    <div class="limiter">
-        <div class="container-table100">
-            <div class="wrap-table100">
-                <br>
-                <br>
-                {% if employee.memberability_set.all and user.is_authenticated   and not user.employee.id == employee.id %}
+
+
+
+    {% if  employee.memberability_set.all or employee.portfolio_set.all or employee.project_set.all or employee.projectmember_set.all or  employee.assignedtask_set.all or user.is_superuser and not user.employee.id == employee.id or user.employee.position == "manager" and not user.employee.id == employee.id %}
+        <div class="ability" >
+            <div class="container-table100">
+                <div class="wrap-table100">
                     {% if user.is_superuser or user.employee.position == "manager" %}
-                        If ability doesn't exist :
-                        <a href="{% url 'dp:new_ability' employee.id %}">Create new ability</a>
-                        <br>
-                        <br>
+                        <div style="float: right">
+                            If ability doesn't exist :
+                            <a href="{% url 'dp:new_ability' employee.id %}" class="btn-gradient orange">Create new
+                                ability</a>
+                        </div>
 
-                        <a href="{% url 'dp:new_emp_ability' employee.id %}">Add new ability to employee</a>
+                        <a href="{% url 'dp:new_emp_ability' employee.id %}" class="btn-gradient orange">Add new ability
+                            to employee</a>
 
-                        <br>
+
+                    {% endif %}
+
+                    <br>
+
+                    {% if employee.memberability_set.all and user.is_superuser or employee.memberability_set.all and user.employee.position == "manager" or employee.memberability_set.all and  user.is_authenticated and not user.employee.id == employee.id %}
+
                         User have next abilities:
+                        <div class="table100 ver1 m-b-110">
+                            <table id="ability">
+                                <thead>
+                                <tr class="row100 head">
+                                    <th class="column100 column1" data-column="column1">Ability</th>
+                                    <th class="column100 column2" data-column="column2">Experience (1-10)</th>
+                                    <th class="column100 column3" data-column="column3">Description</th>
+                                    <th class="column100 column3" data-column="column3">Edit</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for abilitymem in employee.memberability_set.all %}
+                                    <tr class="row100">
+                                        <td class="column100 column1" data-column="column1">
+                                            {{ abilitymem.ability.name }}
+                                        </td>
+                                        <td class="column100 column2" data-column="column2">
+                                            {{ abilitymem.experience }}
+                                        </td>
+                                        <td class="column100 column3" data-column="column3">
+                                            {{ abilitymem.ability.description }}
+                                        </td>
+                                        <td class="column100 column3" data-column="column3">
+                                            <a href="{% url 'dp:memability_edit' abilitymem.id %}"> edit </a>
+                                        </td>
 
-                        <table id="ability">
-                            <thead>
-                            <tr class="row100 head">
-                                <th class="column100 column1" data-column="column1">Ability</th>
-                                <th class="column100 column2" data-column="column2">Experience (1-10)</th>
-                                <th class="column100 column3" data-column="column3">Description</th>
-                                <th class="column100 column3" data-column="column3">Edit</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for abilitymem in employee.memberability_set.all %}
-                                <tr class="row100">
-                                    <td class="column100 column1" data-column="column1">
-                                        {{ abilitymem.ability.name }}
-                                    </td>
-                                    <td class="column100 column2" data-column="column2">
-                                        {{ abilitymem.experience }}
-                                    </td>
-                                    <td class="column100 column3" data-column="column3">
-                                        {{ abilitymem.ability.description }}
-                                    </td>
-                                    <td class="column100 column3" data-column="column3">
-                                        <a href="{% url 'dp:memability_edit' abilitymem.id %}"> edit </a>
-                                    </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% endif %}
+                    {% if employee.portfolio_set.all %}
+                        <br>
+                        <br>
+                        Is manager of following portfolios
+
+                        <div class="table100 ver1 m-b-110">
+                            <table data-vertable="ver1">
+                                <thead>
+                                <tr class="row100 head">
+                                    <th class="column100 column1" data-column="column1">Portfolio</th>
+                                    <th class="column100 column2" data-column="column2">Active from</th>
 
                                 </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+
+                                <ul>
+                                    {% for portfolio in employee.portfolio_set.all %}
+                                        <tr class="row100">
+                                            <td class="column100 column1" data-column="column1">
+                                                <a href="{% url 'dp:portfolio_detail' portfolio.id %}">{{ portfolio.portfolio_name }}</a>
+                                            </td>
+                                            <td class="column100 column2" data-column="column2">
+                                                {{ portfolio.pub_date }}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </ul>
+                                </tbody>
+                            </table>
+                        </div>
                     {% endif %}
-                {% endif %}
+                    {% if employee.project_set.all %}
+                        <br>
+                        <br>
+                        Is manager of following projects
 
+                        <div class="table100 ver1 m-b-110">
+                            <table data-vertable="ver1">
+                                <thead>
+                                <tr class="row100 head">
+                                    <th class="column100 column1" data-column="column1">Project</th>
+                                    <th class="column100 column2" data-column="column2">Active from</th>
+                                    <th class="column100 column3" data-column="column3">State</th>
 
+                                </tr>
+                                </thead>
+                                <tbody>
 
-                {% if employee.portfolio_set.all %}
-                    <br>
-                    <br>
-                    Is manager of following portfolios
+                                <ul>
+                                    {% for project in employee.project_set.all %}
+                                        <tr class="row100">
+                                            <td class="column100 column1" data-column="column1">
+                                                <a href="{% url 'dp:project_detail' project.id %}">{{ project.project_name }}</a>
+                                            </td>
+                                            <td class="column100 column2" data-column="column2">
+                                                {{ project.pub_date }}
+                                            </td>
+                                            <td class="column100 column3" data-column="column3">
+                                                {{ project.get_state_display }}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </ul>
+                                </tbody>
 
-                    <div class="table100 ver1 m-b-110">
-                        <table data-vertable="ver1">
-                            <thead>
-                            <tr class="row100 head">
-                                <th class="column100 column1" data-column="column1">Portfolio</th>
-                                <th class="column100 column2" data-column="column2">Active from</th>
+                            </table>
+                        </div>
+                    {% endif %}
+                    {% if employee.projectmember_set.all %}
+                        <br>
+                        <br>
+                        Is part of following projects
 
-                            </tr>
-                            </thead>
-                            <tbody>
+                        <div class="table100 ver1 m-b-110">
+                            <table data-vertable="ver1">
+                                <thead>
+                                <tr class="row100 head">
+                                    <th class="column100 column1" data-column="column1">Project</th>
+                                    <th class="column100 column2" data-column="column2">Position</th>
+                                </tr>
+                                </thead>
+                                <tbody>
 
-                            <ul>
-                                {% for portfolio in employee.portfolio_set.all %}
-                                    <tr class="row100">
-                                        <td class="column100 column1" data-column="column1">
-                                            <a href="{% url 'dp:portfolio_detail' portfolio.id %}">{{ portfolio.portfolio_name }}</a>
-                                        </td>
-                                        <td class="column100 column2" data-column="column2">
-                                            {{ portfolio.pub_date }}
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                            </ul>
-                            </tbody>
-                        </table>
-                    </div>
-                {% endif %}
-                {% if employee.project_set.all %}
-                    <br>
-                    <br>
-                    Is manager of following projects
+                                <ul>
+                                    {% for projectmember in employee.projectmember_set.all %}
+                                        <tr class="row100">
+                                            <td class="column100 column1" data-column="column1">
+                                                <a href="{% url 'dp:project_detail' projectmember.project_id %}">{{ projectmember.project.project_name }}</a>
+                                            </td>
+                                            <td class="column100 column1" data-column="column1">
+                                                {{ projectmember.position }}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </ul>
+                                </tbody>
 
-                    <div class="table100 ver1 m-b-110">
-                        <table data-vertable="ver1">
-                            <thead>
-                            <tr class="row100 head">
-                                <th class="column100 column1" data-column="column1">Project</th>
-                                <th class="column100 column2" data-column="column2">Active from</th>
-                                <th class="column100 column3" data-column="column3">State</th>
+                            </table>
+                        </div>
+                    {% endif %}
+                    {% if employee.assignedtask_set.all %}
+                        <br>
+                        <br>
+                        Have of following tasks to do
 
-                            </tr>
-                            </thead>
-                            <tbody>
+                        <div class="table100 ver1 m-b-110">
+                            <table data-vertable="ver1">
+                                <thead>
+                                <tr class="row100 head">
+                                    <th class="column100 column1" data-column="column1">Task name</th>
+                                    <th class="column100 column2" data-column="column2">Description</th>
+                                    <th class="column100 column3" data-column="column3">State</th>
+                                    <th class="column100 column4" data-column="column4">Project name</th>
 
-                            <ul>
-                                {% for project in employee.project_set.all %}
-                                    <tr class="row100">
-                                        <td class="column100 column1" data-column="column1">
-                                            <a href="{% url 'dp:project_detail' project.id %}">{{ project.project_name }}</a>
-                                        </td>
-                                        <td class="column100 column2" data-column="column2">
-                                            {{ project.pub_date }}
-                                        </td>
-                                        <td class="column100 column3" data-column="column3">
-                                            {{ project.get_state_display }}
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                            </ul>
-                            </tbody>
+                                </tr>
+                                </thead>
+                                <tbody>
 
-                        </table>
-                    </div>
-                {% endif %}
+                                <ul>
+                                    {% for asstask in employee.assignedtask_set.all %}
+                                        <tr class="row100">
+                                            <td class="column100 column1" data-column="column1">
+                                                {{ asstask.task.name }}
+                                            </td>
+                                            <td class="column100 column2" data-column="column2">
+                                                {{ asstask.task.description }}
+                                            </td>
+                                            <td class="column100 column3" data-column="column3">
+                                                {{ asstask.task.get_state_display }}
+                                            </td>
+                                            <td class="column100 column4" data-column="column4">
+                                                <a href="{% url 'dp:project_detail' asstask.task.in_project_id %}">{{ asstask.task.in_project.project_name }}</a>
+                                            </td>
 
+                                        </tr>
+                                    {% endfor %}
+                                </ul>
+                                </tbody>
 
-                {% if employee.projectmember_set.all %}
-                    <br>
-                    <br>
-                    Is part of following projects
+                            </table>
 
-                    <div class="table100 ver1 m-b-110">
-                        <table data-vertable="ver1">
-                            <thead>
-                            <tr class="row100 head">
-                                <th class="column100 column1" data-column="column1">Project</th>
-                                <th class="column100 column2" data-column="column2">Position</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-
-                            <ul>
-                                {% for projectmember in employee.projectmember_set.all %}
-                                    <tr class="row100">
-                                        <td class="column100 column1" data-column="column1">
-                                            <a href="{% url 'dp:project_detail' projectmember.project_id %}">{{ projectmember.project.project_name }}</a>
-                                        </td>
-                                        <td class="column100 column1" data-column="column1">
-                                            {{ projectmember.position }}
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                            </ul>
-                            </tbody>
-
-                        </table>
-                    </div>
-                {% endif %}
-
-
-
-                {% if employee.assignedtask_set.all %}
-                    <br>
-                    <br>
-                    Have of following tasks to do
-
-                    <div class="table100 ver1 m-b-110">
-                        <table data-vertable="ver1">
-                            <thead>
-                            <tr class="row100 head">
-                                <th class="column100 column1" data-column="column1">Task name</th>
-                                <th class="column100 column2" data-column="column2">Description</th>
-                                <th class="column100 column3" data-column="column3">State</th>
-                                <th class="column100 column4" data-column="column4">Project name</th>
-
-                            </tr>
-                            </thead>
-                            <tbody>
-
-                            <ul>
-                                {% for asstask in employee.assignedtask_set.all %}
-                                    <tr class="row100">
-                                        <td class="column100 column1" data-column="column1">
-                                            {{ asstask.task.name }}
-                                        </td>
-                                        <td class="column100 column2" data-column="column2">
-                                            {{ asstask.task.description }}
-                                        </td>
-                                        <td class="column100 column3" data-column="column3">
-                                            {{ asstask.task.get_state_display }}
-                                        </td>
-                                        <td class="column100 column4" data-column="column4">
-                                            <a href="{% url 'dp:project_detail' asstask.task.in_project_id %}">{{ asstask.task.in_project.project_name }}</a>
-                                        </td>
-
-                                    </tr>
-                                {% endfor %}
-                            </ul>
-                            </tbody>
-
-                        </table>
-
-
-                    </div>
-                {% endif %}
-
+                        </div>
+                    {% endif %}
+                </div>
             </div>
         </div>
-    </div>
+    {% endif %}
 {% endblock %}
 
 

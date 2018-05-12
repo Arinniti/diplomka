@@ -29,12 +29,13 @@
 }
 #cssmenu {
   width: auto;
-  border: 3px solid #fd8a17;
+  margin-bottom: 40px;
+  border: 3px solid #E8601B;
   border-radius: 3px;
   font-family: 'Oswald', sans-serif;
   line-height: 1;
   background: #f7f7f7;
-  box-shadow: 1px 1px 0 #df7002, 2px 2px 0 #df7002, 3px 3px 3px rgba(0, 0, 0, 0.35);
+  box-shadow: 1px 1px 0 rgba(230,95,28,1), 2px 2px 0 #e89618, 3px 3px 3px rgba(0, 0, 0, 0.35);
 }
 
 #cssmenu > ul > li {
@@ -56,7 +57,7 @@
   font-size: 14px;
   text-transform: uppercase;
   text-decoration: none;
-  color: #fd8a17;
+  color: rgba(255,105,30,1);
   -webkit-transition: all .2s ease;
   -moz-transition: all .2s ease;
   -ms-transition: all .2s ease;
@@ -66,7 +67,7 @@
 #cssmenu > ul > li > a:hover,
 #cssmenu > ul > li:hover > a,
 #cssmenu > ul > li.active > a {
-  color: #444444;
+  color: rgba(230,95,28,1);
 }
 #cssmenu #menu-indicator {
   position: absolute;
@@ -75,7 +76,7 @@
   height: 0;
   width: 0;
   border: 5px solid transparent;
-  border-bottom-color: #fd8a17;
+  border-bottom-color: rgba(255,105,30,1);
   -webkit-transition: all 0.25s ease-out;
   -moz-transition: all 0.25s ease-out;
   -ms-transition: all 0.25s ease-out;
@@ -111,7 +112,6 @@
   text-transform: uppercase;
   text-decoration: none;
   color: #fd8a17;
-  background: url('images/bg.png');
 }
 #cssmenu.small-screen #menu-button.menu-opened {
   color: #444444;

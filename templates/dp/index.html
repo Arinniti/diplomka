@@ -51,7 +51,8 @@
                         </table>
                         <br>
                         <br>
-
+                        <a href="{% url 'dp:new_project' %}"  class="btn-gradient orange">Create new project</a>
+                        <br>
                         {% if project_tmp.portfolio is Null and actual_projects %}
                             Projects outside of portfolio
                             <table id="projects_outside_a">

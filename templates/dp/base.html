@@ -1,27 +1,37 @@
 {% load static %}
 {% load extratags %}
 
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
 <link rel="stylesheet" type="text/css" href="{% static 'dp/css/bootstrap.min.css' %}"/>
 <link rel="stylesheet" type="text/css" href="{% static 'dp/css/bootstrap-table.min.css' %}"/>
 <link rel="stylesheet" type="text/css" href="{% static 'dp/css/jquery.dataTables.min.css' %}"/>
 <link rel="stylesheet" type="text/css" href="{% static 'dp/css/nav.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'dp/css/form.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'dp/css/style.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'dp/css/footer.css' %}"/>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css">
 {% block cssblock %}{% endblock %}
 
+
+
 <div id='cssmenu'>
 
-  <ul>
+
+    <ul>
         {% if user.is_authenticated %}
             <li {% if request.path == "/dp/" %} class='active' {% endif %}>
                 <a href="{% url 'dp:index' %}"> Home </a>
             </li>
 
             {% with user.employee.id|stringformat:"s" as user_id_str %}
-            {% with  "/dp/employee/"|add:user_id_str as user_profile %}
+                {% with  "/dp/employee/"|add:user_id_str as user_profile %}
 
-                <li {% if user_profile == request.path  %} class='active' {% endif %}>
-                    <a href="{% url 'dp:employee_detail' user.employee.id %}"> My profile </a>
-                </li>
+                    <li {% if user_profile == request.path %} class='active' {% endif %}>
+                        <a href="{% url 'dp:employee_detail' user.employee.id %}"> My profile </a>
+                    </li>
                 {% endwith %}
             {% endwith %}
             {% if user.is_superuser %}
@@ -34,11 +44,9 @@
         {% endif %}
 
 
-        <li>
+        <li style="float: right">
             {% if user.is_authenticated %}
-                <i class="fas fa-sign-out" aria-hidden="true"> </i>
-                    <a href="{% url 'dp:logout' %}"> Sign off </a>
-
+                <a href="{% url 'dp:logout' %}"> Sign off </a>
             {% else %}
                 <a href="{% url 'dp:login_page' %}"> Sign in </a>
             {% endif %}
@@ -47,39 +55,50 @@
 </div>
 
 
-
 <div class="pagetitle">
     {% block title %}
     {% endblock %}
 </div>
 
 
-
 {% block content %}{% endblock %}
 
-{% block nav-global %}{% endblock %}
 
-<div class="footer">
-    {% add_admin_to_context %}
-    <li>
-        Administrator
-    </li>
-    <li>
-        <a href="{% url 'dp:employee_detail' admin_info.id %}"> {{ admin_info.first_name }} {{ admin_info.last_name }} </a>
-    </li>
-    <li>
-        <a href="mailto:{{ admin_info.email }}">{{ admin_info.email }}</a>
-    </li>
-</div>
+<footer id="myFooter">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+                <h2 class="logo"><a href="{% url 'dp:index' %}"> Portfolio management </a></h2>
+            </div>
+            <div class="col-sm-2 col-sm-offset-5" >
+                {% add_admin_to_context %}
+                <h5>Administrator</h5>
+                <ul>
+                    <li>
+                        <a href="{% url 'dp:employee_detail' admin_info.id %}"> {{ admin_info.first_name }} {{ admin_info.last_name }} </a>
+                    </li>
+                    <li><a href="mailto:{{ admin_info.email }}">{{ admin_info.email }}</a></li>
 
-
-
+                </ul>
+            </div>
+            <div class="col-sm-2">
+                <h5>Technical support</h5>
+                <ul>
+                    <li>Zuzana Skalníková</li>
+                    <li><a href="mailto:{{ 'xskaln04@stud.fit.vutbr.cz' }}">Contact me</a></li>
+                </ul>
+            </div>
+    </div>
+    </div>
+</footer>
 
 
 <script src="{% static 'dp/js/jquery-1.12.4.js' %}"></script>
 <script src="{% static 'dp/js/nav.js' %}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.0/bootstrap-table.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+{% block javascript %}
 
-{% block javascript %}{% endblock %}
+{% endblock %}
