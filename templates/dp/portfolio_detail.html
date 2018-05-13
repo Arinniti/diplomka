@@ -1,7 +1,7 @@
 {% extends "dp/base.html" %}
 
 {% block title %}
-    <h1>Portfolio overview : {{ portfolio.portfolio_name }}</h1>
+    <h1>Portfolio overview</h1>
 
 {% endblock %}
 {% block content %}
@@ -11,125 +11,131 @@
 
 
     <link rel="stylesheet" type="text/css" href="{% static 'dp/css/index.css' %}"/>
-    <div class="limiter">
-        <div class="container-table100">
 
-            <div class="wrap-table100">
-                <div class="table100 ver1 m-b-110">
-                    <table data-vertable="ver1">
-                        <thead>
-                        <tr class="row100 head">
-                            <th class="column100 column1" data-column="column1">Portfolio name</th>
-                            <th class="column100 column2" data-column="column2">Description</th>
-                            <th class="column100 column3" data-column="column3">Manager</th>
-                            {% if user.is_superuser or user.employee.id == portfolio.portfolio_manager_id %}
-                                <th class="column100 column4" data-column="column4">Edit portfolio</th>
-                            {% endif %}
-
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <ul>
-                            <tr class="row100">
-                                <td class="column100 column1" data-column="column1">
-                                    {{ portfolio.portfolio_name }}
-                                </td>
-                                <td class="column100 column2" data-column="column2">
-                                    {{ portfolio.description }}
-                                </td>
-                                <td class="column100 column3" data-column="column3">
-                                    {% if portfolio.portfolio_manager %}
-                                        <a href="{% url 'dp:employee_detail' portfolio.portfolio_manager.id %}">{{ portfolio.portfolio_manager.user.first_name }} {{ portfolio.portfolio_manager.user.last_name }}</a>
-                                    {% endif %}
-                                </td>
-                                {% if user.is_superuser or user.employee.id == portfolio.portfolio_manager_id %}
-                                    <td class="column100 column4" data-column="column4">
-                                        <a href="{% url 'dp:portfolio_edit' portfolio.id %}"> edit </a>
-                                    </td>
-                                {% endif %}
-
-                            </tr>
-                        </ul>
-
-                        </tbody>
-
-                    </table>
-                    <br>
-
-                    <br>
-
-                    {% if user.is_superuser or user.employee.id == portfolio.portfolio_manager_id %}
-                        <a href="{% url 'dp:new_port_project' portfolio.id %}" class="btn-gradient orange">Create new project</a>
-                    {% endif %}
-                <br>
-                    {% if portfolio.project_set.all %}
-
-                        Projects in portfolio
-                        <table id="example">
+    <div class="container-table100">
+        <div class="wrap-table100">
+            <div class="table100 ver1 m-b-110">
+                <div class="row">
+                    <div class="col-sm-10 col-sm-offset-1">
+                        <table data-vertable="ver1">
                             <thead>
                             <tr class="row100 head">
-                                <th class="column100 column1" data-column="column1">Project name</th>
+                                <th class="column100 column1" data-column="column1">Portfolio name</th>
                                 <th class="column100 column2" data-column="column2">Description</th>
                                 <th class="column100 column3" data-column="column3">Manager</th>
                                 {% if user.is_superuser or user.employee.id == portfolio.portfolio_manager_id %}
-                                    <th class="column100 column4" data-column="column4">State</th>
-                                    <th class="column100 column5" data-column="column5">Used budget</th>
-                                    <th class="column100 column6" data-column="column6">Plan budget</th>
-                                    <th class="column100 column7" data-column="column7">Risk</th>
-                                    <th class="column100 column8" data-column="column8">Key word</th>
-                                    <th class="column100 column9" data-column="column9">Analysis value</th>
-
+                                    <th class="column100 column4" data-column="column4">Edit portfolio</th>
                                 {% endif %}
+
                             </tr>
                             </thead>
                             <tbody>
-
-
-                            {% for project in portfolio.project_set.all %}
+                            <ul>
                                 <tr class="row100">
                                     <td class="column100 column1" data-column="column1">
-                                        <a href="{% url 'dp:project_detail' project.id %}">{{ project.project_name }}</a>
+                                        {{ portfolio.portfolio_name }}
                                     </td>
                                     <td class="column100 column2" data-column="column2">
-                                        {{ project.description }}
+                                        {{ portfolio.description }}
                                     </td>
                                     <td class="column100 column3" data-column="column3">
-                                        {% if project.project_manager %}
-                                            <a href="{% url 'dp:employee_detail' project.project_manager.id %}"> {{ portfolio.portfolio_manager.user.first_name }} {{ project.project_manager.user.last_name }}</a>
+                                        {% if portfolio.portfolio_manager %}
+                                            <a href="{% url 'dp:employee_detail' portfolio.portfolio_manager.id %}">{{ portfolio.portfolio_manager.user.first_name }} {{ portfolio.portfolio_manager.user.last_name }}</a>
                                         {% endif %}
                                     </td>
                                     {% if user.is_superuser or user.employee.id == portfolio.portfolio_manager_id %}
                                         <td class="column100 column4" data-column="column4">
-                                            {{ project.get_state_display }}
-                                        </td>
-                                        <td class="column100 column5" data-column="column5">
-                                            {{ project.used_budget }}
-                                        </td>
-                                        <td class="column100 column6" data-column="column6">
-                                            {{ project.plan_budget }}
-                                        </td>
-                                        <td class="column100 column7" data-column="column7">
-                                            {{ project.risk }}
-                                        </td>
-                                        <td class="column100 column8" data-column="column8">
-                                            {% for key_word in project.projectstrategy_set.all %}
-                                                {{ key_word.strategy.name }}<br>
-                                            {% endfor %}
-                                        </td>
-                                        <td class="column100 column9" data-column="column9">
-                                            {{ project.optimalization }}
+                                            <a href="{% url 'dp:portfolio_edit' portfolio.id %}"> edit </a>
                                         </td>
                                     {% endif %}
+
                                 </tr>
-                            {% endfor %}
+                            </ul>
 
                             </tbody>
 
                         </table>
-
-                        <br>
-                    {% endif %}
+                    </div>
                 </div>
+                <br>
+                <br>
+                {% if user.is_superuser or user.employee.id == portfolio.portfolio_manager_id %}
+                    <a href="{% url 'dp:new_port_project' portfolio.id %}" class="btn-gradient cyan">Create new
+                        project</a>
+                {% endif %}
+                <br>
+                {% if portfolio.project_set.all %}
+                    <div class="ttl">
+                        <h2>Projects in portfolio</h2>
+                        <span class="sexy_line"></span>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-10 col-sm-offset-1">
+                            <table id="example">
+                                <thead>
+                                <tr class="row100 head">
+                                    <th class="column100 column1" data-column="column1">Project name</th>
+                                    <th class="column100 column2" data-column="column2">Description</th>
+                                    <th class="column100 column3" data-column="column3">Manager</th>
+                                    {% if user.is_superuser or user.employee.id == portfolio.portfolio_manager_id %}
+                                        <th class="column100 column4" data-column="column4">State</th>
+                                        <th class="column100 column5" data-column="column5">Used budget</th>
+                                        <th class="column100 column6" data-column="column6">Plan budget</th>
+                                        <th class="column100 column7" data-column="column7">Risk</th>
+                                        <th class="column100 column8" data-column="column8">Key word</th>
+                                        <th class="column100 column9" data-column="column9">Analysis value</th>
+
+                                    {% endif %}
+                                </tr>
+                                </thead>
+                                <tbody>
+
+
+                                {% for project in portfolio.project_set.all %}
+                                    <tr class="row100">
+                                        <td class="column100 column1" data-column="column1">
+                                            <a href="{% url 'dp:project_detail' project.id %}">{{ project.project_name }}</a>
+                                        </td>
+                                        <td class="column100 column2" data-column="column2">
+                                            {{ project.description }}
+                                        </td>
+                                        <td class="column100 column3" data-column="column3">
+                                            {% if project.project_manager %}
+                                                <a href="{% url 'dp:employee_detail' project.project_manager.id %}"> {{ portfolio.portfolio_manager.user.first_name }} {{ project.project_manager.user.last_name }}</a>
+                                            {% endif %}
+                                        </td>
+                                        {% if user.is_superuser or user.employee.id == portfolio.portfolio_manager_id %}
+                                            <td class="column100 column4" data-column="column4">
+                                                {{ project.get_state_display }}
+                                            </td>
+                                            <td class="column100 column5" data-column="column5">
+                                                {{ project.used_budget }}
+                                            </td>
+                                            <td class="column100 column6" data-column="column6">
+                                                {{ project.plan_budget }}
+                                            </td>
+                                            <td class="column100 column7" data-column="column7">
+                                                {{ project.risk }}
+                                            </td>
+                                            <td class="column100 column8" data-column="column8">
+                                                {% for key_word in project.projectstrategy_set.all %}
+                                                    {{ key_word.strategy.name }}<br>
+                                                {% endfor %}
+                                            </td>
+                                            <td class="column100 column9" data-column="column9">
+                                                {{ project.optimalization }}
+                                            </td>
+                                        {% endif %}
+                                    </tr>
+                                {% endfor %}
+
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                    <br>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -137,14 +143,23 @@
 
 {% block javascript %}
     <script>
-        {% if user.is_superuser or user.employee.id == portfolio.portfolio_manager.id %}
-            $(document).ready(function () {
+        $(document).ready(function () {
+            {% if projects_count < 10 %}
+                $('#example').DataTable(
+                    {
+                        "paging": false,
+                        "info": false,
+                        "order": [[8, "desc"]]
+                    }
+                );
+            {% else %}
                 $('#example').DataTable(
                     {
                         "order": [[8, "desc"]]
                     }
                 );
-            });
-        {% endif %}
+            {% endif %}
+        });
     </script>
 {% endblock %}
+

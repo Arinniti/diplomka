@@ -11,7 +11,10 @@
                 <div class="wrap-table100">
                     <div class="table100 ver1 m-b-110">
                         <br>
-                        Portfolios
+                        <div class="ttl">
+                            <h2>Portfolios</h2>
+                            <span class="sexy_line"></span>
+                        </div>
                         <table data-vertable="ver1">
                             <thead>
                             <tr class="row100 head">
@@ -51,10 +54,15 @@
                         </table>
                         <br>
                         <br>
-                        <a href="{% url 'dp:new_project' %}"  class="btn-gradient orange">Create new project</a>
+                        <a href="{% url 'dp:new_project' %}" class="btn-gradient cyan">Create new project</a>
+                        <br>
                         <br>
                         {% if project_tmp.portfolio is Null and actual_projects %}
-                            Projects outside of portfolio
+                            <div class="ttl">
+                            <h2>Projects outside of portfolio</h2>
+                            <span class="sexy_line"></span>
+                        </div>
+
                             <table id="projects_outside_a">
                                 <thead>
                                 <tr class="row100 head">
@@ -111,7 +119,11 @@
                         <br>
                         <br>
                         {% if project_tmp.portfolio is Null and finished_projects %}
-                            Projects outside of portfolio
+                            <div class="ttl">
+                            <h2>Finished projects outside of portfolio</h2>
+                            <span class="sexy_line"></span>
+                        </div>
+
                             <table id="projects_outside">
                                 <thead>
                                 <tr class="row100 head">
@@ -167,11 +179,16 @@
                         {% endif %}
                         <br>
 
-                        All employees
+                        <div class="ttl">
+                            <h2>All employees</h2>
+                            <span class="sexy_line"></span>
+                        </div>
                         <table id="employees">
                             <thead>
                             <tr class="row100 head">
                                 <th class="column100 column1" data-column="column1">Name</th>
+                                <th class="column100 column2" data-column="column2">Position</th>
+                                <th class="column100 column1" data-column="column3">Abilities</th>
 
                             </tr>
                             </thead>
@@ -182,6 +199,17 @@
                                     <td class="column100 column1" data-column="column1">
                                         <a href="{% url 'dp:employee_detail' employee.id %}"> {{ employee.user.first_name }} {{ employee.user.last_name }} </a>
                                     </td>
+                                    <td class="column100 column1" data-column="column1">
+                                        {{ employee.position }}
+                                    </td>
+
+                                    <td class="column100 column1" data-column="column1">
+                                    {% for ability in employee.memberability_set.all %}
+                                        {{ ability.ability.name }}{% if not forloop.last %}, {% endif %}
+                                        {% endfor %}
+                                    </td>
+
+
                                 </tr>
                             {% endfor %}
 
@@ -199,12 +227,18 @@
             <div class="container-table100">
                 <div class="wrap-table100">
                     <div class="table100 ver1 m-b-110">
-                        MY WORK
+                        <div class="no-work">
+                            MY WORK
+                        </div>
 
                         {% if user.employee.portfolio_set.all %}
                             <br>
                             <br>
-                            Manager of following portfolios
+                            <div class="ttl">
+                            <h2>Manager of following portfolios</h2>
+                            <span class="sexy_line"></span>
+                        </div>
+
 
 
                             <table data-vertable="ver1">
@@ -236,8 +270,10 @@
                         {% if user.employee.project_set.all %}
                             <br>
                             <br>
-                            Manager of following projects
-
+                            <div class="ttl">
+                            <h2>Manager of following projects</h2>
+                            <span class="sexy_line"></span>
+                        </div>
 
                             <table data-vertable="ver1">
                                 <thead>
@@ -275,7 +311,10 @@
                         {% if user.employee.projectmember_set.all %}
                             <br>
                             <br>
-                            Part of following projects
+                            <div class="ttl">
+                            <h2>Part of following projects</h2>
+                            <span class="sexy_line"></span>
+                        </div>
 
                             <table data-vertable="ver1">
                                 <thead>
@@ -309,7 +348,11 @@
                         {% if employee.assignedtask_set.all %}
                             <br>
                             <br>
-                            Tasks to do
+                            <div class="ttl">
+                                <h2> Tasks to do</h2>
+                                <span class="sexy_line"></span>
+                            </div>
+
 
 
                             <table data-vertable="ver1">
@@ -353,21 +396,52 @@
                 </div>
             </div>
         </div>
-    {% else%}
-        No work in a meantime
+    {% else %}
+        <div class="no-work">
+            No work in a meantime
+        </div>
     {% endif %}
 {% endblock %}
 
 
 {% block javascript %}
-    <script>
 
+    <script>
         $(document).ready(function () {
-            $('#employees').DataTable();
-            $('#projects_outside').DataTable();
-            $('#projects_outside_a').DataTable();
+            {% if employee_count < 10 %}
+                $('#employees').DataTable(
+                    {"paging": false}
+                );
+            {% else %}
+                $('#employees').DataTable();
+            {% endif %}
+
+            {% if project_count < 10 %}
+                $('#projects_outside').DataTable(
+                    {
+                        "paging": false,
+                        "info": false,
+                        "order": [[8, "desc"]]
+                    }
+                );
+            {% else %}
+                $('#projects_outside').DataTable(
+                    {
+                        "order": [[8, "desc"]]
+                    }
+                );
+            {% endif %}
+
+            {% if finished_pr_count < 10 %}
+                $('#projects_outside_a').DataTable(
+                     {"paging": false}
+                );
+            {% else %}
+                $('#projects_outside_a').DataTable();
+            {% endif %}
         });
 
     </script>
+
 {% endblock %}
 

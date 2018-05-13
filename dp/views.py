@@ -26,10 +26,15 @@ def index(request):
     finished_projects = project_list.filter(state__in=['3','5'])
     actual_projects = project_list.filter(state__in=['1','2','4'])
     project_count = actual_projects.count()
-    context['employee_list'] = Employee.objects.all()
+    finished_pr_count = finished_projects.count()
+    employee_list = Employee.objects.all()
+    employee_count = employee_list.count
+    context['employee_list'] = employee_list
+    context['employee_count'] = employee_count
     context['finished_projects'] = finished_projects
     context['actual_projects'] = actual_projects
     context['project_count'] = project_count
+    context['finished_pr_count'] = finished_pr_count
 
     return render(request, "dp/index.html", context)
 
@@ -47,6 +52,7 @@ def portfolio_detail(request, portfolio_id):
 @login_required
 def project_detail(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
+    members = ProjectMember.objects.filter(project_id=project_id)
     is_member = len(request.user.employee.projectmember_set.filter(project_id=project_id)) > 0
     finished_tasks = Task.objects.filter(in_project=project_id, state='3').all()
     actual_tasks = Task.objects.filter(in_project=project_id)
@@ -54,20 +60,30 @@ def project_detail(request, project_id):
     risks_tmp = ProjectRisk.objects.filter(project_id = project_id)
     finished_risks = risks_tmp.filter(risk_state__in=[2,3])
     actual_risks =  risks_tmp.filter(risk_state__in=[0,1])
+
+    actual_risk_count = actual_risks.count()
+    finished_risks_count = finished_risks.count()
+    actual_tasks_count = actual_tasks.count()
+    finished_tasks_count = finished_tasks.count()
+    member_count = members.count()
+
     useable_budget = None
     if  project.plan_budget is not None:
         useable_budget = project.plan_budget - project.used_budget
 
     return render(request, 'dp/project_detail.html',
                   {'project': project, 'is_member': is_member, 'actual_tasks': actual_tasks, 'useable_budget': useable_budget,
-                   'finished_tasks': finished_tasks, 'finished_risks': finished_risks,'actual_risks': actual_risks, 'error_message': "You didn't select a choice."})
-
+                   'finished_tasks': finished_tasks, 'finished_risks': finished_risks,'actual_risks': actual_risks,
+                   'actual_risk_count': actual_risk_count, 'finished_risks_count': finished_risks_count, 'actual_tasks_count': actual_tasks_count,
+                   'finished_tasks_count': finished_tasks_count, 'member_count': member_count,})
 
 @login_required
 def employee_detail(request, employee_id):
     employee = get_object_or_404(Employee, pk=employee_id)
+    abilities = MemberAbility.objects.filter(member_id = employee_id)
+    ability_count = abilities.count()
     return render(request, 'dp/employee_detail.html',
-                  {'employee': employee, 'error_message': "You didn't select a choice."})
+                  {'employee': employee, 'ability_count':ability_count, 'error_message': "You didn't select a choice."})
 
 
 def login_page(request):
@@ -295,7 +311,7 @@ def new_emp_ability_handler(request, employee_id):
 
 class ProjectUpdateView(UpdateView):
     model = Project
-    fields = ['progress', 'state', 'start_date', 'used_budget', 'plan_budget', 'urgency', 'importance', 'project_manager']
+    fields = ['progress', 'state', 'start_date','deadline','possible_income', 'used_budget', 'plan_budget', 'urgency', 'importance', 'project_manager']
     template_name = "dp/project_update_form.html"
 
 class PortfolioUpdateView(UpdateView):

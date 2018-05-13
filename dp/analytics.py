@@ -80,14 +80,15 @@ def calculate_ongoing_proj_score(project):
             result += NOT_URG_NOT_IMP_POINTS
 
     project_evm = project.evm()
-    if project_evm.cpi > CPI_POSITIVE_HIGH:
-        result += CPI_POSITIVE_HIGH_POINTS
-    elif project_evm.cpi > CPI_POSITIVE:
-        result += CPI_POSITIVE_POINTS
-    elif project_evm.cpi > CPI_NEGATIVE:
-        result += CPI_NEGATIVE_POINTS
-    else:
-        result += CPI_NEGATIVE_HIGH_POINTS
+    if project_evm.cpi:
+        if project_evm.cpi > CPI_POSITIVE_HIGH:
+            result += CPI_POSITIVE_HIGH_POINTS
+        elif project_evm.cpi > CPI_POSITIVE:
+            result += CPI_POSITIVE_POINTS
+        elif project_evm.cpi > CPI_NEGATIVE:
+            result += CPI_NEGATIVE_POINTS
+        else:
+            result += CPI_NEGATIVE_HIGH_POINTS
 
 
     return result

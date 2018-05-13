@@ -8,11 +8,8 @@
     {% load static %}
 
     <link rel="stylesheet" type="text/css" href="{% static 'dp/css/index.css' %}"/>
-    <div class="limiter">
 
-        <div class="container-table100">
-            <br>
-            <br>
+        <div class="container-table100 container">
             <div class="wrap-table100">
                 <div class="table100 ver1 m-b-110">
                     <table data-vertable="ver1">
@@ -93,7 +90,11 @@
                                     {{ project.risk }}
                                 </td>
                                 <td class="column100 column4" data-column="column4">
-                                    {{ project.possible_income }}
+                                    {% if project.possible_income is None %}
+                                        Not set
+                                    {% else %}
+                                        {{ project.possible_income }}
+                                    {% endif %}
                                 </td>
                                 <td class="column100 column4" data-column="column4">
                                     {{ project.get_importance_display }}
@@ -117,7 +118,10 @@
                     <br>
                     {% if   user.is_superuser or user.employee.id == project.project_manager.id or user.employee.id == project.portfolio.portfolio_manager.id or user.employee.position == 'manager' %}
                         {% if project.state == "2" or project.state == "4" %}
-                            Analysis of cost using EVM method
+                            <div class="ttl">
+                                <h2>Analysis of cost using EVM method</h2>
+                                <span class="sexy_line"></span>
+                            </div>
                             <table>
                                 <thead>
                                 <tr class="row100 head">
@@ -126,7 +130,8 @@
                                     <th rowspan="2" class="column100 column7" data-column="column7">Cost performance
                                         index
                                     </th>
-                                    <th rowspan="2" class="column100 column8" data-column="column8">Schedule performance
+                                    <th rowspan="2" class="column100 column8" data-column="column8">Schedule
+                                        performance
                                         index
                                     </th>
                                     <th colspan="2" style="text-align: center;" class="column100 column8"
@@ -162,22 +167,28 @@
                                 </tbody>
                             </table>
                             <br>
+                            <br>
                         {% endif %}
                     {% endif %}
+                </div>
+
+                <div class="table100 ver1 m-b-110">
 
 
+                    <div class="ttl">
+                        <h2>Risks affecting project</h2>
+                        <span class="sexy_line"></span>
+                    </div>
                     {% if user.is_superuser or user.employee.id == project.project_manager.id or project.portfolio is Null and user.employee.position == 'manager' or project.portfolio.portfolio_manager_id == user.employee.id %}
                         <div style="float:right">
                             If risk doesn't exist :
-                            <a href="{% url 'dp:new_risk' project.id %}"  class="btn-gradient orange">Create new risk</a>
+                            <a href="{% url 'dp:new_risk' project.id %}" class="btn-gradient cyan">Create new risk</a>
                         </div>
-                        <a href="{% url 'dp:new_proj_risk' project.id %}" class="btn-gradient orange"> Add new risk to project</a>
-                        <br>
+                        <a href="{% url 'dp:new_proj_risk' project.id %}" class="btn-gradient cyan"> Add new risk to
+                            project</a>
                     {% endif %}
-
                     {% if actual_risks %}
 
-                        Risk affecting project
                         <table id="act_risks">
                             <thead>
                             <tr class="row100 head">
@@ -223,12 +234,16 @@
                             </tbody>
                         </table>
                         <br>
+                        <br>
                     {% endif %}
 
 
                     {% if finished_risks %}
                         <br>
-                        Resolved risks and risks that will not happen
+                        <div class="ttl">
+                            <h2>Resolved risks</h2>
+                            <span class="sexy_line"></span>
+                        </div>
                         <table id="fin_risks">
                             <thead>
                             <tr class="row100 head">
@@ -274,21 +289,21 @@
                             </tbody>
                         </table>
                         <br>
-                    {% endif %}
-
-
-                    <br>
-                    <br>
-                    {% if user.is_superuser or user.employee.id == project.project_manager.id or project.portfolio is Null and user.employee.position == 'manager' or project.portfolio.portfolio_manager_id == user.employee.id %}
-                        <a href="{% url 'dp:new_task' project.id %}" class="btn-gradient orange" >Create new task</a>
-                        <br>
                         <br>
                     {% endif %}
-
 
                     {% if actual_tasks %}
                         {% if user.is_superuser or user.employee.id == project.project_manager.id or project.portfolio is Null and user.employee.position == 'manager' or project.portfolio.portfolio_manager_id == user.employee.id or is_member == True %}
-                            Tasks:
+                            <div class="ttl">
+                                <h2>Tasks</h2>
+                                <span class="sexy_line"></span>
+                            </div>
+                            {% if user.is_superuser or user.employee.id == project.project_manager.id or project.portfolio is Null and user.employee.position == 'manager' or project.portfolio.portfolio_manager_id == user.employee.id %}
+                                <a href="{% url 'dp:new_task' project.id %}" class="btn-gradient cyan">Create new
+                                    task</a>
+                                <br>
+                                <br>
+                            {% endif %}
                             <table id="act_tasks">
                                 <thead>
                                 <tr class="row100 head">
@@ -328,12 +343,17 @@
                                 </tbody>
 
                             </table>
+                            <br>
+                            <br>
                         {% endif %}
                     {% endif %}
-                    <br>
+
                     {% if finished_tasks %}
                         {% if user.is_superuser or user.employee.id == project.project_manager.id or project.portfolio is Null and user.employee.position == 'manager' or project.portfolio.portfolio_manager_id == user.employee.id or is_member == True %}
-                            Finished tasks:
+                            <div class="ttl">
+                                <h2>Finished tasks</h2>
+                                <span class="sexy_line"></span>
+                            </div>
                             <table id="fin_tasks">
                                 <thead>
                                 <tr class="row100 head">
@@ -367,12 +387,16 @@
                                 {% endfor %}
                                 </tbody>
                             </table>
+                            <br>
+                            <br>
                         {% endif %}
-                        <br>
                     {% endif %}
 
                     {% if project.projectmember_set.all %}
-                        Project team:
+                        <div class="ttl">
+                            <h2>Project team</h2>
+                            <span class="sexy_line"></span>
+                        </div>
                         <table id="employees">
                             <thead>
                             <tr class="row100 head">
@@ -397,6 +421,8 @@
                             </tbody>
 
                         </table>
+                        <br>
+                        <br>
                     {% endif %}
                     <br>
                 </div>
@@ -410,19 +436,76 @@
 {% block javascript %}
     <script>
         $(document).ready(function () {
-            $('#act_risks').DataTable(
-                {
-                    "order": [[5, "desc"]]
-                }
-            );
-            $('#fin_risks').DataTable(
-            );
-            $('#employees').DataTable(
-            );
-            $('#act_tasks').DataTable(
-            );
-            $('#fin_tasks').DataTable(
-            );
+
+            {% if actual_risk_count < 10 %}
+                $('#act_risks').DataTable(
+                    {
+                        "paging": false,
+                        "info": false,
+                        "order": [[5, "desc"]]
+                    }
+                );
+            {% else %}
+                $('#act_risks').DataTable(
+                    {
+                        "order": [[5, "desc"]]
+                    }
+                );
+            {% endif %}
+
+            {% if finished_risks_count < 10 %}
+                $('#fin_risks').DataTable(
+                    {
+                        "paging": false,
+                        "info": false,
+                        "order": [[5, "desc"]]
+                    }
+                );
+            {% else %}
+                $('#fin_risks').DataTable(
+                    {
+                        "order": [[5, "desc"]]
+                    }
+                );
+            {% endif %}
+
+            {% if member_count < 10 %}
+                $('#employees').DataTable(
+                    {
+                        "paging": false,
+                        "info": false
+                    }
+                );
+            {% else %}
+                $('#employees').DataTable();
+            {% endif %}
+
+
+            {% if actual_tasks_count < 10 %}
+                $('#act_tasks').DataTable(
+                    {
+                        "paging": false,
+                        "info": false,
+                        "order": [[3, "desc"]]
+                    }
+                );
+            {% else %}
+                $('#act_tasks').DataTable();
+            {% endif %}
+
+
+
+            {% if finished_tasks_count < 10 %}
+                $('#fin_tasks').DataTable(
+                    {
+                        "paging": false,
+                        "info": false
+                    }
+                );
+            {% else %}
+                $('#fin_tasks').DataTable();
+            {% endif %}
+
         });
     </script>
 {% endblock %}

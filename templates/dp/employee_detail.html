@@ -1,18 +1,19 @@
 {% extends "dp/base.html" %}
-   {% load static %}
+{% load static %}
 {% block title %}
     <h1>Employee information</h1>
 {% endblock %}
 
 {% block cssblock %}
-   <link rel="stylesheet" type="text/css" href="{% static 'dp/css/index.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'dp/css/index.css' %}"/>
 {% endblock %}
 
 {% block content %}
     <div class="container">
-    <div class="info">
-         <div class="row">
-                <div class="col-sm-3">
+    <div class="row">
+        <div class="info col-sm-8 col-sm-offset-2">
+                <div class="row">
+                <div class="col-sm-5">
                     {% if employee.photo %}
                         <img class="image" alt="image" src="{{ employee.photo.url }}"/>
                     {% else %}
@@ -79,35 +80,37 @@
                         </tbody>
                     </table>
                 </div>
-
+                </div>
             </div>
+
         </div>
     </div>
 
 
 
     {% if  employee.memberability_set.all or employee.portfolio_set.all or employee.project_set.all or employee.projectmember_set.all or  employee.assignedtask_set.all or user.is_superuser and not user.employee.id == employee.id or user.employee.position == "manager" and not user.employee.id == employee.id %}
-        <div class="ability" >
+        <div class="ability">
             <div class="container-table100">
                 <div class="wrap-table100">
-                    {% if user.is_superuser or user.employee.position == "manager" %}
-                        <div style="float: right">
-                            If ability doesn't exist :
-                            <a href="{% url 'dp:new_ability' employee.id %}" class="btn-gradient orange">Create new
-                                ability</a>
+
+
+                    {% if employee.memberability_set.all and user.is_superuser or employee.memberability_set.all and user.employee.position == "manager" and not user.employee.id == employee.id %}
+                        <div class="ttl">
+                            <h2>Users abilities</h2>
+                            <span class="sexy_line"></span>
                         </div>
+                        {% if user.is_superuser or user.employee.position == "manager" and not  user.employee.id == employee.id %}
+                            <div style="float: right">
+                                If ability doesn't exist :
+                                <a href="{% url 'dp:new_ability' employee.id %}" class="btn-gradient cyan">Create new
+                                    ability</a>
+                            </div>
 
-                        <a href="{% url 'dp:new_emp_ability' employee.id %}" class="btn-gradient orange">Add new ability
-                            to employee</a>
+                            <a href="{% url 'dp:new_emp_ability' employee.id %}" class="btn-gradient cyan">Add new
+                                ability
+                                to employee</a>
+                        {% endif %}
 
-
-                    {% endif %}
-
-                    <br>
-
-                    {% if employee.memberability_set.all and user.is_superuser or employee.memberability_set.all and user.employee.position == "manager" or employee.memberability_set.all and  user.is_authenticated and not user.employee.id == employee.id %}
-
-                        User have next abilities:
                         <div class="table100 ver1 m-b-110">
                             <table id="ability">
                                 <thead>
@@ -143,7 +146,11 @@
                     {% if employee.portfolio_set.all %}
                         <br>
                         <br>
-                        Is manager of following portfolios
+                        <div class="ttl">
+                            <h2>Manager of following portfolios</h2>
+                            <span class="sexy_line"></span>
+                        </div>
+
 
                         <div class="table100 ver1 m-b-110">
                             <table data-vertable="ver1">
@@ -175,7 +182,11 @@
                     {% if employee.project_set.all %}
                         <br>
                         <br>
-                        Is manager of following projects
+                        <div class="ttl">
+                            <h2>Manager of following projects</h2>
+                            <span class="sexy_line"></span>
+                        </div>
+
 
                         <div class="table100 ver1 m-b-110">
                             <table data-vertable="ver1">
@@ -212,7 +223,11 @@
                     {% if employee.projectmember_set.all %}
                         <br>
                         <br>
-                        Is part of following projects
+                        <div class="ttl">
+                            <h2>Part of following projects</h2>
+                            <span class="sexy_line"></span>
+                        </div>
+
 
                         <div class="table100 ver1 m-b-110">
                             <table data-vertable="ver1">
@@ -244,7 +259,11 @@
                     {% if employee.assignedtask_set.all %}
                         <br>
                         <br>
-                        Have of following tasks to do
+                        <div class="ttl">
+                            <h2>Tasks to do</h2>
+                            <span class="sexy_line"></span>
+                        </div>
+
 
                         <div class="table100 ver1 m-b-110">
                             <table data-vertable="ver1">
@@ -294,11 +313,22 @@
 {% block javascript %}
     <script>
         $(document).ready(function () {
-            $('#ability').DataTable(
-                {
-                    "order": [[1, "desc"]]
-                }
-            );
+
+            {% if ability_count < 10 %}
+                $('#ability').DataTable(
+                    {
+                        "paging": false,
+                        "info": false,
+                        "order": [[1, "desc"]]
+                    }
+                );
+            {% else %}
+                $('#ability').DataTable(
+                    {
+                        "order": [[1, "desc"]]
+                    }
+                );
+            {% endif %}
         });
     </script>
 {% endblock %}
