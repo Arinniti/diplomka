@@ -9,7 +9,7 @@
         <div class="col-md-4 col-md-offset-4">
             <div class="form-style-2">
 
-                <div class="form-style-2-heading">Provide your information</div>
+                <div class="form-style-2-heading">Create new project</div>
                 {% if portfolio_id %}
                     <form action="{% url "dp:new_port_project" portfolio_id %}" method="post">
                         {% csrf_token %}
@@ -34,5 +34,6 @@
     <script src="{% static 'dp/js/jquery.multi-select.js' %}"></script>
     <script>
         $('#id_key_words').multiSelect()
+         $('#id_members').multiSelect()
     </script>
 {% endblock %}

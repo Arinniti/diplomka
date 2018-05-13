@@ -31,6 +31,13 @@ class NewProjectForm(BaseForm):
             widget=forms.SelectMultiple(),
             choices=[] if key_word_list is None else key_word_list,
         )
+
+        self.fields["members"] = forms.MultipleChoiceField(
+            required=False,
+            initial=True,
+            widget=forms.SelectMultiple(),
+            choices=[] if employee_list is None else employee_list,
+        )
         #self.fields['project_manager'].widget.attrs = {'class': 'select'}
         super(NewProjectForm, self).full_clean()
     name = forms.CharField()

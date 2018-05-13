@@ -128,6 +128,8 @@ class ProjectMember(models.Model):
     position = models.CharField(max_length=200, null=True)
     def __str__(self):
         return "%s in %s" % (self.member.user.username, self.project.project_name)
+    def get_absolute_url(self):
+        return reverse('dp:project_detail', kwargs={'project_id': self.project_id})
 
 class Ability(models.Model):
     name = models.CharField(max_length=50, null=True)

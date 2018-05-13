@@ -2,22 +2,33 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2231d7ed-1c45-4d21-9195-70a8a53dd2f2" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/dp/static/dp/img/sort_asc.png" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dp/static/dp/img/sort_asc_disabled.png" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dp/static/dp/img/sort_both.png" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dp/static/dp/img/sort_desc.png" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dp/static/dp/img/sort_desc_disabled.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/templates/dp/projmember_update_form.html" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
-      <change beforePath="$PROJECT_DIR$/dp/analytics.py" afterPath="$PROJECT_DIR$/dp/analytics.py" />
-      <change beforePath="$PROJECT_DIR$/dp/static/dp/css/footer.css" afterPath="$PROJECT_DIR$/dp/static/dp/css/footer.css" />
-      <change beforePath="$PROJECT_DIR$/dp/static/dp/css/index.css" afterPath="$PROJECT_DIR$/dp/static/dp/css/index.css" />
+      <change beforePath="$PROJECT_DIR$/dp/forms.py" afterPath="$PROJECT_DIR$/dp/forms.py" />
+      <change beforePath="$PROJECT_DIR$/dp/models.py" afterPath="$PROJECT_DIR$/dp/models.py" />
+      <change beforePath="$PROJECT_DIR$/dp/static/dp/css/nav.css" afterPath="$PROJECT_DIR$/dp/static/dp/css/nav.css" />
       <change beforePath="$PROJECT_DIR$/dp/static/dp/css/style.css" afterPath="$PROJECT_DIR$/dp/static/dp/css/style.css" />
+      <change beforePath="$PROJECT_DIR$/dp/templatetags/extratags.py" afterPath="$PROJECT_DIR$/dp/templatetags/extratags.py" />
+      <change beforePath="$PROJECT_DIR$/dp/urls.py" afterPath="$PROJECT_DIR$/dp/urls.py" />
       <change beforePath="$PROJECT_DIR$/dp/views.py" afterPath="$PROJECT_DIR$/dp/views.py" />
+      <change beforePath="$PROJECT_DIR$/templates/dp/ability_update_form.html" afterPath="$PROJECT_DIR$/templates/dp/ability_update_form.html" />
+      <change beforePath="$PROJECT_DIR$/templates/dp/authentication.html" afterPath="$PROJECT_DIR$/templates/dp/authentication.html" />
+      <change beforePath="$PROJECT_DIR$/templates/dp/base.html" afterPath="$PROJECT_DIR$/templates/dp/base.html" />
       <change beforePath="$PROJECT_DIR$/templates/dp/employee_detail.html" afterPath="$PROJECT_DIR$/templates/dp/employee_detail.html" />
       <change beforePath="$PROJECT_DIR$/templates/dp/index.html" afterPath="$PROJECT_DIR$/templates/dp/index.html" />
+      <change beforePath="$PROJECT_DIR$/templates/dp/new_ability.html" afterPath="$PROJECT_DIR$/templates/dp/new_ability.html" />
+      <change beforePath="$PROJECT_DIR$/templates/dp/new_mem_ability.html" afterPath="$PROJECT_DIR$/templates/dp/new_mem_ability.html" />
+      <change beforePath="$PROJECT_DIR$/templates/dp/new_proj_risk.html" afterPath="$PROJECT_DIR$/templates/dp/new_proj_risk.html" />
+      <change beforePath="$PROJECT_DIR$/templates/dp/new_project.html" afterPath="$PROJECT_DIR$/templates/dp/new_project.html" />
+      <change beforePath="$PROJECT_DIR$/templates/dp/new_risk.html" afterPath="$PROJECT_DIR$/templates/dp/new_risk.html" />
+      <change beforePath="$PROJECT_DIR$/templates/dp/new_task.html" afterPath="$PROJECT_DIR$/templates/dp/new_task.html" />
       <change beforePath="$PROJECT_DIR$/templates/dp/portfolio_detail.html" afterPath="$PROJECT_DIR$/templates/dp/portfolio_detail.html" />
+      <change beforePath="$PROJECT_DIR$/templates/dp/portfolio_update_form.html" afterPath="$PROJECT_DIR$/templates/dp/portfolio_update_form.html" />
       <change beforePath="$PROJECT_DIR$/templates/dp/project_detail.html" afterPath="$PROJECT_DIR$/templates/dp/project_detail.html" />
+      <change beforePath="$PROJECT_DIR$/templates/dp/project_update_form.html" afterPath="$PROJECT_DIR$/templates/dp/project_update_form.html" />
+      <change beforePath="$PROJECT_DIR$/templates/dp/projrisk_update_form.html" afterPath="$PROJECT_DIR$/templates/dp/projrisk_update_form.html" />
+      <change beforePath="$PROJECT_DIR$/templates/dp/task_update_form.html" afterPath="$PROJECT_DIR$/templates/dp/task_update_form.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -62,56 +73,17 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dp/views.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="243">
-              <caret line="84" column="53" lean-forward="false" selection-start-line="84" selection-start-column="53" selection-end-line="84" selection-end-column="53" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/templates/dp/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="253">
-              <caret line="207" column="83" lean-forward="false" selection-start-line="207" selection-start-column="76" selection-end-line="207" selection-end-column="83" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="portfolio_detail.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/dp/portfolio_detail.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="215">
-              <caret line="18" column="20" lean-forward="true" selection-start-line="18" selection-start-column="20" selection-end-line="18" selection-end-column="59" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="project_detail.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/dp/project_detail.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="9" column="41" lean-forward="true" selection-start-line="9" selection-start-column="41" selection-end-line="9" selection-end-column="42" />
-              <folding>
-                <element signature="e#385#4461#0#HTML" expanded="false" />
-                <marker date="1526171665074" expanded="false" signature="363:10609" ph="..." />
-                <marker date="1526171665074" expanded="false" signature="10662:26657" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="employee_detail.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="employee_detail.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/templates/dp/employee_detail.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="168">
-              <caret line="13" column="51" lean-forward="false" selection-start-line="12" selection-start-column="4" selection-end-line="13" selection-end-column="51" />
-              <folding />
+            <state relative-caret-position="277">
+              <caret line="132" column="126" lean-forward="false" selection-start-line="132" selection-start-column="126" selection-end-line="132" selection-end-column="126" />
+              <folding>
+                <element signature="n#if#4;n#!!top" expanded="false" />
+                <element signature="n#if#5;n#!!top" expanded="false" />
+                <element signature="n#if#6;n#!!top" expanded="false" />
+                <element signature="n#if#7;n#!!top" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -147,6 +119,11 @@
       <find>/images</find>
       <find>10</find>
       <find>105</find>
+      <find>subtra</find>
+      <find>mul</find>
+      <find>div</find>
+      <find>height</find>
+      <find>position</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -178,42 +155,43 @@
         <option value="$PROJECT_DIR$/templates/dp/project_update.html" />
         <option value="$PROJECT_DIR$/templates/dp/tast_update_form.html" />
         <option value="$PROJECT_DIR$/diplomka/settings.py" />
-        <option value="$PROJECT_DIR$/dp/urls.py" />
         <option value="$PROJECT_DIR$/dp/analytic_settings.py" />
         <option value="$PROJECT_DIR$/dp/choices.py" />
         <option value="$PROJECT_DIR$/dp/admin.py" />
         <option value="$PROJECT_DIR$/dp/tags.py" />
-        <option value="$PROJECT_DIR$/dp/templatetags/extratags.py" />
         <option value="$PROJECT_DIR$/dp/templatetags/myfilters.py" />
         <option value="$PROJECT_DIR$/dp/static/dp/css/multi-select.css" />
-        <option value="$PROJECT_DIR$/templates/dp/authentication.html" />
-        <option value="$PROJECT_DIR$/templates/dp/new_project.html" />
-        <option value="$PROJECT_DIR$/templates/dp/portfolio_update_form.html" />
-        <option value="$PROJECT_DIR$/templates/dp/ability_update_form.html" />
-        <option value="$PROJECT_DIR$/templates/dp/new_mem_ability.html" />
-        <option value="$PROJECT_DIR$/templates/dp/new_proj_risk.html" />
-        <option value="$PROJECT_DIR$/templates/dp/new_risk.html" />
-        <option value="$PROJECT_DIR$/templates/dp/new_task.html" />
-        <option value="$PROJECT_DIR$/templates/dp/project_update_form.html" />
-        <option value="$PROJECT_DIR$/templates/dp/task_update_form.html" />
-        <option value="$PROJECT_DIR$/dp/forms.py" />
-        <option value="$PROJECT_DIR$/dp/static/dp/css/nav.css" />
-        <option value="$PROJECT_DIR$/templates/dp/projrisk_update_form.html" />
-        <option value="$PROJECT_DIR$/templates/dp/base.html" />
-        <option value="$PROJECT_DIR$/templates/dp/new_ability.html" />
         <option value="$PROJECT_DIR$/dp/static/dp/css/form.css" />
         <option value="$PROJECT_DIR$/dp/analytics.py" />
         <option value="$PROJECT_DIR$/dp/static/dp/css/jquery.dataTables.min.css" />
         <option value="$PROJECT_DIR$/dp/static/dp/js/jquery-1.12.4.js" />
-        <option value="$PROJECT_DIR$/dp/models.py" />
-        <option value="$PROJECT_DIR$/dp/views.py" />
-        <option value="$PROJECT_DIR$/dp/static/dp/css/style.css" />
-        <option value="$PROJECT_DIR$/dp/static/dp/css/footer.css" />
-        <option value="$PROJECT_DIR$/templates/dp/employee_detail.html" />
-        <option value="$PROJECT_DIR$/templates/dp/portfolio_detail.html" />
         <option value="$PROJECT_DIR$/dp/static/dp/css/index.css" />
-        <option value="$PROJECT_DIR$/templates/dp/project_detail.html" />
+        <option value="$PROJECT_DIR$/dp/templatetags/extratags.py" />
+        <option value="$PROJECT_DIR$/templates/dp/portfolio_detail.html" />
+        <option value="$PROJECT_DIR$/dp/static/dp/css/nav.css" />
+        <option value="$PROJECT_DIR$/dp/static/dp/css/style.css" />
         <option value="$PROJECT_DIR$/templates/dp/index.html" />
+        <option value="$PROJECT_DIR$/dp/static/dp/css/footer.css" />
+        <option value="$PROJECT_DIR$/templates/dp/base.html" />
+        <option value="$PROJECT_DIR$/templates/dp/authentication.html" />
+        <option value="$PROJECT_DIR$/templates/dp/projrisk_update_form.html" />
+        <option value="$PROJECT_DIR$/templates/dp/ability_update_form.html" />
+        <option value="$PROJECT_DIR$/templates/dp/new_task.html" />
+        <option value="$PROJECT_DIR$/templates/dp/project_update_form.html" />
+        <option value="$PROJECT_DIR$/templates/dp/task_update_form.html" />
+        <option value="$PROJECT_DIR$/templates/dp/portfolio_update_form.html" />
+        <option value="$PROJECT_DIR$/templates/dp/new_risk.html" />
+        <option value="$PROJECT_DIR$/templates/dp/new_proj_risk.html" />
+        <option value="$PROJECT_DIR$/templates/dp/new_mem_ability.html" />
+        <option value="$PROJECT_DIR$/templates/dp/new_ability.html" />
+        <option value="$PROJECT_DIR$/dp/forms.py" />
+        <option value="$PROJECT_DIR$/templates/dp/new_project.html" />
+        <option value="$PROJECT_DIR$/dp/urls.py" />
+        <option value="$PROJECT_DIR$/dp/views.py" />
+        <option value="$PROJECT_DIR$/dp/models.py" />
+        <option value="$PROJECT_DIR$/templates/dp/projmember_update_form.html" />
+        <option value="$PROJECT_DIR$/templates/dp/project_detail.html" />
+        <option value="$PROJECT_DIR$/templates/dp/employee_detail.html" />
       </list>
     </option>
   </component>
@@ -245,7 +223,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -321,6 +298,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="Scratches" />
     </panes>
   </component>
@@ -509,7 +487,14 @@
       <option name="project" value="LOCAL" />
       <updated>1526150727256</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="gui">
+      <created>1526173005436</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1526173005436</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -522,13 +507,13 @@
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24724409" sideWeight="0.46778917" order="18" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14934114" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19765739" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15373352" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15300146" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="SciView" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.38740158" sideWeight="0.63762814" order="19" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22204724" sideWeight="0.63762814" order="19" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="20" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32913387" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
@@ -556,21 +541,22 @@
     <MESSAGE value="optimization, settings(user) file,  ability new/add, project/task/ability/risk forms updates," />
     <MESSAGE value="nav page GUI" />
     <MESSAGE value="footer, button, .." />
-    <option name="LAST_COMMIT_MESSAGE" value="footer, button, .." />
+    <MESSAGE value="gui" />
+    <option name="LAST_COMMIT_MESSAGE" value="gui" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/dp/views.py</url>
-          <line>304</line>
+          <line>321</line>
           <option name="timeStamp" value="101" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="103" />
+      <option name="time" value="108" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="Python.DjangoServer">
@@ -581,78 +567,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="das://table:/7ca40007/1cde3ea4-660f-43f7-aee4-359678a3b32f/main.dp_risk">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dp/choices.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="22" column="6" lean-forward="false" selection-start-line="22" selection-start-column="5" selection-end-line="22" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dp/analytic_settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="18" lean-forward="false" selection-start-line="12" selection-start-column="16" selection-end-line="12" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://table:/7ca40007/1cde3ea4-660f-43f7-aee4-359678a3b32f/main.dp_projectrisk">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://table:/7ca40007/1cde3ea4-660f-43f7-aee4-359678a3b32f/main.dp_project">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dp/admin.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://table:/7ca40007/1cde3ea4-660f-43f7-aee4-359678a3b32f/main.auth_user">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://table:/7ca40007/1cde3ea4-660f-43f7-aee4-359678a3b32f/main.dp_employee">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dp/templatetags/extratags.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="42" lean-forward="false" selection-start-line="12" selection-start-column="42" selection-end-line="12" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dp/static/dp/js/nav.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dp/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -676,14 +590,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dp/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="15" column="28" lean-forward="true" selection-start-line="15" selection-start-column="28" selection-end-line="15" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dp/templatetags/myfilters.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
@@ -695,109 +601,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/dp/authentication.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="82" lean-forward="false" selection-start-line="7" selection-start-column="82" selection-end-line="7" selection-end-column="82" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/dp/ability_update_form.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="38">
-          <caret line="8" column="35" lean-forward="false" selection-start-line="8" selection-start-column="35" selection-end-line="8" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/dp/new_proj_risk.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="7" column="35" lean-forward="false" selection-start-line="7" selection-start-column="35" selection-end-line="7" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/dp/new_risk.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="26" lean-forward="false" selection-start-line="7" selection-start-column="26" selection-end-line="7" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/dp/new_task.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="7" column="35" lean-forward="false" selection-start-line="7" selection-start-column="35" selection-end-line="7" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/dp/task_update_form.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="7" column="26" lean-forward="false" selection-start-line="7" selection-start-column="26" selection-end-line="7" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/dp/project_update_form.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="19" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/dp/portfolio_update_form.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="35" lean-forward="false" selection-start-line="8" selection-start-column="35" selection-end-line="8" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/dp/new_mem_ability.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-95">
-          <caret line="7" column="35" lean-forward="false" selection-start-line="7" selection-start-column="35" selection-end-line="7" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/dp/new_project.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="35" lean-forward="false" selection-start-line="7" selection-start-column="26" selection-end-line="7" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dp/static/dp/css/nav.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="31" column="18" lean-forward="false" selection-start-line="31" selection-start-column="18" selection-end-line="31" selection-end-column="18" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/media/male-profile-user-shadow_318-40244.jpg">
       <provider selected="true" editor-type-id="images">
         <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/dp/projrisk_update_form.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="19" lean-forward="true" selection-start-line="7" selection-start-column="19" selection-end-line="7" selection-end-column="19" />
-          <folding />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/dp/static/dp/css/multi-select.css">
@@ -812,22 +621,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-442">
           <caret line="16" column="14" lean-forward="false" selection-start-line="16" selection-start-column="14" selection-end-line="16" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/dp/new_ability.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="10" column="37" lean-forward="false" selection-start-line="10" selection-start-column="37" selection-end-line="10" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/dp/base.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-799">
-          <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -862,7 +655,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="24" lean-forward="false" selection-start-line="0" selection-start-column="22" selection-end-line="0" selection-end-column="24" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -870,24 +662,265 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="234">
           <caret line="8714" column="42" lean-forward="false" selection-start-line="8714" selection-start-column="42" selection-end-line="8714" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://table:/7ca40007/1cde3ea4-660f-43f7-aee4-359678a3b32f/main.dp_organizationstrategy">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dp/analytic_settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="18" lean-forward="false" selection-start-line="12" selection-start-column="16" selection-end-line="12" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dp/templatetags/extratags.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="341">
+          <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dp/static/dp/css/nav.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="13" lean-forward="false" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/dp/authentication.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" column="14" lean-forward="false" selection-start-line="13" selection-start-column="14" selection-end-line="23" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/dp/base.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="106">
+          <caret line="68" column="56" lean-forward="false" selection-start-line="68" selection-start-column="56" selection-end-line="68" selection-end-column="56" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dp/static/dp/css/footer.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="28" column="30" lean-forward="false" selection-start-line="28" selection-start-column="30" selection-end-line="28" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dp/static/dp/css/index.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="27" column="19" lean-forward="true" selection-start-line="27" selection-start-column="19" selection-end-line="27" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dp/static/dp/css/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="527">
+          <caret line="58" column="0" lean-forward="true" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/dp/ability_update_form.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="106">
+          <caret line="12" column="64" lean-forward="false" selection-start-line="12" selection-start-column="64" selection-end-line="12" selection-end-column="64" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/dp/project_update_form.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="106">
+          <caret line="11" column="64" lean-forward="false" selection-start-line="11" selection-start-column="64" selection-end-line="11" selection-end-column="64" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dp/models.py">
+    <entry file="file://$PROJECT_DIR$/templates/dp/task_update_form.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="351">
-          <caret line="69" column="25" lean-forward="true" selection-start-line="69" selection-start-column="25" selection-end-line="69" selection-end-column="25" />
+        <state relative-caret-position="204">
+          <caret line="15" column="57" lean-forward="true" selection-start-line="15" selection-start-column="57" selection-end-line="15" selection-end-column="57" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/dp/new_risk.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="24" column="23" lean-forward="false" selection-start-line="24" selection-start-column="23" selection-end-line="24" selection-end-column="23" />
+          <folding>
+            <element signature="e#585#610#0#HTML" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/dp/new_proj_risk.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="15" column="80" lean-forward="false" selection-start-line="15" selection-start-column="80" selection-end-line="15" selection-end-column="80" />
+          <folding>
+            <element signature="e#593#618#0#HTML" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/dp/new_task.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="11" column="65" lean-forward="false" selection-start-line="11" selection-start-column="65" selection-end-line="11" selection-end-column="65" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://table:/7ca40007/1cde3ea4-660f-43f7-aee4-359678a3b32f/main.dp_risk">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://table:/7ca40007/1cde3ea4-660f-43f7-aee4-359678a3b32f/main.dp_ability">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/dp/new_mem_ability.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="15" column="80" lean-forward="false" selection-start-line="15" selection-start-column="80" selection-end-line="15" selection-end-column="80" />
+          <folding>
+            <element signature="e#600#625#0#HTML" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://table:/7ca40007/1cde3ea4-660f-43f7-aee4-359678a3b32f/main.dp_assignedtask">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://table:/7ca40007/1cde3ea4-660f-43f7-aee4-359678a3b32f/main.dp_task">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/dp/new_ability.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="16" column="80" lean-forward="false" selection-start-line="16" selection-start-column="80" selection-end-line="16" selection-end-column="80" />
+          <folding>
+            <element signature="e#593#618#0#HTML" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/dp/forms.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="393">
-          <caret line="33" column="9" lean-forward="false" selection-start-line="33" selection-start-column="9" selection-end-line="33" selection-end-column="9" />
+        <state relative-caret-position="527">
+          <caret line="34" column="26" lean-forward="true" selection-start-line="34" selection-start-column="26" selection-end-line="34" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/dp/portfolio_update_form.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="34" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/dp/projrisk_update_form.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="61" lean-forward="false" selection-start-line="12" selection-start-column="61" selection-end-line="12" selection-end-column="61" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://table:/7ca40007/1cde3ea4-660f-43f7-aee4-359678a3b32f/main.dp_employee">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://table:/7ca40007/1cde3ea4-660f-43f7-aee4-359678a3b32f/main.dp_projectmember">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/dp/new_project.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="36" column="23" lean-forward="false" selection-start-line="36" selection-start-column="23" selection-end-line="36" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://table:/7ca40007/1cde3ea4-660f-43f7-aee4-359678a3b32f/main.dp_project">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dp/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="219">
+          <caret line="131" column="77" lean-forward="true" selection-start-line="131" selection-start-column="77" selection-end-line="131" selection-end-column="77" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/dp/projmember_update_form.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="291">
+          <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+          <folding>
+            <element signature="n#style#0;n#input#0;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/dp/project_detail.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3391">
+          <caret line="249" column="117" lean-forward="false" selection-start-line="249" selection-start-column="117" selection-end-line="249" selection-end-column="117" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dp/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="32" column="87" lean-forward="false" selection-start-line="32" selection-start-column="67" selection-end-line="32" selection-end-column="87" />
           <folding />
         </state>
       </provider>
@@ -899,78 +932,42 @@
         </state>
       </provider>
     </entry>
-    <entry file="das://table:/7ca40007/1cde3ea4-660f-43f7-aee4-359678a3b32f/main.dp_organizationstrategy">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dp/static/dp/css/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="298">
-          <caret line="57" column="0" lean-forward="false" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dp/static/dp/css/footer.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="28" column="4" lean-forward="true" selection-start-line="28" selection-start-column="4" selection-end-line="28" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dp/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="243">
-          <caret line="84" column="53" lean-forward="false" selection-start-line="84" selection-start-column="53" selection-end-line="84" selection-end-column="53" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dp/static/dp/css/index.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="97" column="27" lean-forward="false" selection-start-line="97" selection-start-column="27" selection-end-line="97" selection-end-column="27" />
-          <folding />
+        <state relative-caret-position="291">
+          <caret line="360" column="18" lean-forward="false" selection-start-line="360" selection-start-column="18" selection-end-line="360" selection-end-column="18" />
+          <folding>
+            <element signature="e#0#44#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/dp/portfolio_detail.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="215">
-          <caret line="18" column="20" lean-forward="true" selection-start-line="18" selection-start-column="20" selection-end-line="18" selection-end-column="59" />
+        <state relative-caret-position="17">
+          <caret line="87" column="117" lean-forward="false" selection-start-line="87" selection-start-column="117" selection-end-line="87" selection-end-column="117" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/dp/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1462">
+          <caret line="67" column="40" lean-forward="false" selection-start-line="67" selection-start-column="40" selection-end-line="67" selection-end-column="40" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/dp/employee_detail.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="13" column="51" lean-forward="false" selection-start-line="12" selection-start-column="4" selection-end-line="13" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/dp/project_detail.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="9" column="41" lean-forward="true" selection-start-line="9" selection-start-column="41" selection-end-line="9" selection-end-column="42" />
+        <state relative-caret-position="277">
+          <caret line="132" column="126" lean-forward="false" selection-start-line="132" selection-start-column="126" selection-end-line="132" selection-end-column="126" />
           <folding>
-            <element signature="e#385#4461#0#HTML" expanded="false" />
-            <marker date="1526171665074" expanded="false" signature="363:10609" ph="..." />
-            <marker date="1526171665074" expanded="false" signature="10662:26657" ph="..." />
+            <element signature="n#if#4;n#!!top" expanded="false" />
+            <element signature="n#if#5;n#!!top" expanded="false" />
+            <element signature="n#if#6;n#!!top" expanded="false" />
+            <element signature="n#if#7;n#!!top" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/dp/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="207" column="83" lean-forward="false" selection-start-line="207" selection-start-column="76" selection-end-line="207" selection-end-column="83" />
-          <folding />
         </state>
       </provider>
     </entry>

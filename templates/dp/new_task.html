@@ -9,7 +9,7 @@
         <div class="col-md-4 col-md-offset-4">
             <div class="form-style-2">
 
-                <div class="form-style-2-heading">Provide your information</div>
+                <div class="form-style-2-heading">Create new task</div>
                 <form action="{% url "dp:new_task" project_id %}" method="post">
                     {% csrf_token %}
                     {{ form }}

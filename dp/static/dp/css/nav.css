@@ -15,6 +15,10 @@
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
+
+#cssmenu ul li{
+  padding-left: 8px;
+}
 #cssmenu:after,
 #cssmenu > ul:after {
   content: ".";
@@ -29,6 +33,7 @@
 }
 #cssmenu {
   width: auto;
+
   margin-bottom: 40px;
   border: 3px solid #E8601B;
   border-radius: 3px;

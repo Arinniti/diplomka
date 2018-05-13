@@ -2,6 +2,7 @@
 
 {% block content %}
     {% load static %}
+    {% load extratags %}
     <link rel="stylesheet" type="text/css" href="{% static 'dp/css/index.css' %}"/>
     {% if user.employee.position == "manager" or user.is_superuser %}
 
@@ -54,14 +55,17 @@
                         </table>
                         <br>
                         <br>
-                        <a href="{% url 'dp:new_project' %}" class="btn-gradient cyan">Create new project</a>
+
                         <br>
                         <br>
                         {% if project_tmp.portfolio is Null and actual_projects %}
                             <div class="ttl">
-                            <h2>Projects outside of portfolio</h2>
-                            <span class="sexy_line"></span>
-                        </div>
+                                <h2>Projects outside of portfolio</h2>
+                                <span class="sexy_line"></span>
+                            </div>
+                            {% if user.is_superuser %}
+                                <a href="{% url 'dp:new_project' %}" class="btn-gradient cyan">Create new project</a>
+                                {% endif %}
 
                             <table id="projects_outside_a">
                                 <thead>
@@ -72,9 +76,9 @@
                                     <th class="column100 column4" data-column="column4">State</th>
                                     <th class="column100 column5" data-column="column5">Used budget</th>
                                     <th class="column100 column6" data-column="column6">Plan budget</th>
-                                    <th class="column100 column7" data-column="column7">Risk</th>
+                                    <th class="column100 column7" data-column="column7">Risk (1-16)</th>
                                     <th class="column100 column8" data-column="column8">Key word</th>
-                                    <th class="column100 column9" data-column="column9">Analysis value</th>
+                                    <th class="column100 column9" data-column="column9">Analysis value (1-25)</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -100,17 +104,36 @@
                                         <td class="column100 column6" data-column="column6">
                                             {{ project_tmp.plan_budget }}
                                         </td>
-                                        <td class="column100 column7" data-column="column7">
-                                            {{ project_tmp.risk }}
-                                        </td>
+
+                                    {% with project_tmp.risk|mul:125|divide:16 as tmp %}
+                                            {% with 125|subtract:tmp as val %}
+                                                <td class="column100 column9" style="">
+                                                    <div class="row">
+                                                        <div class="col-sm-3">{{ project_tmp.risk }} </div>
+                                                        <div class="col-sm-3">
+                                                            <div style="margin-top: 5px; width: 8px; height: 8px ; background:  hsl({{ val }},100%,50%);"></div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            {% endwith %}
+                                        {% endwith %}
                                         <td class="column100 column8" data-column="column8">
                                             {% for key_word in project_tmp.projectstrategy_set.all %}
                                                 {{ key_word.strategy.name }}<br>
                                             {% endfor %}
                                         </td>
-                                        <td class="column100 column9" data-column="column9">
-                                            {{ project_tmp.optimalization }}
-                                        </td>
+                                        {% with project_tmp.optimalization|mul:125|divide:25 as tmp %}
+                                            {% with 0|add:tmp as val %}
+                                                <td class="column100 column9" style="">
+                                                    <div class="row">
+                                                        <div class="col-sm-3">{{ project_tmp.optimalization }} </div>
+                                                        <div class="col-sm-3">
+                                                            <div style="margin-top: 5px; width: 15px; height: 15px ; background:  hsl({{ val }},100%,50%);"></div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            {% endwith %}
+                                        {% endwith %}
                                     </tr>
                                 {% endfor %}
                                 </tbody>
@@ -120,9 +143,9 @@
                         <br>
                         {% if project_tmp.portfolio is Null and finished_projects %}
                             <div class="ttl">
-                            <h2>Finished projects outside of portfolio</h2>
-                            <span class="sexy_line"></span>
-                        </div>
+                                <h2>Finished projects outside of portfolio</h2>
+                                <span class="sexy_line"></span>
+                            </div>
 
                             <table id="projects_outside">
                                 <thead>
@@ -133,9 +156,8 @@
                                     <th class="column100 column4" data-column="column4">State</th>
                                     <th class="column100 column5" data-column="column5">Used budget</th>
                                     <th class="column100 column6" data-column="column6">Plan budget</th>
-                                    <th class="column100 column7" data-column="column7">Risk</th>
-                                    <th class="column100 column8" data-column="column8">Key word</th>
-                                    <th class="column100 column9" data-column="column9">Analysis value</th>
+                                    <th class="column100 column8" data-column="column8">Key word </th>
+
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -161,16 +183,10 @@
                                         <td class="column100 column6" data-column="column6">
                                             {{ project_tmp.plan_budget }}
                                         </td>
-                                        <td class="column100 column7" data-column="column7">
-                                            {{ project_tmp.risk }}
-                                        </td>
-                                        <td class="column100 column8" data-column="column8">
+                                         <td class="column100 column8" data-column="column8">
                                             {% for key_word in project_tmp.projectstrategy_set.all %}
                                                 {{ key_word.strategy.name }}<br>
                                             {% endfor %}
-                                        </td>
-                                        <td class="column100 column9" data-column="column9">
-                                            {{ project_tmp.optimalization }}
                                         </td>
                                     </tr>
                                 {% endfor %}
@@ -204,8 +220,10 @@
                                     </td>
 
                                     <td class="column100 column1" data-column="column1">
-                                    {% for ability in employee.memberability_set.all %}
-                                        {{ ability.ability.name }}{% if not forloop.last %}, {% endif %}
+                                        {% for ability in employee.memberability_set.all %}
+                                            {% if not employee.id == user.employee.id %}
+                                                {{ ability.ability.name }}{% if not forloop.last %}, {% endif %}
+                                            {% endif %}
                                         {% endfor %}
                                     </td>
 
@@ -235,9 +253,9 @@
                             <br>
                             <br>
                             <div class="ttl">
-                            <h2>Manager of following portfolios</h2>
-                            <span class="sexy_line"></span>
-                        </div>
+                                <h2>Manager of following portfolios</h2>
+                                <span class="sexy_line"></span>
+                            </div>
 
 
 
@@ -271,9 +289,9 @@
                             <br>
                             <br>
                             <div class="ttl">
-                            <h2>Manager of following projects</h2>
-                            <span class="sexy_line"></span>
-                        </div>
+                                <h2>Manager of following projects</h2>
+                                <span class="sexy_line"></span>
+                            </div>
 
                             <table data-vertable="ver1">
                                 <thead>
@@ -312,9 +330,9 @@
                             <br>
                             <br>
                             <div class="ttl">
-                            <h2>Part of following projects</h2>
-                            <span class="sexy_line"></span>
-                        </div>
+                                <h2>Part of following projects</h2>
+                                <span class="sexy_line"></span>
+                            </div>
 
                             <table data-vertable="ver1">
                                 <thead>
@@ -420,24 +438,27 @@
                 $('#projects_outside').DataTable(
                     {
                         "paging": false,
-                        "info": false,
-                        "order": [[8, "desc"]]
                     }
                 );
             {% else %}
                 $('#projects_outside').DataTable(
-                    {
-                        "order": [[8, "desc"]]
-                    }
+                    {}
                 );
             {% endif %}
 
             {% if finished_pr_count < 10 %}
                 $('#projects_outside_a').DataTable(
-                     {"paging": false}
+                    {
+                        "paging": false,
+                        "order": [[8, "desc"]]
+                    }
                 );
             {% else %}
-                $('#projects_outside_a').DataTable();
+                $('#projects_outside_a').DataTable(
+                    {
+                        "order": [[8, "desc"]]
+                    }
+                );
             {% endif %}
         });
 

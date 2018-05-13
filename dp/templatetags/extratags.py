@@ -14,3 +14,15 @@ def add_admin_to_context(context):
 
     context.dicts[0]["admin_info"] = admin_info
     return ''
+
+@register.filter
+def subtract(value, arg):
+    return value - arg
+
+@register.filter
+def mul(value, arg):
+    return value * arg
+
+@register.filter
+def divide(value, arg):
+    return value / arg

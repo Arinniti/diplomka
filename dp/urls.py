@@ -30,5 +30,5 @@ urlpatterns = [
     url(r'^portfolio/(?P<pk>\d+)/edit$', login_required(views.PortfolioUpdateView.as_view()), name='portfolio_edit'),
     url(r'^project/(?P<pk>\d+)/risk/edit$', login_required(views.ProjRiskUpdateView.as_view()), name='projrisk_edit'),
     url(r'^employee/(?P<pk>\d+)/ability/edit$', login_required(views.MemAbilityUpdateView.as_view()), name='memability_edit'),
-
+    url(r'^project/(?P<pk>\d+)/member/edit$', login_required(views.ProjMemberUpdateView.as_view()), name='projmem_edit'),
 ]

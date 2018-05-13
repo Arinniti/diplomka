@@ -6,428 +6,461 @@
 {% block content %}
 
     {% load static %}
+    {% load extratags %}
 
     <link rel="stylesheet" type="text/css" href="{% static 'dp/css/index.css' %}"/>
 
-        <div class="container-table100 container">
-            <div class="wrap-table100">
-                <div class="table100 ver1 m-b-110">
+    <div class="container-table100 container">
+        <div class="wrap-table100">
+            <div class="table100 ver1 m-b-110">
+                <table data-vertable="ver1">
+                    <thead>
+                    <tr class="row100 head">
+                        <th class="column100 column1" data-column="column1">Project name</th>
+                        <th class="column100 column2" data-column="column2">Description</th>
+                        <th class="column100 column3" data-column="column3">State</th>
+                        <th class="column100 column3" data-column="column3">Progress</th>
+                        <th class="column100 column4" data-column="column4">Manager</th>
+                        {% if   user.is_superuser or user.employee.id == project.project_manager.id or is_member or user.employee.id == project.portfolio.portfolio_manager.id or user.employee.position == 'manager' %}
+                            <th class="column100 column1" data-column="column1">Deadline</th>
+                            <th class="column100 column1" data-column="column1">Key Words</th>
+                            {% if user.is_superuser or user.employee.id == project.project_manager.id or user.employee.id == project.portfolio.portfolio_manager.id or project.portfolio is Null and user.employee.position == 'manager' %}
+                                <th class="column100 column4" data-column="column3">Edit project</th>
+                            {% endif %}
+                        {% endif %}
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="row100">
+                        <td class="column100 column1" data-column="column1">
+                            {{ project.project_name }}
+                        </td>
+                        <td class="column100 column2" data-column="column2">
+                            {{ project.description }}
+                        </td>
+                        <td class="column100 column3" data-column="column3">
+                            {{ project.get_state_display }}
+                        </td>
+                        <td class="column100 column3" data-column="column3">
+                            {{ project.progress }}
+                        </td>
+                        <td class="column100 column4" data-column="column4">
+                            {% if project.project_manager %}
+                                <a href="{% url 'dp:employee_detail' project.project_manager.id %}">{{ project.project_manager.user.first_name }} {{ project.project_manager.user.last_name }}</a>
+                            {% endif %}
+                        </td>
+                        {% if   user.is_superuser or user.employee.id == project.project_manager.id or is_member or user.employee.id == project.portfolio.portfolio_manager.id or user.employee.position == 'manager' %}
+                            <td class="column100 column9" data-column="column9">
+                                {{ project.deadline }}
+                            </td>
+                            <td class="column100 column9" data-column="column9">
+                                {% for key_word in project.projectstrategy_set.all %}
+                                    {{ key_word.strategy.name }}<br>
+                                {% endfor %}
+                            </td>
+                            {% if user.is_superuser or user.employee.id == project.project_manager.id or user.employee.id == project.portfolio.portfolio_manager.id or project.portfolio is Null and user.employee.position == 'manager' %}
+                                <td class="column100 column9" data-column="column9">
+                                    <a href="{% url 'dp:project_edit' project.id %}"><i class="far fa-edit"></i> Edit
+                                    </a>
+                                </td>
+                            {% endif %}
+                        {% endif %}
+
+                    </tr>
+                    </tbody>
+
+                </table>
+                <br>
+                <br>
+                {% if   user.is_superuser or user.employee.id == project.project_manager.id or user.employee.id == project.portfolio.portfolio_manager.id or user.employee.position == 'manager' %}
                     <table data-vertable="ver1">
                         <thead>
                         <tr class="row100 head">
-                            <th class="column100 column1" data-column="column1">Project name</th>
-                            <th class="column100 column2" data-column="column2">Description</th>
-                            <th class="column100 column3" data-column="column3">State</th>
-                            <th class="column100 column3" data-column="column3">Progress</th>
-                            <th class="column100 column4" data-column="column4">Manager</th>
-                            {% if   user.is_superuser or user.employee.id == project.project_manager.id or is_member or user.employee.id == project.portfolio.portfolio_manager.id or user.employee.position == 'manager' %}
-                                <th class="column100 column1" data-column="column1">Deadline</th>
-                                <th class="column100 column1" data-column="column1">Key Words</th>
-                                {% if user.is_superuser or user.employee.id == project.project_manager.id or user.employee.id == project.portfolio.portfolio_manager.id or project.portfolio is Null and user.employee.position == 'manager' %}
-                                    <th class="column100 column4" data-column="column3">Edit project</th>
-                                {% endif %}
-                            {% endif %}
-
+                            <th class="column100 column9" data-column="column9">Possible income</th>
+                            <th class="column100 column9" data-column="column9">Importance</th>
+                            <th class="column100 column9" data-column="column9">Urgency</th>
+                            <th class="column100 column9" data-column="column9">Complexity</th>
+                            <th class="column100 column9" data-column="column9">Risk (1-16)</th>
+                            <th class="column100 column9" data-column="column9">Analysis value (1-25)</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr class="row100">
-                            <td class="column100 column1" data-column="column1">
-                                {{ project.project_name }}
-                            </td>
-                            <td class="column100 column2" data-column="column2">
-                                {{ project.description }}
-                            </td>
-                            <td class="column100 column3" data-column="column3">
-                                {{ project.get_state_display }}
-                            </td>
-                            <td class="column100 column3" data-column="column3">
-                                {{ project.progress }}
-                            </td>
                             <td class="column100 column4" data-column="column4">
-                                {% if project.project_manager %}
-                                    <a href="{% url 'dp:employee_detail' project.project_manager.id %}">{{ project.project_manager.user.first_name }} {{ project.project_manager.user.last_name }}</a>
+                                {% if project.possible_income is None %}
+                                    Not set
+                                {% else %}
+                                    {{ project.possible_income }}
                                 {% endif %}
                             </td>
-                            {% if   user.is_superuser or user.employee.id == project.project_manager.id or is_member or user.employee.id == project.portfolio.portfolio_manager.id or user.employee.position == 'manager' %}
-                                <td class="column100 column9" data-column="column9">
-                                    {{ project.deadline }}
+
+
+                            <td class="column100 column4" data-column="column4">
+                                {{ project.get_importance_display }}
+                            </td>
+
+                            <td class="column100 column4" data-column="column4">
+                                {{ project.get_urgency_display }}
+                            </td>
+
+                            <td class="column100 column4" data-column="column4">
+                                {{ project.get_complexity_display }}
+                            </td>
+                            {% with project.risk|mul:125|divide:16 as tmp %}
+                                {% with 125|subtract:tmp as val %}
+                                    <td class="column100 column9" style="">
+                                        <div class="row">
+                                            <div class="col-sm-3">{{ project.risk }} </div>
+                                            <div class="col-sm-3">
+                                                <div style="margin-top: 5px; width: 8px; height: 8px ; background:  hsl({{ val }},100%,50%);"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                {% endwith %}
+                            {% endwith %}
+                            {% with project.optimalization|mul:125|divide:25 as tmp %}
+                                {% with 0|add:tmp as val %}
+                                    <td class="column100 column9" style="">
+                                        <div class="row">
+                                            <div class="col-sm-3">{{ project.optimalization }} </div>
+                                            <div class="col-sm-3">
+                                                <div style="margin-top: 5px; width: 15px; height: 15px ; background:  hsl({{ val }},100%,50%);"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                {% endwith %}
+                            {% endwith %}
+                        </tr>
+                        </tbody>
+                    </table>
+                {% endif %}
+                <br>
+                <br>
+                {% if   user.is_superuser or user.employee.id == project.project_manager.id or user.employee.id == project.portfolio.portfolio_manager.id or user.employee.position == 'manager' %}
+                    {% if project.state == "2" or project.state == "4" %}
+                        <div class="ttl">
+                            <h2>Analysis of cost using EVM method</h2>
+                            <span class="sexy_line"></span>
+                        </div>
+                        <table>
+                            <thead>
+                            <tr class="row100 head">
+                                <th rowspan="2" class="column100 column6" data-column="column6">Budget</th>
+                                <th rowspan="2" class="column100 column8" data-column="column8">Used budget</th>
+                                <th rowspan="2" class="column100 column7" data-column="column7">Cost performance
+                                    index
+                                </th>
+                                <th rowspan="2" class="column100 column8" data-column="column8">Schedule
+                                    performance
+                                    index
+                                </th>
+                                <th colspan="2" style="text-align: center;" class="column100 column8"
+                                    data-column="column8">Prediction
+                                </th>
+                            </tr>
+                            <tr>
+                                <th class="column100 column7" data-column="column7">Cost at completion</th>
+                                <th class="column100 column8" data-column="column8">Cost to complete</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="row100">
+                                <td class="column100 column6" data-column="column6">
+                                    {{ project.plan_budget }}
                                 </td>
-                                <td class="column100 column9" data-column="column9">
-                                    {% for key_word in project.projectstrategy_set.all %}
-                                        {{ key_word.strategy.name }}<br>
-                                    {% endfor %}
+                                <td class="column100 column6" data-column="column6">
+                                    {{ project.used_budget }}
+                                </td>
+                                <td class="column100 column6" data-column="column6">
+                                    {{ project.evm.cpi }}
+                                </td>
+                                <td class="column100 column6" data-column="column6">
+                                    {{ project.evm.spi }}
+                                </td>
+                                <td class="column100 column6" data-column="column6">
+                                    {{ project.evm.eac }}
+                                </td>
+                                <td class="column100 column6" data-column="column6">
+                                    {{ project.evm.etc }}
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <br>
+                        <br>
+                    {% endif %}
+                {% endif %}
+            </div>
+
+            <div class="table100 ver1 m-b-110">
+
+
+                <div class="ttl">
+                    <h2>Risks affecting project</h2>
+                    <span class="sexy_line"></span>
+                </div>
+                {% if user.is_superuser or user.employee.id == project.project_manager.id or project.portfolio is Null and user.employee.position == 'manager' or project.portfolio.portfolio_manager_id == user.employee.id %}
+                    <div style="float:right">
+                        If risk doesn't exist :
+                        <a href="{% url 'dp:new_risk' project.id %}" class="btn-gradient cyan">Create new risk</a>
+                    </div>
+                    <a href="{% url 'dp:new_proj_risk' project.id %}" class="btn-gradient cyan"> Add new risk to
+                        project</a>
+                {% endif %}
+                {% if actual_risks %}
+
+                    <table id="act_risks">
+                        <thead>
+                        <tr class="row100 head">
+                            <th class="column100 column6" data-column="column6">Name</th>
+                            <th class="column100 column8" data-column="column8">Description</th>
+                            <th class="column100 column8" data-column="column8">State</th>
+                            <th class="column100 column7" data-column="column7">Probability</th>
+                            <th class="column100 column8" data-column="column8">Impact</th>
+                            <th class="column100 column8" data-column="column8">Risk value</th>
+                            {% if user.is_superuser or user.employee.id == project.project_manager.id or user.employee.id == project.portfolio.portfolio_manager.id or project.portfolio is Null and user.employee.position == 'manager' %}
+                                <th class="column100 column6" data-column="column6">Edit Risk</th>
+                            {% endif %}
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for pr_risk in actual_risks %}
+                            <tr class="row100">
+                                <td class="column100 column6" data-column="column6">
+                                    {{ pr_risk.risk.name }}
+                                </td>
+                                <td class="column100 column7" data-column="column7">
+                                    {{ pr_risk.risk.description }}
+                                </td>
+                                <td class="column100 column8" data-column="column8">
+                                    {{ pr_risk.get_risk_state_display }}
+                                </td>
+                                <td class="column100 column8" data-column="column8">
+                                    {{ pr_risk.get_probability_display }}
+                                </td>
+                                <td class="column100 column8" data-column="column8">
+                                    {{ pr_risk.get_risk_impact_display }}
+                                </td>
+                                <td class="column100 column8" data-column="column8">
+                                    {{ pr_risk.get_risk_value }}
                                 </td>
                                 {% if user.is_superuser or user.employee.id == project.project_manager.id or user.employee.id == project.portfolio.portfolio_manager.id or project.portfolio is Null and user.employee.position == 'manager' %}
-                                    <td class="column100 column9" data-column="column9">
-                                        <a href="{% url 'dp:project_edit' project.id %}"> edit </a>
+                                    <td class="column100 column6" data-column="column6">
+                                        <a href="{% url 'dp:projrisk_edit' pr_risk.id %}"><i class="far fa-edit"></i> Edit </a>
                                     </td>
                                 {% endif %}
-                            {% endif %}
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    <br>
+                    <br>
+                {% endif %}
 
+
+                {% if finished_risks %}
+                    <br>
+                    <div class="ttl">
+                        <h2>Resolved risks</h2>
+                        <span class="sexy_line"></span>
+                    </div>
+                    <table id="fin_risks">
+                        <thead>
+                        <tr class="row100 head">
+                            <th class="column100 column6" data-column="column6">Name</th>
+                            <th class="column100 column8" data-column="column8">Description</th>
+                            <th class="column100 column8" data-column="column8">State</th>
+                            <th class="column100 column7" data-column="column7">Probability</th>
+                            <th class="column100 column8" data-column="column8">Impact</th>
+                            <th class="column100 column8" data-column="column8">Risk value</th>
+                            {% if user.is_superuser or user.employee.id == project.project_manager.id or user.employee.id == project.portfolio.portfolio_manager.id or project.portfolio is Null and user.employee.position == 'manager' %}
+                                <th class="column100 column6" data-column="column6">Edit Risk</th>
+                            {% endif %}
                         </tr>
+                        </thead>
+                        <tbody>
+                        {% for pr_risk in finished_risks %}
+                            <tr class="row100">
+                                <td class="column100 column6" data-column="column6">
+                                    {{ pr_risk.risk.name }}
+                                </td>
+                                <td class="column100 column7" data-column="column7">
+                                    {{ pr_risk.risk.description }}
+                                </td>
+                                <td class="column100 column8" data-column="column8">
+                                    {{ pr_risk.get_risk_state_display }}
+                                </td>
+                                <td class="column100 column8" data-column="column8">
+                                    {{ pr_risk.get_probability_display }}
+                                </td>
+                                <td class="column100 column8" data-column="column8">
+                                    {{ pr_risk.get_risk_impact_display }}
+                                </td>
+                                <td class="column100 column8" data-column="column8">
+                                    {{ pr_risk.get_risk_value }}
+                                </td>
+                                {% if user.is_superuser or user.employee.id == project.project_manager.id or user.employee.id == project.portfolio.portfolio_manager.id or project.portfolio is Null and user.employee.position == 'manager' %}
+                                    <td class="column100 column6" data-column="column6">
+                                        <a href="{% url 'dp:projrisk_edit' pr_risk.id %}"><i class="far fa-edit"></i> Edit </a>
+                                    </td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    <br>
+                    <br>
+                {% endif %}
+
+
+                {% if user.is_superuser or user.employee.id == project.project_manager.id or project.portfolio is Null and user.employee.position == 'manager' or project.portfolio.portfolio_manager_id == user.employee.id or is_member == True %}
+                    <div class="ttl">
+                        <h2>Tasks</h2>
+                        <span class="sexy_line"></span>
+                    </div>
+                    {% if user.is_superuser or user.employee.id == project.project_manager.id or project.portfolio is Null and user.employee.position == 'manager' or project.portfolio.portfolio_manager_id == user.employee.id %}
+                        <a href="{% url 'dp:new_task' project.id %}" class="btn-gradient cyan">Create new
+                            task</a>
+                        <br>
+                        <br>
+                    {% endif %}
+                    {% if actual_tasks %}
+                        <table id="act_tasks">
+                            <thead>
+                            <tr class="row100 head">
+                                <th class="column100 column1" data-column="column1">Name</th>
+                                <th class="column100 column2" data-column="column2">Description</th>
+                                <th class="column100 column3" data-column="column3">Employee</th>
+                                <th class="column100 column4" data-column="column3">State</th>
+                                <th class="column100 column4" data-column="column3">Edit task</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for act_task in actual_tasks %}
+                                <tr class="row100">
+                                    <td class="column100 column1" data-column="column1">
+                                        {{ act_task.name }}
+                                    </td>
+                                    <td class="column100 column2" data-column="column2">
+                                        {{ act_task.description }}
+                                    </td>
+                                    {% if act_task.assignedtask_set %}
+                                        <td class="column100 column3" data-column="column3">
+                                            {% for emp in act_task.assignedtask_set.all %}
+
+                                                <a href="{% url 'dp:employee_detail' emp.employee_id %}"> {{ emp.employee.user.last_name }}</a>
+                                            {% endfor %}
+                                        </td>
+                                    {% endif %}
+                                    <td class="column100 column4" data-column="column4">
+                                        {{ act_task.get_state_display }}
+                                    </td>
+                                    <td class="column100 column5" data-column="column5">
+
+                                        <a href="{% url 'dp:task_edit' act_task.id %}"><i class="far fa-edit"></i> Edit</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+
+                        </table>
+                        <br>
+                        <br>
+                    {% endif %}
+                {% endif %}
+
+                {% if finished_tasks %}
+                    {% if user.is_superuser or user.employee.id == project.project_manager.id or project.portfolio is Null and user.employee.position == 'manager' or project.portfolio.portfolio_manager_id == user.employee.id or is_member == True %}
+                        <div class="ttl">
+                            <h2>Finished tasks</h2>
+                            <span class="sexy_line"></span>
+                        </div>
+                        <table id="fin_tasks">
+                            <thead>
+                            <tr class="row100 head">
+                                <th class="column100 column1" data-column="column1">Name</th>
+                                <th class="column100 column2" data-column="column2">Description</th>
+                                <th class="column100 column3" data-column="column3">Employee</th>
+                                <th class="column100 column4" data-column="column4">State</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for fin_task in finished_tasks %}
+                                <tr class="row100">
+                                    <td class="column100 column1" data-column="column1">
+                                        {{ fin_task.name }}
+                                    </td>
+                                    <td class="column100 column2" data-column="column2">
+                                        {{ fin_task.description }}
+                                    </td>
+                                    {% if fin_task.assignedtask_set %}
+                                        <td class="column100 column3" data-column="column3">
+                                            {% for emp in fin_task.assignedtask_set.all %}
+
+                                                <a href="{% url 'dp:employee_detail' emp.employee_id %}"> {{ emp.employee.user.last_name }}</a>
+                                            {% endfor %}
+                                        </td>
+                                    {% endif %}
+                                    <td class="column100 column4" data-column="column4">
+                                        {{ fin_task.get_state_display }}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        <br>
+                        <br>
+                    {% endif %}
+                {% endif %}
+
+                {% if project.projectmember_set.all %}
+                    <div class="ttl">
+                        <h2>Project team</h2>
+                        <span class="sexy_line"></span>
+                    </div>
+                    <table id="employees">
+                        <thead>
+                        <tr class="row100 head">
+                            <th class="column100 column1" data-column="column1">Name</th>
+                            <th class="column100 column2" data-column="column2">Position</th>
+                            {% if user.is_superuser or user.employee.id == project.project_manager.id or user.employee.id == project.portfolio.portfolio_manager.id or project.portfolio is Null and user.employee.position == 'manager' %}
+                                <th class="column100 column3" data-column="column3">Edit position</th>
+                            {% endif %}
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <ul>
+                            {% for projectmember in project.projectmember_set.all %}
+                                <tr class="row100">
+                                    <td class="column100 column1" data-column="column1">
+                                        <a href="{% url 'dp:employee_detail' projectmember.member_id %}">{{ projectmember.member.user.first_name }} {{ projectmember.member.user.last_name }} </a>
+                                    </td>
+                                    <td class="column100 column2" data-column="column2">
+                                        {{ projectmember.position }}
+                                    </td>
+                                    {% if user.is_superuser or user.employee.id == project.project_manager.id or user.employee.id == project.portfolio.portfolio_manager.id or project.portfolio is Null and user.employee.position == 'manager' %}
+                                        <td class="column100 column9" data-column="column9">
+                                            <a href="{% url 'dp:projmem_edit' projectmember.id %}"><i class="far fa-edit"></i>
+                                                Edit position</a>
+                                        </td>
+                                    {% endif %}
+
+                                </tr>
+                            {% endfor %}
+                        </ul>
+
                         </tbody>
 
                     </table>
                     <br>
                     <br>
-                    {% if   user.is_superuser or user.employee.id == project.project_manager.id or user.employee.id == project.portfolio.portfolio_manager.id or user.employee.position == 'manager' %}
-                        <table data-vertable="ver1">
-                            <thead>
-                            <tr class="row100 head">
-
-                                <th class="column100 column9" data-column="column9">Risk (1-16)</th>
-                                <th class="column100 column9" data-column="column9">Possible income</th>
-                                <th class="column100 column9" data-column="column9">Importance</th>
-                                <th class="column100 column9" data-column="column9">Urgency</th>
-                                <th class="column100 column9" data-column="column9">Complexity</th>
-                                <th class="column100 column9" data-column="column9">Analysis value</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr class="row100">
-                                <td class="column100 column4" data-column="column4">
-                                    {{ project.risk }}
-                                </td>
-                                <td class="column100 column4" data-column="column4">
-                                    {% if project.possible_income is None %}
-                                        Not set
-                                    {% else %}
-                                        {{ project.possible_income }}
-                                    {% endif %}
-                                </td>
-                                <td class="column100 column4" data-column="column4">
-                                    {{ project.get_importance_display }}
-                                </td>
-
-                                <td class="column100 column4" data-column="column4">
-                                    {{ project.get_urgency_display }}
-                                </td>
-
-                                <td class="column100 column4" data-column="column4">
-                                    {{ project.get_complexity_display }}
-                                </td>
-                                <td class="column100 column4" data-column="column4">
-                                    {{ project.optimalization }}
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    {% endif %}
-                    <br>
-                    <br>
-                    {% if   user.is_superuser or user.employee.id == project.project_manager.id or user.employee.id == project.portfolio.portfolio_manager.id or user.employee.position == 'manager' %}
-                        {% if project.state == "2" or project.state == "4" %}
-                            <div class="ttl">
-                                <h2>Analysis of cost using EVM method</h2>
-                                <span class="sexy_line"></span>
-                            </div>
-                            <table>
-                                <thead>
-                                <tr class="row100 head">
-                                    <th rowspan="2" class="column100 column6" data-column="column6">Budget</th>
-                                    <th rowspan="2" class="column100 column8" data-column="column8">Used budget</th>
-                                    <th rowspan="2" class="column100 column7" data-column="column7">Cost performance
-                                        index
-                                    </th>
-                                    <th rowspan="2" class="column100 column8" data-column="column8">Schedule
-                                        performance
-                                        index
-                                    </th>
-                                    <th colspan="2" style="text-align: center;" class="column100 column8"
-                                        data-column="column8">Prediction
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <th class="column100 column7" data-column="column7">Cost at completion</th>
-                                    <th class="column100 column8" data-column="column8">Cost to complete</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr class="row100">
-                                    <td class="column100 column6" data-column="column6">
-                                        {{ project.plan_budget }}
-                                    </td>
-                                    <td class="column100 column6" data-column="column6">
-                                        {{ project.used_budget }}
-                                    </td>
-                                    <td class="column100 column6" data-column="column6">
-                                        {{ project.evm.cpi }}
-                                    </td>
-                                    <td class="column100 column6" data-column="column6">
-                                        {{ project.evm.spi }}
-                                    </td>
-                                    <td class="column100 column6" data-column="column6">
-                                        {{ project.evm.eac }}
-                                    </td>
-                                    <td class="column100 column6" data-column="column6">
-                                        {{ project.evm.etc }}
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <br>
-                            <br>
-                        {% endif %}
-                    {% endif %}
-                </div>
-
-                <div class="table100 ver1 m-b-110">
-
-
-                    <div class="ttl">
-                        <h2>Risks affecting project</h2>
-                        <span class="sexy_line"></span>
-                    </div>
-                    {% if user.is_superuser or user.employee.id == project.project_manager.id or project.portfolio is Null and user.employee.position == 'manager' or project.portfolio.portfolio_manager_id == user.employee.id %}
-                        <div style="float:right">
-                            If risk doesn't exist :
-                            <a href="{% url 'dp:new_risk' project.id %}" class="btn-gradient cyan">Create new risk</a>
-                        </div>
-                        <a href="{% url 'dp:new_proj_risk' project.id %}" class="btn-gradient cyan"> Add new risk to
-                            project</a>
-                    {% endif %}
-                    {% if actual_risks %}
-
-                        <table id="act_risks">
-                            <thead>
-                            <tr class="row100 head">
-                                <th class="column100 column6" data-column="column6">Name</th>
-                                <th class="column100 column8" data-column="column8">Description</th>
-                                <th class="column100 column8" data-column="column8">State</th>
-                                <th class="column100 column7" data-column="column7">Probability</th>
-                                <th class="column100 column8" data-column="column8">Impact</th>
-                                <th class="column100 column8" data-column="column8">Risk value</th>
-                                {% if user.is_superuser or user.employee.id == project.project_manager.id or user.employee.id == project.portfolio.portfolio_manager.id or project.portfolio is Null and user.employee.position == 'manager' %}
-                                    <th class="column100 column6" data-column="column6">Edit Risk</th>
-                                {% endif %}
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for pr_risk in actual_risks %}
-                                <tr class="row100">
-                                    <td class="column100 column6" data-column="column6">
-                                        {{ pr_risk.risk.name }}
-                                    </td>
-                                    <td class="column100 column7" data-column="column7">
-                                        {{ pr_risk.risk.description }}
-                                    </td>
-                                    <td class="column100 column8" data-column="column8">
-                                        {{ pr_risk.get_risk_state_display }}
-                                    </td>
-                                    <td class="column100 column8" data-column="column8">
-                                        {{ pr_risk.get_probability_display }}
-                                    </td>
-                                    <td class="column100 column8" data-column="column8">
-                                        {{ pr_risk.get_risk_impact_display }}
-                                    </td>
-                                    <td class="column100 column8" data-column="column8">
-                                        {{ pr_risk.get_risk_value }}
-                                    </td>
-                                    {% if user.is_superuser or user.employee.id == project.project_manager.id or user.employee.id == project.portfolio.portfolio_manager.id or project.portfolio is Null and user.employee.position == 'manager' %}
-                                        <td class="column100 column6" data-column="column6">
-                                            <a href="{% url 'dp:projrisk_edit' pr_risk.id %}"> edit </a>
-                                        </td>
-                                    {% endif %}
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                        <br>
-                        <br>
-                    {% endif %}
-
-
-                    {% if finished_risks %}
-                        <br>
-                        <div class="ttl">
-                            <h2>Resolved risks</h2>
-                            <span class="sexy_line"></span>
-                        </div>
-                        <table id="fin_risks">
-                            <thead>
-                            <tr class="row100 head">
-                                <th class="column100 column6" data-column="column6">Name</th>
-                                <th class="column100 column8" data-column="column8">Description</th>
-                                <th class="column100 column8" data-column="column8">State</th>
-                                <th class="column100 column7" data-column="column7">Probability</th>
-                                <th class="column100 column8" data-column="column8">Impact</th>
-                                <th class="column100 column8" data-column="column8">Risk value</th>
-                                {% if user.is_superuser or user.employee.id == project.project_manager.id or user.employee.id == project.portfolio.portfolio_manager.id or project.portfolio is Null and user.employee.position == 'manager' %}
-                                    <th class="column100 column6" data-column="column6">Edit Risk</th>
-                                {% endif %}
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for pr_risk in finished_risks %}
-                                <tr class="row100">
-                                    <td class="column100 column6" data-column="column6">
-                                        {{ pr_risk.risk.name }}
-                                    </td>
-                                    <td class="column100 column7" data-column="column7">
-                                        {{ pr_risk.risk.description }}
-                                    </td>
-                                    <td class="column100 column8" data-column="column8">
-                                        {{ pr_risk.get_risk_state_display }}
-                                    </td>
-                                    <td class="column100 column8" data-column="column8">
-                                        {{ pr_risk.get_probability_display }}
-                                    </td>
-                                    <td class="column100 column8" data-column="column8">
-                                        {{ pr_risk.get_risk_impact_display }}
-                                    </td>
-                                    <td class="column100 column8" data-column="column8">
-                                        {{ pr_risk.get_risk_value }}
-                                    </td>
-                                    {% if user.is_superuser or user.employee.id == project.project_manager.id or user.employee.id == project.portfolio.portfolio_manager.id or project.portfolio is Null and user.employee.position == 'manager' %}
-                                        <td class="column100 column6" data-column="column6">
-                                            <a href="{% url 'dp:projrisk_edit' pr_risk.id %}"> edit </a>
-                                        </td>
-                                    {% endif %}
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                        <br>
-                        <br>
-                    {% endif %}
-
-                    {% if actual_tasks %}
-                        {% if user.is_superuser or user.employee.id == project.project_manager.id or project.portfolio is Null and user.employee.position == 'manager' or project.portfolio.portfolio_manager_id == user.employee.id or is_member == True %}
-                            <div class="ttl">
-                                <h2>Tasks</h2>
-                                <span class="sexy_line"></span>
-                            </div>
-                            {% if user.is_superuser or user.employee.id == project.project_manager.id or project.portfolio is Null and user.employee.position == 'manager' or project.portfolio.portfolio_manager_id == user.employee.id %}
-                                <a href="{% url 'dp:new_task' project.id %}" class="btn-gradient cyan">Create new
-                                    task</a>
-                                <br>
-                                <br>
-                            {% endif %}
-                            <table id="act_tasks">
-                                <thead>
-                                <tr class="row100 head">
-                                    <th class="column100 column1" data-column="column1">Name</th>
-                                    <th class="column100 column2" data-column="column2">Description</th>
-                                    <th class="column100 column3" data-column="column3">Employee</th>
-                                    <th class="column100 column4" data-column="column3">State</th>
-                                    <th class="column100 column4" data-column="column3">Edit task</th>
-
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {% for act_task in actual_tasks %}
-                                    <tr class="row100">
-                                        <td class="column100 column1" data-column="column1">
-                                            {{ act_task.name }}
-                                        </td>
-                                        <td class="column100 column2" data-column="column2">
-                                            {{ act_task.description }}
-                                        </td>
-                                        {% if act_task.assignedtask_set %}
-                                            <td class="column100 column3" data-column="column3">
-                                                {% for emp in act_task.assignedtask_set.all %}
-
-                                                    <a href="{% url 'dp:employee_detail' emp.employee_id %}"> {{ emp.employee.user.last_name }}</a>
-                                                {% endfor %}
-                                            </td>
-                                        {% endif %}
-                                        <td class="column100 column4" data-column="column4">
-                                            {{ act_task.get_state_display }}
-                                        </td>
-                                        <td class="column100 column5" data-column="column5">
-                                            <a href="{% url 'dp:task_edit' act_task.id %}"> edit </a>
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                                </tbody>
-
-                            </table>
-                            <br>
-                            <br>
-                        {% endif %}
-                    {% endif %}
-
-                    {% if finished_tasks %}
-                        {% if user.is_superuser or user.employee.id == project.project_manager.id or project.portfolio is Null and user.employee.position == 'manager' or project.portfolio.portfolio_manager_id == user.employee.id or is_member == True %}
-                            <div class="ttl">
-                                <h2>Finished tasks</h2>
-                                <span class="sexy_line"></span>
-                            </div>
-                            <table id="fin_tasks">
-                                <thead>
-                                <tr class="row100 head">
-                                    <th class="column100 column1" data-column="column1">Name</th>
-                                    <th class="column100 column2" data-column="column2">Description</th>
-                                    <th class="column100 column3" data-column="column3">Employee</th>
-                                    <th class="column100 column4" data-column="column4">State</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {% for fin_task in finished_tasks %}
-                                    <tr class="row100">
-                                        <td class="column100 column1" data-column="column1">
-                                            {{ fin_task.name }}
-                                        </td>
-                                        <td class="column100 column2" data-column="column2">
-                                            {{ fin_task.description }}
-                                        </td>
-                                        {% if fin_task.assignedtask_set %}
-                                            <td class="column100 column3" data-column="column3">
-                                                {% for emp in fin_task.assignedtask_set.all %}
-
-                                                    <a href="{% url 'dp:employee_detail' emp.employee_id %}"> {{ emp.employee.user.last_name }}</a>
-                                                {% endfor %}
-                                            </td>
-                                        {% endif %}
-                                        <td class="column100 column4" data-column="column4">
-                                            {{ fin_task.get_state_display }}
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                                </tbody>
-                            </table>
-                            <br>
-                            <br>
-                        {% endif %}
-                    {% endif %}
-
-                    {% if project.projectmember_set.all %}
-                        <div class="ttl">
-                            <h2>Project team</h2>
-                            <span class="sexy_line"></span>
-                        </div>
-                        <table id="employees">
-                            <thead>
-                            <tr class="row100 head">
-                                <th class="column100 column1" data-column="column1">Name</th>
-                                <th class="column100 column2" data-column="column2">Position</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <ul>
-                                {% for projectmember in project.projectmember_set.all %}
-                                    <tr class="row100">
-                                        <td class="column100 column1" data-column="column1">
-                                            <a href="{% url 'dp:employee_detail' projectmember.member_id %}">{{ projectmember.member.user.first_name }} {{ projectmember.member.user.last_name }} </a>
-                                        </td>
-                                        <td class="column100 column2" data-column="column2">
-                                            {{ projectmember.position }}
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                            </ul>
-
-                            </tbody>
-
-                        </table>
-                        <br>
-                        <br>
-                    {% endif %}
-                    <br>
-                </div>
+                {% endif %}
+                <br>
             </div>
         </div>
+    </div>
     </div>
 
 {% endblock content %}
