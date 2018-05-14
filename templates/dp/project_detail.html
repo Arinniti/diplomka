@@ -10,6 +10,22 @@
 
     <link rel="stylesheet" type="text/css" href="{% static 'dp/css/index.css' %}"/>
 
+    <div class="row" style="margin-top: 15px;">
+        <div class="col-sm-8 col-lg-offset-2">
+            <div class="row" style="border: solid 2px">
+                <div class="col-sm-4">
+                    <div id="progress"></div>
+                </div>
+                <div class="col-sm-4">
+                    <div id="risk"></div>
+                </div>
+                <div class="col-sm-4">
+                    <div id="analysis"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="container-table100 container">
         <div class="wrap-table100">
             <div class="table100 ver1 m-b-110">
@@ -61,7 +77,8 @@
                             </td>
                             {% if user.is_superuser or user.employee.id == project.project_manager.id or user.employee.id == project.portfolio.portfolio_manager.id or project.portfolio is Null and user.employee.position == 'manager' %}
                                 <td class="column100 column9" data-column="column9">
-                                    <a href="{% url 'dp:project_edit' project.id %}"><i class="far fa-edit"></i> Edit
+                                    <a href="{% url 'dp:project_edit' project.id %}"><i class="far fa-edit"></i>
+                                        Edit
                                     </a>
                                 </td>
                             {% endif %}
@@ -247,7 +264,9 @@
                                 </td>
                                 {% if user.is_superuser or user.employee.id == project.project_manager.id or user.employee.id == project.portfolio.portfolio_manager.id or project.portfolio is Null and user.employee.position == 'manager' %}
                                     <td class="column100 column6" data-column="column6">
-                                        <a href="{% url 'dp:projrisk_edit' pr_risk.id %}"><i class="far fa-edit"></i> Edit </a>
+                                        <a href="{% url 'dp:projrisk_edit' pr_risk.id %}"><i
+                                                class="far fa-edit"></i>
+                                            Edit </a>
                                     </td>
                                 {% endif %}
                             </tr>
@@ -302,7 +321,9 @@
                                 </td>
                                 {% if user.is_superuser or user.employee.id == project.project_manager.id or user.employee.id == project.portfolio.portfolio_manager.id or project.portfolio is Null and user.employee.position == 'manager' %}
                                     <td class="column100 column6" data-column="column6">
-                                        <a href="{% url 'dp:projrisk_edit' pr_risk.id %}"><i class="far fa-edit"></i> Edit </a>
+                                        <a href="{% url 'dp:projrisk_edit' pr_risk.id %}"><i
+                                                class="far fa-edit"></i>
+                                            Edit </a>
                                     </td>
                                 {% endif %}
                             </tr>
@@ -359,7 +380,8 @@
                                     </td>
                                     <td class="column100 column5" data-column="column5">
 
-                                        <a href="{% url 'dp:task_edit' act_task.id %}"><i class="far fa-edit"></i> Edit</a>
+                                        <a href="{% url 'dp:task_edit' act_task.id %}"><i class="far fa-edit"></i>
+                                            Edit</a>
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -442,7 +464,8 @@
                                     </td>
                                     {% if user.is_superuser or user.employee.id == project.project_manager.id or user.employee.id == project.portfolio.portfolio_manager.id or project.portfolio is Null and user.employee.position == 'manager' %}
                                         <td class="column100 column9" data-column="column9">
-                                            <a href="{% url 'dp:projmem_edit' projectmember.id %}"><i class="far fa-edit"></i>
+                                            <a href="{% url 'dp:projmem_edit' projectmember.id %}"><i
+                                                    class="far fa-edit"></i>
                                                 Edit position</a>
                                         </td>
                                     {% endif %}
@@ -540,5 +563,105 @@
             {% endif %}
 
         });
+
+
+        var bar = new ProgressBar.Circle(progress, {
+            color: '#000',
+            // This has to be the same size as the maximum width to
+            // prevent clipping
+            strokeWidth: 4,
+            trailWidth: 1,
+            easing: 'easeInOut',
+            duration: 1400,
+            text: {
+                autoStyleContainer: false
+            },
+            from: {color: '#f00', width: 1},
+            to: {color: '#0f0', width: 4},
+            // Set default step function for all animate calls
+            step: function (state, circle) {
+                circle.path.setAttribute('stroke', state.color);
+                circle.path.setAttribute('stroke-width', state.width);
+
+                var value = Math.round(circle.value() * 100);
+                if (value === 0) {
+                    circle.setText("Progress " +value + "%");
+                } else {
+                    circle.setText("Progress " +value + "%");
+                }
+
+            }
+        });
+        bar.text.style.fontFamily = '"Raleway", Helvetica, sans-serif';
+        bar.text.style.fontSize = '2rem';
+
+        bar.animate({{ project.progress }});  // Number from 0.0 to 1.0
+
+        var bar = new ProgressBar.Circle(risk, {
+            color: '#000',
+            // This has to be the same size as the maximum width to
+            // prevent clipping
+            strokeWidth: 4,
+            trailWidth: 1,
+            easing: 'easeInOut',
+            duration: 1400,
+            text: {
+                autoStyleContainer: false
+            },
+            from: {color: '#0f0', width: 1},
+            to: {color: '#f00', width: 4},
+            // Set default step function for all animate calls
+            step: function (state, circle) {
+                circle.path.setAttribute('stroke', state.color);
+                circle.path.setAttribute('stroke-width', state.width);
+
+                var value = Math.round(circle.value());
+                if (value === 0) {
+                    circle.setText("Risk <br>" + {{ project.risk }});
+                } else {
+                    circle.setText("Risk <br>" + {{ project.risk }});
+                }
+
+            }
+        });
+        bar.text.style.fontFamily = '"Raleway", Helvetica, sans-serif';
+        bar.text.style.fontSize = '2rem';
+        risk_percentage = {{ project.risk }} /16
+        bar.animate(risk_percentage);  // Number from 0.0 to 1.0
+
+
+        var bar = new ProgressBar.Circle(analysis, {
+            color: '#000',
+            // This has to be the same size as the maximum width to
+            // prevent clipping
+            strokeWidth: 4,
+            trailWidth: 4,
+            easing: 'easeInOut',
+            duration: 1400,
+            text: {
+                autoStyleContainer: false
+            },
+            from: {color: '#f00', width: 1},
+            to: {color: '#0f0', width: 4},
+            // Set default step function for all animate calls
+            step: function (state, circle) {
+                circle.path.setAttribute('stroke', state.color);
+                circle.path.setAttribute('stroke-width', state.width);
+
+                var value = Math.round(circle.value());
+                if (value === 0) {
+                    circle.setText("Attractivness " + {{ project.optimalization }});
+                } else {
+                    circle.setText("Attractivness " + {{ project.optimalization }});
+                }
+
+            }
+        });
+        bar.text.style.fontFamily = '"Raleway", Helvetica, sans-serif';
+        bar.text.style.fontSize = '2rem';
+        optim_percentage = {{ project.optimalization }} /25
+        bar.animate(optim_percentage);  // Number from 0.0 to 1.0
+
+
     </script>
 {% endblock %}

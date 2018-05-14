@@ -51,6 +51,32 @@ ul, li {
     background: -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 500, from(#474449), to(#e3e3cd));
 }
 
+#progress {
+  margin: 20px;
+  width: 200px;
+  height: 200px;
+  position: relative;
+}
+
+#risk {
+  margin: 20px;
+  width: 200px;
+  height: 200px;
+  position: relative;
+}
+
+#analysis {
+  margin: 20px;
+  width: 200px;
+  height: 200px;
+  position: relative;
+}
+
+#get-low {
+    margin-top:20px;
+}
+
+
 /* ------------------------------------ */
 input {
   display: block;
@@ -295,3 +321,12 @@ th, td {
 .btn-gradient.blue:active   {background: #608FBF;}
 .btn-gradient.purple:active {background: #BD8EB7;}
 .btn-gradient.yellow:active {background: #DBC05B;}
+
+/*
+Progress bar
+ */
+
+.progressbar-text
+{
+    text-align: center;
+}
