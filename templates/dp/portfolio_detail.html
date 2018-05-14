@@ -7,7 +7,7 @@
 {% block content %}
 
     {% load static %}
-{% load extratags %}
+    {% load extratags %}
 
 
     <link rel="stylesheet" type="text/css" href="{% static 'dp/css/index.css' %}"/>
@@ -61,11 +61,12 @@
                 <br>
 
                 <div class="ttl">
-                        <h2>Projects in portfolio</h2>
-                        <span class="sexy_line"></span>
-                    </div>
+                    <h2>Projects in portfolio</h2>
+                    <span class="sexy_line"></span>
+                </div>
                 {% if user.is_superuser or user.employee.id == portfolio.portfolio_manager_id %}
-                    <a href="{% url 'dp:new_port_project' portfolio.id %}" style="margin-left: 9%" class="btn-gradient cyan">Create new
+                    <a href="{% url 'dp:new_port_project' portfolio.id %}" style="margin-left: 9%"
+                       class="btn-gradient cyan">Create new
                         project</a>
                 {% endif %}
 
@@ -116,34 +117,40 @@
                                                 {{ project.plan_budget }}
                                             </td>
                                             {% with project.risk|mul:125|divide:16 as tmp %}
-                                            {% with 125|subtract:tmp as val %}
-                                                <td class="column100 column9" style="">
-                                                    <div class="row">
-                                                        <div class="col-sm-3">{{ project.risk }} </div>
-                                                        <div class="col-sm-3">
-                                                            <div style="margin-top: 5px; width: 8px; height: 8px ; background:  hsl({{ val }},100%,50%);"></div>
+                                                {% with 125|subtract:tmp as val %}
+                                                    <td class="column100 column9" style="">
+                                                        <div class="row">
+                                                            <div class="col-sm-3">{{ project.risk }} </div>
+                                                            <div class="col-sm-3">
+                                                                <div style="margin-top: 5px; width: 8px; height: 8px ; background:  hsl({{ val }},100%,50%);"></div>
+                                                            </div>
+
                                                         </div>
-                                                    </div>
-                                                </td>
+                                                    </td>
+                                                {% endwith %}
                                             {% endwith %}
-                                        {% endwith %}
                                             <td class="column100 column8" data-column="column8">
                                                 {% for key_word in project.projectstrategy_set.all %}
                                                     {{ key_word.strategy.name }}<br>
                                                 {% endfor %}
                                             </td>
                                             {% with project.optimalization|mul:125|divide:25 as tmp %}
-                                            {% with 0|add:tmp as val %}
-                                                <td class="column100 column9" style="">
-                                                    <div class="row">
-                                                        <div class="col-sm-3">{{ project.optimalization }} </div>
-                                                        <div class="col-sm-3">
-                                                            <div style="margin-top: 5px; width: 15px; height: 15px ; background:  hsl({{ val }},100%,50%);"></div>
+                                                {% with 0|add:tmp as val %}
+                                                    <td class="column100 column9" style="">
+                                                        <div class="row">
+                                                            <div class="col-sm-3">{{ project.optimalization }} </div>
+                                                            <div class="col-sm-3">
+                                                                <div style="margin-top: 5px; width: 15px; height: 15px ; background:  hsl({{ val }},100%,50%);"></div>
+                                                            </div>
+                                                            {% if project.optimalization <= attractivness %}
+                                                                <div class="col-sm-3" style="color: red">
+                                                                    <i class="fas fa-exclamation-triangle"></i>
+                                                                </div>
+                                                            {% endif %}
                                                         </div>
-                                                    </div>
-                                                </td>
+                                                    </td>
+                                                {% endwith %}
                                             {% endwith %}
-                                        {% endwith %}
 
                                         {% endif %}
                                     </tr>

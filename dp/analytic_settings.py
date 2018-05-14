@@ -3,7 +3,7 @@
 
 #score separating attractive project from unattractive for portfolio/organization
 #project can get 1-25 points defining it attractiveness.
-ATTRACTIVENESS_POINT = 7
+ATTRACTIVENESS_POINT = 8
 
 #score defining if strategy of project
 IS_STRATEGIC_POINTS = 5

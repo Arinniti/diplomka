@@ -142,12 +142,18 @@
                                         <div class="row">
                                             <div class="col-sm-3">{{ project.optimalization }} </div>
                                             <div class="col-sm-3">
-                                                <div style="margin-top: 5px; width: 15px; height: 15px ; background:  hsl({{ val }},100%,50%);"></div>
+                                                <div style="margin-top: 2px; width: 15px; height: 15px ; background:  hsl({{ val }},100%,50%);"></div>
                                             </div>
+                                            {% if project.optimalization <= attractivness %}
+                                                <div class="col-sm-3" style="color: red">
+                                                    <i class="fas fa-exclamation-triangle"></i>
+                                                </div>
+                                            {% endif %}
                                         </div>
                                     </td>
                                 {% endwith %}
                             {% endwith %}
+
                         </tr>
                         </tbody>
                     </table>
@@ -585,9 +591,9 @@
 
                 var value = Math.round(circle.value() * 100);
                 if (value === 0) {
-                    circle.setText("Progress " +value + "%");
+                    circle.setText("Progress " + value + "%");
                 } else {
-                    circle.setText("Progress " +value + "%");
+                    circle.setText("Progress " + value + "%");
                 }
 
             }

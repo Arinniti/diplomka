@@ -13,6 +13,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from datetime import datetime, date
 from .analytics import *
+from  .analytic_settings import *
 from collections import OrderedDict
 from operator import itemgetter
 
@@ -44,7 +45,7 @@ def portfolio_detail(request, portfolio_id):
     portfolio = get_object_or_404(Portfolio, pk=portfolio_id)
     projects_count = portfolio.project_set.count
     return render(request, 'dp/portfolio_detail.html',
-                  {'portfolio': portfolio, 'projects_count': projects_count,
+                  {'portfolio': portfolio, 'attractivness':ATTRACTIVENESS_POINT, 'projects_count': projects_count,
                    'error_message': "You didn't select a choice."})
 
 
@@ -60,6 +61,7 @@ def project_detail(request, project_id):
     finished_risks = risks_tmp.filter(risk_state__in=[2, 3])
     actual_risks = risks_tmp.filter(risk_state__in=[0, 1])
 
+
     actual_risk_count = actual_risks.count()
     finished_risks_count = finished_risks.count()
     actual_tasks_count = actual_tasks.count()
@@ -71,7 +73,7 @@ def project_detail(request, project_id):
         useable_budget = project.plan_budget - project.used_budget
 
     return render(request, 'dp/project_detail.html',
-                  {'project': project, 'is_member': is_member, 'actual_tasks': actual_tasks,
+                  {'project': project, 'is_member': is_member,'attractivness':ATTRACTIVENESS_POINT, 'actual_tasks': actual_tasks,
                    'useable_budget': useable_budget,
                    'finished_tasks': finished_tasks, 'finished_risks': finished_risks, 'actual_risks': actual_risks,
                    'actual_risk_count': actual_risk_count, 'finished_risks_count': finished_risks_count,
