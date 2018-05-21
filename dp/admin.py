@@ -1,6 +1,6 @@
 from django.contrib import admin
-from .models import Portfolio, Project, Employee, ProjectMember, Ability, MemberAbility, Task, AssignedTask, ProjectNotes, \
-    TaskNotes, Costumer, ProjectRisk, Risk, PortfolioStrategy, ProjectStrategy, OrganizationStrategy
+from .models import Portfolio, Project, Employee, ProjectMember, Ability, MemberAbility, Task, AssignedTask, \
+   ProjectRisk, Risk, PortfolioStrategy, ProjectStrategy, OrganizationStrategy
 from django.shortcuts import reverse
 
 
@@ -20,11 +20,6 @@ admin.site.register(PortfolioStrategy)
 admin.site.register(ProjectStrategy)
 admin.site.register(OrganizationStrategy)
 
-
-
-admin.site.register(ProjectNotes)
-admin.site.register(TaskNotes)
-admin.site.register(Costumer)
 
 
 admin.site.site_url = "../dp/"

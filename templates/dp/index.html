@@ -65,7 +65,7 @@
                             </div>
                             {% if user.is_superuser %}
                                 <a href="{% url 'dp:new_project' %}" class="btn-gradient cyan">Create new project</a>
-                                {% endif %}
+                            {% endif %}
 
                             <table id="projects_outside_a">
                                 <thead>
@@ -76,7 +76,6 @@
                                     <th class="column100 column4" data-column="column4">State</th>
                                     <th class="column100 column5" data-column="column5">Used budget</th>
                                     <th class="column100 column6" data-column="column6">Plan budget</th>
-                                    <th class="column100 column7" data-column="column7">Risk (1-16)</th>
                                     <th class="column100 column8" data-column="column8">Key word</th>
                                     <th class="column100 column9" data-column="column9">Analysis value (1-25)</th>
                                 </tr>
@@ -104,36 +103,34 @@
                                         <td class="column100 column6" data-column="column6">
                                             {{ project_tmp.plan_budget }}
                                         </td>
-
-                                    {% with project_tmp.risk|mul:125|divide:16 as tmp %}
-                                            {% with 125|subtract:tmp as val %}
-                                                <td class="column100 column9" style="">
-                                                    <div class="row">
-                                                        <div class="col-sm-3">{{ project_tmp.risk }} </div>
-                                                        <div class="col-sm-3">
-                                                            <div style="margin-top: 5px; width: 8px; height: 8px ; background:  hsl({{ val }},100%,50%);"></div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            {% endwith %}
-                                        {% endwith %}
                                         <td class="column100 column8" data-column="column8">
                                             {% for key_word in project_tmp.projectstrategy_set.all %}
                                                 {{ key_word.strategy.name }}<br>
                                             {% endfor %}
                                         </td>
-                                        {% with project_tmp.optimalization|mul:125|divide:25 as tmp %}
-                                            {% with 0|add:tmp as val %}
-                                                <td class="column100 column9" style="">
-                                                    <div class="row">
-                                                        <div class="col-sm-3">{{ project_tmp.optimalization }} </div>
-                                                        <div class="col-sm-3">
-                                                            <div style="margin-top: 5px; width: 15px; height: 15px ; background:  hsl({{ val }},100%,50%);"></div>
+                                        {% if not project_tmp.optimalization == 0 %}
+                                            {% with project_tmp.optimalization|mul:125|divide:25 as tmp %}
+                                                {% with 0|add:tmp as val %}
+                                                    <td class="column100 column9" style="">
+                                                        <div class="row">
+                                                            <div class="col-sm-3">{{ project_tmp.optimalization }} </div>
+                                                            <div class="col-sm-3">
+                                                                <div style="margin-top: 5px; width: 15px; height: 15px ; background:  hsl({{ val }},100%,50%);"></div>
+                                                            </div>
+                                                            {% if project_tmp.optimalization <= attractivness and project.state == '2' %}
+                                                                <div class="col-sm-3" style="color: red">
+                                                                    <i class="fas fa-exclamation-triangle"></i>
+                                                                </div>
+                                                            {% endif %}
                                                         </div>
-                                                    </div>
-                                                </td>
+                                                    </td>
+                                                {% endwith %}
                                             {% endwith %}
-                                        {% endwith %}
+                                        {% else %}
+                                            <td class="column100 column6" data-column="column6">
+                                                {{ project_tmp.optimalization }}
+                                            </td>
+                                        {% endif %}
                                     </tr>
                                 {% endfor %}
                                 </tbody>
@@ -156,7 +153,7 @@
                                     <th class="column100 column4" data-column="column4">State</th>
                                     <th class="column100 column5" data-column="column5">Used budget</th>
                                     <th class="column100 column6" data-column="column6">Plan budget</th>
-                                    <th class="column100 column8" data-column="column8">Key word </th>
+                                    <th class="column100 column8" data-column="column8">Key word</th>
 
                                 </tr>
                                 </thead>
@@ -183,7 +180,7 @@
                                         <td class="column100 column6" data-column="column6">
                                             {{ project_tmp.plan_budget }}
                                         </td>
-                                         <td class="column100 column8" data-column="column8">
+                                        <td class="column100 column8" data-column="column8">
                                             {% for key_word in project_tmp.projectstrategy_set.all %}
                                                 {{ key_word.strategy.name }}<br>
                                             {% endfor %}
@@ -297,7 +294,6 @@
                                 <thead>
                                 <tr class="row100 head">
                                     <th class="column100 column1" data-column="column1">Project</th>
-                                    <th class="column100 column2" data-column="column2">Active from</th>
                                     <th class="column100 column3" data-column="column3">State</th>
 
                                 </tr>
@@ -310,9 +306,7 @@
                                             <td class="column100 column1" data-column="column1">
                                                 <a href="{% url 'dp:project_detail' project.id %}">{{ project.project_name }}</a>
                                             </td>
-                                            <td class="column100 column2" data-column="column2">
-                                                {{ project.pub_date }}
-                                            </td>
+
                                             <td class="column100 column3" data-column="column3">
                                                 {{ project.get_state_display }}
                                             </td>
@@ -450,7 +444,7 @@
                 $('#projects_outside_a').DataTable(
                     {
                         "paging": false,
-                        "order": [[8, "desc"]]
+                        "order": [[7, "desc"]]
                     }
                 );
             {% else %}

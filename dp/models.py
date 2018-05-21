@@ -112,7 +112,10 @@ class Project(models.Model):
         return EVM.new_instance(self)
 
     def optimalization(self):
-        return optimization(self, OrganizationStrategy.objects.all())
+        if self.state=="2":
+            return optimization(self, OrganizationStrategy.objects.all())
+        else:
+            return 0
 
 class ProjectStrategy(models.Model):
     class Meta:
@@ -155,6 +158,9 @@ class Task(models.Model):
     description = models.CharField(max_length=200, null=True)
     deadline = models.DateField('date of deadline', null=True, blank=True)
     pub_date = models.DateTimeField(auto_now_add=True)
+    start_date = models.DateField('date of start', null=True, blank=True)
+    progress = models.DecimalField(max_digits=3, decimal_places=2, default=0,
+                                   validators=[MaxValueValidator(1.00), MinValueValidator(0.00)])
 
     STATE_VALUES = (
         ('1', 'Planned'),
@@ -163,7 +169,6 @@ class Task(models.Model):
         ('4', 'Interrupted')
     )
     state = models.CharField(max_length=1, choices=STATE_VALUES, default=1)
-    progress = models.DecimalField(max_digits=3, decimal_places=2, default=0, validators=[MaxValueValidator(1.00), MinValueValidator(0.00)])
 
     @classmethod
     def create(cls, name, description, project_id):
@@ -188,24 +193,7 @@ class AssignedTask(models.Model):
         assignTask.task = task
         return assignTask
 
-class Costumer(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    is_costumer = True
-    def __str__(self):
-        return self.user.username
 
-class TaskNotes(models.Model):
-    task = models.ForeignKey(Task, on_delete=models.CASCADE)
-    author = models.ForeignKey(Employee, on_delete=models.CASCADE)
-    note = models.CharField(max_length=200)
-    pub_date = models.DateTimeField(auto_now_add=True)
-
-class ProjectNotes(models.Model):
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    author = models.ForeignKey(Employee, on_delete=models.CASCADE)
-    note = models.CharField(max_length=200)
-    pub_date = models.DateTimeField(auto_now_add=True)
 
 class Risk (models.Model):
     name = models.CharField(max_length=50, null=True)

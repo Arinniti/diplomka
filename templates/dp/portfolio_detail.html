@@ -66,8 +66,7 @@
                 </div>
                 {% if user.is_superuser or user.employee.id == portfolio.portfolio_manager_id %}
                     <a href="{% url 'dp:new_port_project' portfolio.id %}" style="margin-left: 9%"
-                       class="btn-gradient cyan">Create new
-                        project</a>
+                       class="btn-gradient cyan">Create new project</a>
                 {% endif %}
 
                 {% if portfolio.project_set.all %}
@@ -84,7 +83,6 @@
                                         <th class="column100 column4" data-column="column4">State</th>
                                         <th class="column100 column5" data-column="column5">Used budget</th>
                                         <th class="column100 column6" data-column="column6">Plan budget</th>
-                                        <th class="column100 column7" data-column="column7">Risk (1-16)</th>
                                         <th class="column100 column8" data-column="column8">Key word</th>
                                         <th class="column100 column9" data-column="column9">Analysis value(1-25)</th>
                                     {% endif %}
@@ -116,41 +114,35 @@
                                             <td class="column100 column6" data-column="column6">
                                                 {{ project.plan_budget }}
                                             </td>
-                                            {% with project.risk|mul:125|divide:16 as tmp %}
-                                                {% with 125|subtract:tmp as val %}
-                                                    <td class="column100 column9" style="">
-                                                        <div class="row">
-                                                            <div class="col-sm-3">{{ project.risk }} </div>
-                                                            <div class="col-sm-3">
-                                                                <div style="margin-top: 5px; width: 8px; height: 8px ; background:  hsl({{ val }},100%,50%);"></div>
-                                                            </div>
-
-                                                        </div>
-                                                    </td>
-                                                {% endwith %}
-                                            {% endwith %}
                                             <td class="column100 column8" data-column="column8">
                                                 {% for key_word in project.projectstrategy_set.all %}
                                                     {{ key_word.strategy.name }}<br>
                                                 {% endfor %}
                                             </td>
-                                            {% with project.optimalization|mul:125|divide:25 as tmp %}
-                                                {% with 0|add:tmp as val %}
-                                                    <td class="column100 column9" style="">
-                                                        <div class="row">
-                                                            <div class="col-sm-3">{{ project.optimalization }} </div>
-                                                            <div class="col-sm-3">
-                                                                <div style="margin-top: 5px; width: 15px; height: 15px ; background:  hsl({{ val }},100%,50%);"></div>
-                                                            </div>
-                                                            {% if project.optimalization <= attractivness %}
-                                                                <div class="col-sm-3" style="color: red">
-                                                                    <i class="fas fa-exclamation-triangle"></i>
+                                            {% if not project.optimalization == 0 %}
+                                                {% with project.optimalization|mul:125|divide:max_attractivness as tmp %}
+                                                    {% with 0|add:tmp as val %}
+                                                        <td class="column100 column9" style="">
+                                                            <div class="row">
+                                                                <div class="col-sm-3">{{ project.optimalization }} </div>
+                                                                <div class="col-sm-3">
+                                                                    <div style="margin-top: 5px; width: 15px; height: 15px ; background:  hsl({{ val }},100%,50%);"></div>
                                                                 </div>
-                                                            {% endif %}
-                                                        </div>
-                                                    </td>
+                                                                {% if project.optimalization <= attractivness and project.state == '2'%}
+                                                                    <div class="col-sm-3" style="color: red">
+                                                                        <i class="fas fa-exclamation-triangle"></i>
+                                                                    </div>
+                                                                {% endif %}
+                                                            </div>
+                                                        </td>
+                                                    {% endwith %}
                                                 {% endwith %}
-                                            {% endwith %}
+                                            {% else %}
+                                                <td class="column100 column6" data-column="column6">
+                                                {{ project.optimalization }}
+                                            </td>
+                                            {% endif %}
+
 
                                         {% endif %}
                                     </tr>
@@ -176,13 +168,13 @@
                     {
                         "paging": false,
                         "info": false,
-                        "order": [[8, "desc"]]
+                        "order": [[7, "desc"]]
                     }
                 );
             {% else %}
                 $('#example').DataTable(
                     {
-                        "order": [[8, "desc"]]
+                        "order": [[7, "desc"]]
                     }
                 );
             {% endif %}

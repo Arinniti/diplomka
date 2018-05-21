@@ -36,6 +36,7 @@ def index(request):
     context['actual_projects'] = actual_projects
     context['project_count'] = project_count
     context['finished_pr_count'] = finished_pr_count
+    context['attractivness'] = ATTRACTIVNESS_POINT
 
     return render(request, "dp/index.html", context)
 
@@ -45,7 +46,7 @@ def portfolio_detail(request, portfolio_id):
     portfolio = get_object_or_404(Portfolio, pk=portfolio_id)
     projects_count = portfolio.project_set.count
     return render(request, 'dp/portfolio_detail.html',
-                  {'portfolio': portfolio, 'attractivness':ATTRACTIVENESS_POINT, 'projects_count': projects_count,
+                  {'portfolio': portfolio, 'attractivness':ATTRACTIVNESS_POINT, 'max_attractivness':MAX_ATTRACTIVNESS, 'projects_count': projects_count,
                    'error_message': "You didn't select a choice."})
 
 
@@ -73,7 +74,7 @@ def project_detail(request, project_id):
         useable_budget = project.plan_budget - project.used_budget
 
     return render(request, 'dp/project_detail.html',
-                  {'project': project, 'is_member': is_member,'attractivness':ATTRACTIVENESS_POINT, 'actual_tasks': actual_tasks,
+                  {'project': project, 'is_member': is_member,'attractivness':ATTRACTIVNESS_POINT, 'max_attractivness':MAX_ATTRACTIVNESS, 'actual_tasks': actual_tasks,
                    'useable_budget': useable_budget,
                    'finished_tasks': finished_tasks, 'finished_risks': finished_risks, 'actual_risks': actual_risks,
                    'actual_risk_count': actual_risk_count, 'finished_risks_count': finished_risks_count,
@@ -227,7 +228,7 @@ def new_task_handler(request, project_id):
                 return redirect(reverse('dp:project_detail', kwargs={"project_id": project_id}))
 
     employees = ProjectMember.objects.filter(project_id=project_id).all()
-    employees = [(empl.member_id, empl.member.user.username) for empl in employees]
+    employees = [(empl.member_id, empl.member.user.last_name) for empl in employees]
     if request.method == 'POST':
 
         form = NewTaskForm(request.POST, employee_list=employees)

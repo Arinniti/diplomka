@@ -1,10 +1,5 @@
 #Editable criteria values -> depending on strategy
 
-
-#score separating attractive project from unattractive for portfolio/organization
-#project can get 1-25 points defining it attractiveness.
-ATTRACTIVENESS_POINT = 8
-
 #score defining if strategy of project
 IS_STRATEGIC_POINTS = 5
 ISNT_STRATEGIC_POINTS = 1
@@ -53,3 +48,11 @@ CPI_POSITIVE_POINTS = 3    #value 3 > CPI > 1
 CPI_NEGATIVE_POINTS = 1    #value 1 > CPI > -2
 CPI_NEGATIVE_HIGH_POINTS = 0   #value CPI < -2
 
+
+
+# Number of max point depends on score set on kriterias below
+MAX_ATTRACTIVNESS = IS_STRATEGIC_POINTS+RISK_OK_POINTS+COMPLEXITY_LOW_POINTS+\
+                     URG_IMP_POINTS+PROGRESS_HIGH_POINTS+CPI_POSITIVE_HIGH_POINTS
+
+#score separating attractive project from unattractive for portfolio/organization
+ATTRACTIVNESS_POINT = 8

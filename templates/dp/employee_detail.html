@@ -130,7 +130,8 @@
                                             {{ abilitymem.ability.description }}
                                         </td>
                                         <td class="column100 column3" data-column="column3">
-                                            <a href="{% url 'dp:memability_edit' abilitymem.id %}"><i class="far fa-edit"></i> Edit </a>
+                                            <a href="{% url 'dp:memability_edit' abilitymem.id %}"><i
+                                                    class="far fa-edit"></i> Edit </a>
                                         </td>
 
                                     </tr>
@@ -255,51 +256,53 @@
                     </div>
                 {% endif %}
                 {% if employee.assignedtask_set.all %}
-                    <br>
-                    <br>
-                    <div class="ttl">
-                        <h2>Tasks to do</h2>
-                        <span class="sexy_line"></span>
-                    </div>
+                    {% if user.is_superuser or user.employee.id == employee.id or user.employee.position == "manager" %}
+                        <br>
+                        <br>
+                        <div class="ttl">
+                            <h2>Tasks to do</h2>
+                            <span class="sexy_line"></span>
+                        </div>
 
 
-                    <div class="table100 ver1 m-b-110">
-                        <table data-vertable="ver1">
-                            <thead>
-                            <tr class="row100 head">
-                                <th class="column100 column1" data-column="column1">Task name</th>
-                                <th class="column100 column2" data-column="column2">Description</th>
-                                <th class="column100 column3" data-column="column3">State</th>
-                                <th class="column100 column4" data-column="column4">Project name</th>
+                        <div class="table100 ver1 m-b-110">
+                            <table data-vertable="ver1">
+                                <thead>
+                                <tr class="row100 head">
+                                    <th class="column100 column1" data-column="column1">Task name</th>
+                                    <th class="column100 column2" data-column="column2">Description</th>
+                                    <th class="column100 column3" data-column="column3">State</th>
+                                    <th class="column100 column4" data-column="column4">Project name</th>
 
-                            </tr>
-                            </thead>
-                            <tbody>
+                                </tr>
+                                </thead>
+                                <tbody>
 
-                            <ul>
-                                {% for asstask in employee.assignedtask_set.all %}
-                                    <tr class="row100">
-                                        <td class="column100 column1" data-column="column1">
-                                            {{ asstask.task.name }}
-                                        </td>
-                                        <td class="column100 column2" data-column="column2">
-                                            {{ asstask.task.description }}
-                                        </td>
-                                        <td class="column100 column3" data-column="column3">
-                                            {{ asstask.task.get_state_display }}
-                                        </td>
-                                        <td class="column100 column4" data-column="column4">
-                                            <a href="{% url 'dp:project_detail' asstask.task.in_project_id %}">{{ asstask.task.in_project.project_name }}</a>
-                                        </td>
+                                <ul>
+                                    {% for asstask in employee.assignedtask_set.all %}
+                                        <tr class="row100">
+                                            <td class="column100 column1" data-column="column1">
+                                                {{ asstask.task.name }}
+                                            </td>
+                                            <td class="column100 column2" data-column="column2">
+                                                {{ asstask.task.description }}
+                                            </td>
+                                            <td class="column100 column3" data-column="column3">
+                                                {{ asstask.task.get_state_display }}
+                                            </td>
+                                            <td class="column100 column4" data-column="column4">
+                                                <a href="{% url 'dp:project_detail' asstask.task.in_project_id %}">{{ asstask.task.in_project.project_name }}</a>
+                                            </td>
 
-                                    </tr>
-                                {% endfor %}
-                            </ul>
-                            </tbody>
+                                        </tr>
+                                    {% endfor %}
+                                </ul>
+                                </tbody>
 
-                        </table>
+                            </table>
 
-                    </div>
+                        </div>
+                    {% endif %}
                 {% endif %}
             </div>
         </div>
