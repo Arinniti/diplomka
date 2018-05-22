@@ -1,42 +1,62 @@
 from datetime import date
 from dp.analytic_settings import *
 
+class EVMTask:
+    def __init__(self):
+        self.ev = 0
+        self.ac = 0
+        self.pv = 0
+
+    def calculate_for_task(self, tast_instance):
+        task = tast_instance
+        emps = task.assignedtask_set.count()
+
+        if task.deadline and task.start_date and task.state=='2':
+            days_plan = task.deadline - task.start_date
+            days_plan = days_plan.days * emps
+
+            today = date.today()
+            days_past = today - task.start_date
+            days_past = days_past.days * emps
+
+            self.ev = (round(task.progress * days_plan, 0))
+            self.ac = days_past
+            self.pv = days_plan
+
+    @staticmethod
+    def new_instance(tast_instance):
+        ins = EVMTask()
+        ins.calculate_for_task(tast_instance)
+        return ins
+
+
+
+
+
 class EVM:
     def __init__(self):
-        self.ev = None
-        self.ac = None
-        self.pv = None
+        self.ev = 0
+        self.ac = 0
+        self.pv = 0
 
-        self.cpi = None
-        self.spi = None
-        self.eac = None
-        self.etc = None
+        self.cpi = 0
+        self.spi = 0
+        self.eac = 0
+        self.etc = 0
 
     def calculate_for_project(self, project_instance):
         project = project_instance
-        plan_daily_cost = "Not set"
-        actual_daily_cost = "Not set"
-        days_past = "Not set"
-        if project.deadline and project.start_date:
-            days = project.deadline - project.start_date
-            days = days.days
+        if project.deadline and project.start_date and project.state == '2':
+            for task in project.task_set.all():
+                self.ev = self.ev + task.evmtask().ev
+                self.pv = self.pv + task.evmtask().pv
+                self.ac = self.ac + task.evmtask().ac
 
-            plan_daily_cost = project.plan_budget / days
-            plan_daily_cost = (round(plan_daily_cost, 2))
-
-            today = date.today()
-            days_past = today - project.start_date
-            days_past = days_past.days
-
-            self.ev = project.progress * project.plan_budget
-            self.ac = project.used_budget
-            self.pv = plan_daily_cost * days_past
-
-            self.cpi = (round(self.ev / self.ac, 2))
-
-            self.spi = (round(self.ev / self.pv, 2))
-            self.eac = (round(project.plan_budget / self.cpi, 2))
-            self.etc = self.eac - self.ac
+            if self.ev is not 0:
+                self.cpi = (round(self.ev / self.ac, 2))
+                self.spi = (round(self.ev / self.pv, 2))
+                self.eac = (round(project.plan_budget / self.cpi, 2))
+                self.etc = self.eac - self.ac
 
     @staticmethod
     def new_instance(project_instance):
@@ -46,8 +66,6 @@ class EVM:
 
 def optimization(project, org_strategy):
     result = 0
-
-    result += RISK_OK_POINTS if project.risk(zero_if_not_set=True) < RISK_APPETITE else RISK_NOT_OK_POINTS
 
     result += COMPLEXITY_LOW_POINTS if project.complexity == '0' else COMPLEXITY_HIGH_POINTS
     is_strategic = check_if_strategic(project, org_strategy)
@@ -80,16 +98,16 @@ def calculate_ongoing_proj_score(project):
             result += NOT_URG_NOT_IMP_POINTS
 
     project_evm = project.evm()
-    if project_evm.cpi:
-        if project_evm.cpi > CPI_POSITIVE_HIGH:
-            result += CPI_POSITIVE_HIGH_POINTS
-        elif project_evm.cpi > CPI_POSITIVE:
-            result += CPI_POSITIVE_POINTS
-        elif project_evm.cpi > CPI_NEGATIVE:
-            result += CPI_NEGATIVE_POINTS
-        else:
-            result += CPI_NEGATIVE_HIGH_POINTS
-
+    if project_evm.cpi >= 1:
+        if project_evm.spi >= 1:
+            result += CPI_SPI_POINTS
+        elif project_evm.spi < 1:
+            result += CPI_NOT_SPI_POINTS
+    else:
+        if project_evm.spi >= 1:
+            result += NOT_CPI_SPI_POINTS
+        elif project_evm.spi < 1:
+            result += NOT_CPI_NOT_SPI_POINTS
 
     return result
 

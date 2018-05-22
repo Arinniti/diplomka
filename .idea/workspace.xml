@@ -2,19 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2231d7ed-1c45-4d21-9195-70a8a53dd2f2" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/dp/migrations/0062_auto_20180517_1103.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dp/migrations/0063_auto_20180521_1757.py" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/1cde3ea4-660f-43f7-aee4-359678a3b32f.xml" afterPath="$PROJECT_DIR$/.idea/dataSources/1cde3ea4-660f-43f7-aee4-359678a3b32f.xml" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
-      <change beforePath="$PROJECT_DIR$/diplomka/settings.py" afterPath="$PROJECT_DIR$/diplomka/settings.py" />
-      <change beforePath="$PROJECT_DIR$/dp/admin.py" afterPath="$PROJECT_DIR$/dp/admin.py" />
       <change beforePath="$PROJECT_DIR$/dp/analytic_settings.py" afterPath="$PROJECT_DIR$/dp/analytic_settings.py" />
-      <change beforePath="$PROJECT_DIR$/dp/choices.py" afterPath="$PROJECT_DIR$/dp/choices.py" />
+      <change beforePath="$PROJECT_DIR$/dp/analytics.py" afterPath="$PROJECT_DIR$/dp/analytics.py" />
       <change beforePath="$PROJECT_DIR$/dp/models.py" afterPath="$PROJECT_DIR$/dp/models.py" />
       <change beforePath="$PROJECT_DIR$/dp/views.py" afterPath="$PROJECT_DIR$/dp/views.py" />
-      <change beforePath="$PROJECT_DIR$/templates/dp/employee_detail.html" afterPath="$PROJECT_DIR$/templates/dp/employee_detail.html" />
-      <change beforePath="$PROJECT_DIR$/templates/dp/index.html" afterPath="$PROJECT_DIR$/templates/dp/index.html" />
       <change beforePath="$PROJECT_DIR$/templates/dp/portfolio_detail.html" afterPath="$PROJECT_DIR$/templates/dp/portfolio_detail.html" />
       <change beforePath="$PROJECT_DIR$/templates/dp/project_detail.html" afterPath="$PROJECT_DIR$/templates/dp/project_detail.html" />
     </list>
@@ -61,53 +54,60 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dp/views.py">
+      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dp/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="230" column="60" lean-forward="false" selection-start-line="230" selection-start-column="60" selection-end-line="230" selection-end-column="60" />
+            <state relative-caret-position="79">
+              <caret line="59" column="14" lean-forward="false" selection-start-line="59" selection-start-column="4" selection-end-line="59" selection-end-column="14" />
               <folding>
-                <element signature="e#0#44#0" expanded="true" />
+                <element signature="e#0#14#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="forms.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dp/forms.py">
+      <file leaf-file-name="project_detail.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/dp/project_detail.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="9" column="42" lean-forward="false" selection-start-line="9" selection-start-column="42" selection-end-line="9" selection-end-column="55" />
+            <state relative-caret-position="257">
+              <caret line="100" column="118" lean-forward="false" selection-start-line="100" selection-start-column="118" selection-end-line="100" selection-end-column="118" />
+              <folding>
+                <element signature="e#7571#7610#0#HTML" expanded="true" />
+                <element signature="e#7716#7753#0#HTML" expanded="true" />
+                <element signature="e#8203#8242#0#HTML" expanded="true" />
+                <element signature="e#8350#8387#0#HTML" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="analytic_settings.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/dp/analytic_settings.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="241">
+              <caret line="31" column="27" lean-forward="false" selection-start-line="31" selection-start-column="27" selection-end-line="31" selection-end-column="27" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dp/models.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="264">
-              <caret line="166" column="18" lean-forward="false" selection-start-line="166" selection-start-column="18" selection-end-line="166" selection-end-column="18" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="employee_detail.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/dp/employee_detail.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="314">
-              <caret line="304" column="28" lean-forward="false" selection-start-line="304" selection-start-column="28" selection-end-line="304" selection-end-column="28" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="analytics.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="analytics.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dp/analytics.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1428">
-              <caret line="106" column="16" lean-forward="false" selection-start-line="106" selection-start-column="16" selection-end-line="106" selection-end-column="16" />
+            <state relative-caret-position="164">
+              <caret line="68" column="0" lean-forward="true" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#25#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="portfolio_detail.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/dp/portfolio_detail.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="236">
+              <caret line="49" column="94" lean-forward="false" selection-start-line="49" selection-start-column="94" selection-end-line="49" selection-end-column="94" />
               <folding />
             </state>
           </provider>
@@ -182,7 +182,6 @@
         <option value="$PROJECT_DIR$/dp/tags.py" />
         <option value="$PROJECT_DIR$/dp/templatetags/myfilters.py" />
         <option value="$PROJECT_DIR$/dp/static/dp/css/multi-select.css" />
-        <option value="$PROJECT_DIR$/dp/analytics.py" />
         <option value="$PROJECT_DIR$/dp/static/dp/css/jquery.dataTables.min.css" />
         <option value="$PROJECT_DIR$/dp/static/dp/js/jquery-1.12.4.js" />
         <option value="$PROJECT_DIR$/dp/templatetags/extratags.py" />
@@ -210,14 +209,15 @@
         <option value="$PROJECT_DIR$/dp/static/dp/css/index.css" />
         <option value="$PROJECT_DIR$/dp/choices.py" />
         <option value="$PROJECT_DIR$/diplomka/settings.py" />
-        <option value="$PROJECT_DIR$/dp/analytic_settings.py" />
-        <option value="$PROJECT_DIR$/dp/views.py" />
-        <option value="$PROJECT_DIR$/dp/models.py" />
         <option value="$PROJECT_DIR$/dp/admin.py" />
-        <option value="$PROJECT_DIR$/templates/dp/portfolio_detail.html" />
-        <option value="$PROJECT_DIR$/templates/dp/project_detail.html" />
         <option value="$PROJECT_DIR$/templates/dp/index.html" />
         <option value="$PROJECT_DIR$/templates/dp/employee_detail.html" />
+        <option value="$PROJECT_DIR$/dp/models.py" />
+        <option value="$PROJECT_DIR$/dp/views.py" />
+        <option value="$PROJECT_DIR$/templates/dp/portfolio_detail.html" />
+        <option value="$PROJECT_DIR$/dp/analytics.py" />
+        <option value="$PROJECT_DIR$/templates/dp/project_detail.html" />
+        <option value="$PROJECT_DIR$/dp/analytic_settings.py" />
       </list>
     </option>
   </component>
@@ -511,7 +511,14 @@
       <option name="project" value="LOCAL" />
       <updated>1526336035426</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="all done except EVM">
+      <created>1526942456582</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1526942456582</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -520,10 +527,10 @@
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32913387" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.66456693" sideWeight="0.3623719" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24566929" sideWeight="0.43997073" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32913387" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24724409" sideWeight="0.46778917" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24566929" sideWeight="0.56002927" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="manage.py@diplomka" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27244094" sideWeight="0.4941435" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2489019" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
@@ -532,7 +539,7 @@
       <window_info id="SciView" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24963397" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22204724" sideWeight="0.63762814" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.46614173" sideWeight="0.63762814" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -562,21 +569,15 @@
     <MESSAGE value="gui finished(missing progress), projmembers in create project" />
     <MESSAGE value="progress bars" />
     <MESSAGE value="exclamation mark" />
-    <option name="LAST_COMMIT_MESSAGE" value="exclamation mark" />
+    <MESSAGE value="all done except EVM" />
+    <option name="LAST_COMMIT_MESSAGE" value="all done except EVM" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/dp/views.py</url>
-          <line>324</line>
-          <option name="timeStamp" value="101" />
-        </line-breakpoint>
-      </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="108" />
+      <option name="time" value="121" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="Python.DjangoServer">
@@ -587,18 +588,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/dp/static/dp/js/jquery.multi-select.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/media/male-profile-user-shadow_318-40244.jpg">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dp/static/dp/css/multi-select.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
@@ -723,13 +712,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="das://table:/7ca40007/1cde3ea4-660f-43f7-aee4-359678a3b32f/main.dp_assignedtask">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/dp/new_ability.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="144">
@@ -836,46 +818,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="das://table:/7ca40007/1cde3ea4-660f-43f7-aee4-359678a3b32f/main.dp_task">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dp/analytic_settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="19" lean-forward="false" selection-start-line="9" selection-start-column="19" selection-end-line="9" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://table:/7ca40007/1cde3ea4-660f-43f7-aee4-359678a3b32f/main.dp_project">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dp/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="230" column="60" lean-forward="false" selection-start-line="230" selection-start-column="60" selection-end-line="230" selection-end-column="60" />
-          <folding>
-            <element signature="e#0#44#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dp/forms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="9" column="42" lean-forward="false" selection-start-line="9" selection-start-column="42" selection-end-line="9" selection-end-column="55" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dp/admin.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
@@ -908,34 +850,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/dp/portfolio_detail.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="139" column="44" lean-forward="false" selection-start-line="139" selection-start-column="44" selection-end-line="142" selection-end-column="49" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/dp/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="376">
           <caret line="130" column="62" lean-forward="false" selection-start-line="130" selection-start-column="62" selection-end-line="130" selection-end-column="62" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/dp/project_detail.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="393">
-          <caret line="143" column="49" lean-forward="false" selection-start-line="143" selection-start-column="49" selection-end-line="143" selection-end-column="49" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dp/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="166" column="18" lean-forward="false" selection-start-line="166" selection-start-column="18" selection-end-line="166" selection-end-column="18" />
           <folding />
         </state>
       </provider>
@@ -948,10 +866,105 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/dp/forms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="9" column="42" lean-forward="false" selection-start-line="9" selection-start-column="42" selection-end-line="9" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://table:/7ca40007/1cde3ea4-660f-43f7-aee4-359678a3b32f/main.dp_assignedtask">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://table:/7ca40007/1cde3ea4-660f-43f7-aee4-359678a3b32f/main.dp_projectstrategy">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://table:/7ca40007/1cde3ea4-660f-43f7-aee4-359678a3b32f/main.dp_project">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Program Files/Python37/Lib/site-packages/django/db/models/fields/related_descriptors.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="494" column="0" lean-forward="false" selection-start-line="494" selection-start-column="0" selection-end-line="494" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://table:/7ca40007/1cde3ea4-660f-43f7-aee4-359678a3b32f/main.dp_task">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/dp/portfolio_detail.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="236">
+          <caret line="49" column="94" lean-forward="false" selection-start-line="49" selection-start-column="94" selection-end-line="49" selection-end-column="94" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/dp/analytics.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1428">
-          <caret line="106" column="16" lean-forward="false" selection-start-line="106" selection-start-column="16" selection-end-line="106" selection-end-column="16" />
+        <state relative-caret-position="164">
+          <caret line="68" column="0" lean-forward="true" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dp/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="76" column="117" lean-forward="false" selection-start-line="76" selection-start-column="100" selection-end-line="76" selection-end-column="117" />
+          <folding>
+            <element signature="e#0#44#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dp/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="79">
+          <caret line="59" column="14" lean-forward="false" selection-start-line="59" selection-start-column="4" selection-end-line="59" selection-end-column="14" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/dp/project_detail.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="257">
+          <caret line="100" column="118" lean-forward="false" selection-start-line="100" selection-start-column="118" selection-end-line="100" selection-end-column="118" />
+          <folding>
+            <element signature="e#7571#7610#0#HTML" expanded="true" />
+            <element signature="e#7716#7753#0#HTML" expanded="true" />
+            <element signature="e#8203#8242#0#HTML" expanded="true" />
+            <element signature="e#8350#8387#0#HTML" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dp/analytic_settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="241">
+          <caret line="31" column="27" lean-forward="false" selection-start-line="31" selection-start-column="27" selection-end-line="31" selection-end-column="27" />
           <folding />
         </state>
       </provider>

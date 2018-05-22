@@ -5,7 +5,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.shortcuts import reverse
-from .analytics import EVM, optimization
+from .analytics import *
 
 class Employee(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -179,6 +179,9 @@ class Task(models.Model):
 
     def get_absolute_url(self):
         return reverse('dp:project_detail', kwargs={'project_id': self.in_project.id})
+
+    def evmtask(self):
+        return EVMTask.new_instance(self)
 
 
 class AssignedTask(models.Model):

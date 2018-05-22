@@ -9,20 +9,20 @@
     {% load extratags %}
 
     <link rel="stylesheet" type="text/css" href="{% static 'dp/css/index.css' %}"/>
-{% if user.is_superuser or user.employee.id == project.project_manager.id or user.employee.id == project.portfolio.portfolio_manager.id or project.portfolio is Null and user.employee.position == 'manager' %}
-    <div class="row" style="margin-top: 15px;">
-        <div class="col-sm-6 col-lg-offset-3">
-            <div class="row" style="border: solid 2px">
-                <div class="col-sm-5 col-lg-offset-1">
-                    <div id="progress"></div>
-                </div>
-                <div class="col-sm-2">
-                    <div id="analysis"></div>
+    {% if user.is_superuser or user.employee.id == project.project_manager.id or user.employee.id == project.portfolio.portfolio_manager.id or project.portfolio is Null and user.employee.position == 'manager' %}
+        <div class="row" style="margin-top: 15px;">
+            <div class="col-sm-6 col-lg-offset-3">
+                <div class="row" style="border: solid 2px">
+                    <div class="col-sm-5 col-lg-offset-1">
+                        <div id="progress"></div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div id="analysis"></div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-{% endif %}
+    {% endif %}
     <div class="container-table100 container">
         <div class="wrap-table100">
             <div class="table100 ver1 m-b-110">
@@ -32,9 +32,9 @@
                         <th class="column100 column1" data-column="column1">Project name</th>
                         <th class="column100 column2" data-column="column2">Description</th>
                         <th class="column100 column3" data-column="column3">State</th>
-                        <th class="column100 column3" data-column="column3">Progress</th>
                         <th class="column100 column4" data-column="column4">Manager</th>
                         {% if   user.is_superuser or user.employee.id == project.project_manager.id or is_member or user.employee.id == project.portfolio.portfolio_manager.id or user.employee.position == 'manager' %}
+                            <th class="column100 column1" data-column="column1">Start date</th>
                             <th class="column100 column1" data-column="column1">Deadline</th>
                             <th class="column100 column1" data-column="column1">Key Words</th>
                             {% if user.is_superuser or user.employee.id == project.project_manager.id or user.employee.id == project.portfolio.portfolio_manager.id or project.portfolio is Null and user.employee.position == 'manager' %}
@@ -55,15 +55,16 @@
                         <td class="column100 column3" data-column="column3">
                             {{ project.get_state_display }}
                         </td>
-                        <td class="column100 column3" data-column="column3">
-                            {{ project.progress }}
-                        </td>
+
                         <td class="column100 column4" data-column="column4">
                             {% if project.project_manager %}
                                 <a href="{% url 'dp:employee_detail' project.project_manager.id %}">{{ project.project_manager.user.first_name }} {{ project.project_manager.user.last_name }}</a>
                             {% endif %}
                         </td>
                         {% if   user.is_superuser or user.employee.id == project.project_manager.id or is_member or user.employee.id == project.portfolio.portfolio_manager.id or user.employee.position == 'manager' %}
+                            <td class="column100 column9" data-column="column9">
+                                {{ project.start_date }}
+                            </td>
                             <td class="column100 column9" data-column="column9">
                                 {{ project.deadline }}
                             </td>
@@ -95,7 +96,9 @@
                             <th class="column100 column9" data-column="column9">Importance</th>
                             <th class="column100 column9" data-column="column9">Urgency</th>
                             <th class="column100 column9" data-column="column9">Complexity</th>
-                            <th class="column100 column9" data-column="column9">Analysis value (1-25)</th>
+                            <th class="column100 column7" data-column="column7">Cost performance index</th>
+                            <th class="column100 column8" data-column="column8">Schedule performance index</th>
+                            <th class="column100 column9" data-column="column9">Analysis value (1-{{ max_attractivness }})</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -120,28 +123,49 @@
                             <td class="column100 column4" data-column="column4">
                                 {{ project.get_complexity_display }}
                             </td>
-                        {% if not project.optimalization == 0 %}
-                            {% with project.optimalization|mul:125|divide:max_attractivness as tmp %}
-                                {% with 0|add:tmp as val %}
-                                    <td class="column100 column9" style="">
-                                        <div class="row">
-                                            <div class="col-sm-3">{{ project.optimalization }} </div>
-                                            <div class="col-sm-3">
-                                                <div style="margin-top: 2px; width: 15px; height: 15px ; background:  hsl({{ val }},100%,50%);"></div>
-                                            </div>
-                                            {% if project.optimalization <= attractivness  and project.state == '2'%}
-                                                <div class="col-sm-3" style="color: red">
-                                                    <i class="fas fa-exclamation-triangle"></i>
+                            <td class="column100 column6" data-column="column6">
+                                {{ project.evm.cpi }}
+                                {% if project.evm.cpi != 0 %}
+                                    {% if project.evm.cpi >= 1 %}
+                                        <p style="color: green; font-weight: bold">Cost Lower</p>
+                                    {% else %}
+                                        <p style="color: red; font-weight: bold">Cost Higher</p>
+
+                                    {% endif %}
+                                {% endif %}
+                            </td>
+                            <td class="column100 column6" data-column="column6">
+                                {{ project.evm.spi }}
+                                {% if project.evm.spi != 0 %}
+                                    {% if project.evm.spi >= 1 %}
+                                        <p style="color: green; font-weight: bold">Time Advance</p>
+                                    {% else %}
+                                        <p style="color: red; font-weight: bold">Time Delay</p>
+                                    {% endif %}
+                                {% endif %}
+                            </td>
+                            {% if not project.optimalization == 0 %}
+                                {% with project.optimalization|mul:125|divide:max_attractivness as tmp %}
+                                    {% with 0|add:tmp as val %}
+                                        <td class="column100 column9" style="">
+                                            <div class="row">
+                                                <div class="col-sm-3">{{ project.optimalization }} </div>
+                                                <div class="col-sm-3">
+                                                    <div style="margin-top: 2px; width: 15px; height: 15px ; background:  hsl({{ val }},100%,50%);"></div>
                                                 </div>
-                                            {% endif %}
-                                        </div>
-                                    </td>
+                                                {% if project.optimalization <= attractivness  and project.state == '2' %}
+                                                    <div class="col-sm-3" style="color: red">
+                                                        <i class="fas fa-exclamation-triangle"></i>
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        </td>
+                                    {% endwith %}
                                 {% endwith %}
-                            {% endwith %}
                             {% else %}
-                                                <td class="column100 column6" data-column="column6">
-                                                {{ project.optimalization }}
-                                            </td>
+                                <td class="column100 column6" data-column="column6">
+                                    {{ project.optimalization }}
+                                </td>
                             {% endif %}
 
                         </tr>
@@ -150,60 +174,7 @@
                 {% endif %}
                 <br>
                 <br>
-                {% if   user.is_superuser or user.employee.id == project.project_manager.id or user.employee.id == project.portfolio.portfolio_manager.id or user.employee.position == 'manager' %}
-                    {% if project.state == "2" or project.state == "4" %}
-                        <div class="ttl">
-                            <h2>Analysis of cost using EVM method</h2>
-                            <span class="sexy_line"></span>
-                        </div>
-                        <table>
-                            <thead>
-                            <tr class="row100 head">
-                                <th rowspan="2" class="column100 column6" data-column="column6">Budget</th>
-                                <th rowspan="2" class="column100 column8" data-column="column8">Used budget</th>
-                                <th rowspan="2" class="column100 column7" data-column="column7">Cost performance
-                                    index
-                                </th>
-                                <th rowspan="2" class="column100 column8" data-column="column8">Schedule
-                                    performance
-                                    index
-                                </th>
-                                <th colspan="2" style="text-align: center;" class="column100 column8"
-                                    data-column="column8">Prediction
-                                </th>
-                            </tr>
-                            <tr>
-                                <th class="column100 column7" data-column="column7">Cost at completion</th>
-                                <th class="column100 column8" data-column="column8">Cost to complete</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr class="row100">
-                                <td class="column100 column6" data-column="column6">
-                                    {{ project.plan_budget }}
-                                </td>
-                                <td class="column100 column6" data-column="column6">
-                                    {{ project.used_budget }}
-                                </td>
-                                <td class="column100 column6" data-column="column6">
-                                    {{ project.evm.cpi }}
-                                </td>
-                                <td class="column100 column6" data-column="column6">
-                                    {{ project.evm.spi }}
-                                </td>
-                                <td class="column100 column6" data-column="column6">
-                                    {{ project.evm.eac }}
-                                </td>
-                                <td class="column100 column6" data-column="column6">
-                                    {{ project.evm.etc }}
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <br>
-                        <br>
-                    {% endif %}
-                {% endif %}
+
             </div>
 
             <div class="table100 ver1 m-b-110">
@@ -255,9 +226,20 @@
                                 <td class="column100 column8" data-column="column8">
                                     {{ pr_risk.get_risk_impact_display }}
                                 </td>
-                                <td class="column100 column8" data-column="column8">
-                                    {{ pr_risk.get_risk_value }}
-                                </td>
+
+                            {% with pr_risk.get_risk_value|mul:125|divide:16 as tmp %}
+                                    {% with 125|subtract:tmp as val %}
+                                        <td class="column100 column9" style="">
+                                            <div class="row">
+                                                <div class="col-sm-3">{{ pr_risk.get_risk_value }} </div>
+                                                <div class="col-sm-3">
+                                                    <div style="margin-top: 2px; width: 15px; height: 15px ; background:  hsl({{ val }},100%,50%);"></div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    {% endwith %}
+                                {% endwith %}
+
                                 {% if user.is_superuser or user.employee.id == project.project_manager.id or user.employee.id == project.portfolio.portfolio_manager.id or project.portfolio is Null and user.employee.position == 'manager' %}
                                     <td class="column100 column6" data-column="column6">
                                         <a href="{% url 'dp:projrisk_edit' pr_risk.id %}"><i
@@ -312,9 +294,18 @@
                                 <td class="column100 column8" data-column="column8">
                                     {{ pr_risk.get_risk_impact_display }}
                                 </td>
-                                <td class="column100 column8" data-column="column8">
-                                    {{ pr_risk.get_risk_value }}
-                                </td>
+                                  {% with pr_risk.get_risk_value|mul:125|divide:16 as tmp %}
+                                    {% with 125|subtract:tmp as val %}
+                                        <td class="column100 column9" style="">
+                                            <div class="row">
+                                                <div class="col-sm-3">{{ pr_risk.get_risk_value }} </div>
+                                                <div class="col-sm-3">
+                                                    <div style="margin-top: 2px; width: 15px; height: 15px ; background:  hsl({{ val }},100%,50%);"></div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    {% endwith %}
+                                {% endwith %}
                                 {% if user.is_superuser or user.employee.id == project.project_manager.id or user.employee.id == project.portfolio.portfolio_manager.id or project.portfolio is Null and user.employee.position == 'manager' %}
                                     <td class="column100 column6" data-column="column6">
                                         <a href="{% url 'dp:projrisk_edit' pr_risk.id %}"><i
@@ -351,6 +342,7 @@
                                 <th class="column100 column3" data-column="column3">Employee</th>
                                 <th class="column100 column4" data-column="column3">State</th>
                                 <th class="column100 column4" data-column="column3">Progress</th>
+                                <th class="column100 column4" data-column="column3">Start date</th>
                                 <th class="column100 column4" data-column="column3">Deadline</th>
                                 <th class="column100 column4" data-column="column3">Edit task</th>
 
@@ -376,10 +368,13 @@
                                     <td class="column100 column4" data-column="column4">
                                         {{ act_task.get_state_display }}
                                     </td>
-                                <td class="column100 column4" data-column="column4">
+                                    <td class="column100 column4" data-column="column4">
                                         {{ act_task.progress }}
                                     </td>
-                                <td class="column100 column4" data-column="column4">
+                                    <td class="column100 column4" data-column="column4">
+                                        {{ act_task.start_date }}
+                                    </td>
+                                    <td class="column100 column4" data-column="column4">
                                         {{ act_task.deadline }}
                                     </td>
                                     <td class="column100 column5" data-column="column5">
@@ -630,7 +625,7 @@
         });
         bar.text.style.fontFamily = '"Raleway", Helvetica, sans-serif';
         bar.text.style.fontSize = '2rem';
-        optim_percentage = {{ project.optimalization }} /25
+        optim_percentage = {{ project.optimalization }} /{{ max_attractivness }}
         bar.animate(optim_percentage);  // Number from 0.0 to 1.0
 
 

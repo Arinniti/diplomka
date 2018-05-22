@@ -23,7 +23,9 @@
                                 <th class="column100 column1" data-column="column1">Portfolio name</th>
                                 <th class="column100 column2" data-column="column2">Description</th>
                                 <th class="column100 column3" data-column="column3">Manager</th>
+
                                 {% if user.is_superuser or user.employee.id == portfolio.portfolio_manager_id %}
+                                    <th class="column100 column4" data-column="column4">Key Words</th>
                                     <th class="column100 column4" data-column="column4">Edit portfolio</th>
                                 {% endif %}
 
@@ -44,6 +46,11 @@
                                         {% endif %}
                                     </td>
                                     {% if user.is_superuser or user.employee.id == portfolio.portfolio_manager_id %}
+                                        <td class="column100 column9" data-column="column9">
+                                            {% for key_word in portfolio.portfoliostrategy_set.all %}
+                                                {{ key_word.strategy.name }}<br>
+                                            {% endfor %}
+                                        </td>
                                         <td class="column100 column4" data-column="column4">
                                             <a href="{% url 'dp:portfolio_edit' portfolio.id %}"> edit </a>
                                         </td>
@@ -128,7 +135,7 @@
                                                                 <div class="col-sm-3">
                                                                     <div style="margin-top: 5px; width: 15px; height: 15px ; background:  hsl({{ val }},100%,50%);"></div>
                                                                 </div>
-                                                                {% if project.optimalization <= attractivness and project.state == '2'%}
+                                                                {% if project.optimalization <= attractivness and project.state == '2' %}
                                                                     <div class="col-sm-3" style="color: red">
                                                                         <i class="fas fa-exclamation-triangle"></i>
                                                                     </div>
@@ -139,8 +146,8 @@
                                                 {% endwith %}
                                             {% else %}
                                                 <td class="column100 column6" data-column="column6">
-                                                {{ project.optimalization }}
-                                            </td>
+                                                    {{ project.optimalization }}
+                                                </td>
                                             {% endif %}
 
 

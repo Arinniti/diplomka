@@ -344,7 +344,7 @@ class PortfolioUpdateView(UpdateView):
 
 class TaskUpdateView(UpdateView):
     model = Task
-    fields = ['name', 'description', 'state', 'progress', 'deadline']
+    fields = ['name', 'description', 'state', 'progress', 'deadline', 'start_date']
     template_name = "dp/task_update_form.html"
 
 
