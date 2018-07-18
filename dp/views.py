@@ -29,7 +29,10 @@ def index(request):
     project_count = actual_projects.count()
     finished_pr_count = finished_projects.count()
     employee_list = Employee.objects.all()
-    employee_count = employee_list.count
+    employee_count = employee_list.count()
+    my_projects = request.user.employee.projectmember_set.count()
+    my_lead_projects= request.user.employee.project_set.count()
+    my_tasks = request.user.employee.assignedtask_set.count()
     context['employee_list'] = employee_list
     context['employee_count'] = employee_count
     context['finished_projects'] = finished_projects
@@ -37,6 +40,10 @@ def index(request):
     context['project_count'] = project_count
     context['finished_pr_count'] = finished_pr_count
     context['attractivness'] = ATTRACTIVNESS_POINT
+    context['my_projects'] = my_projects
+    context['my_lead_projects'] = my_lead_projects
+    context['my_tasks'] = my_tasks
+
 
     return render(request, "dp/index.html", context)
 
@@ -62,6 +69,12 @@ def project_detail(request, project_id):
     finished_risks = risks_tmp.filter(risk_state__in=[2, 3])
     actual_risks = risks_tmp.filter(risk_state__in=[0, 1])
 
+    my_tasks = []
+    for task in actual_tasks:
+        task_info_tmp = {}
+        task_info_tmp["obj"] = task
+        task_info_tmp["isEditable"] = len(task.assignedtask_set.filter(employee_id=request.user.employee.id).all()) > 0
+        my_tasks.append(task_info_tmp)
 
     actual_risk_count = actual_risks.count()
     finished_risks_count = finished_risks.count()
@@ -74,12 +87,12 @@ def project_detail(request, project_id):
         useable_budget = project.plan_budget - project.used_budget
 
     return render(request, 'dp/project_detail.html',
-                  {'project': project, 'is_member': is_member,'attractivness':ATTRACTIVNESS_POINT, 'max_attractivness':MAX_ATTRACTIVNESS, 'actual_tasks': actual_tasks,
+                  {'project': project, 'is_member': is_member,'attractivness':ATTRACTIVNESS_POINT, 'max_attractivness':MAX_ATTRACTIVNESS,
                    'useable_budget': useable_budget,
                    'finished_tasks': finished_tasks, 'finished_risks': finished_risks, 'actual_risks': actual_risks,
                    'actual_risk_count': actual_risk_count, 'finished_risks_count': finished_risks_count,
                    'actual_tasks_count': actual_tasks_count,
-                   'finished_tasks_count': finished_tasks_count, 'member_count': member_count, })
+                   'finished_tasks_count': finished_tasks_count, 'my_tasks':my_tasks, 'member_count': member_count, })
 
 
 @login_required
@@ -87,9 +100,11 @@ def employee_detail(request, employee_id):
     employee = get_object_or_404(Employee, pk=employee_id)
     abilities = MemberAbility.objects.filter(member_id=employee_id)
     ability_count = abilities.count()
+    proj_count = employee.projectmember_set.count()
+    task_count = employee.assignedtask_set.count()
     return render(request, 'dp/employee_detail.html',
-                  {'employee': employee, 'ability_count': ability_count,
-                   'error_message': "You didn't select a choice."})
+                  {'employee': employee, 'ability_count': ability_count, 'proj_count': proj_count,
+                   'task_count': task_count, 'error_message': "You didn't select a choice."})
 
 
 def login_page(request):

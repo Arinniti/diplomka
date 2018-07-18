@@ -37,8 +37,10 @@
                             <th class="column100 column1" data-column="column1">Start date</th>
                             <th class="column100 column1" data-column="column1">Deadline</th>
                             <th class="column100 column1" data-column="column1">Key Words</th>
-                            {% if user.is_superuser or user.employee.id == project.project_manager.id or user.employee.id == project.portfolio.portfolio_manager.id or project.portfolio is Null and user.employee.position == 'manager' %}
-                                <th class="column100 column4" data-column="column3">Edit project</th>
+                            {% if project.state != '5' and project.state != '3' %}
+                                {% if user.is_superuser or user.employee.id == project.project_manager.id or user.employee.id == project.portfolio.portfolio_manager.id or project.portfolio is Null and user.employee.position == 'manager' %}
+                                    <th class="column100 column4" data-column="column3">Edit project</th>
+                                {% endif %}
                             {% endif %}
                         {% endif %}
 
@@ -73,12 +75,14 @@
                                     {{ key_word.strategy.name }}<br>
                                 {% endfor %}
                             </td>
-                            {% if user.is_superuser or user.employee.id == project.project_manager.id or user.employee.id == project.portfolio.portfolio_manager.id or project.portfolio is Null and user.employee.position == 'manager' %}
-                                <td class="column100 column9" data-column="column9">
-                                    <a href="{% url 'dp:project_edit' project.id %}"><i class="far fa-edit"></i>
-                                        Edit
-                                    </a>
-                                </td>
+                            {% if project.state != '5' and project.state != '3' %}
+                                {% if user.is_superuser or user.employee.id == project.project_manager.id or user.employee.id == project.portfolio.portfolio_manager.id or project.portfolio is Null and user.employee.position == 'manager' %}
+                                    <td class="column100 column9" data-column="column9">
+                                        <a href="{% url 'dp:project_edit' project.id %}"><i class="far fa-edit"></i>
+                                            Edit
+                                        </a>
+                                    </td>
+                                {% endif %}
                             {% endif %}
                         {% endif %}
 
@@ -98,7 +102,9 @@
                             <th class="column100 column9" data-column="column9">Complexity</th>
                             <th class="column100 column7" data-column="column7">Cost performance index</th>
                             <th class="column100 column8" data-column="column8">Schedule performance index</th>
-                            <th class="column100 column9" data-column="column9">Analysis value (1-{{ max_attractivness }})</th>
+                            <th class="column100 column9" data-column="column9">Analysis value
+                                (1-{{ max_attractivness }})
+                            </th>
                         </tr>
                         </thead>
                         <tbody>
@@ -184,13 +190,15 @@
                     <h2>Risks affecting project</h2>
                     <span class="sexy_line"></span>
                 </div>
-                {% if user.is_superuser or user.employee.id == project.project_manager.id or project.portfolio is Null and user.employee.position == 'manager' or project.portfolio.portfolio_manager_id == user.employee.id %}
-                    <div style="float:right">
-                        If risk doesn't exist :
-                        <a href="{% url 'dp:new_risk' project.id %}" class="btn-gradient cyan">Create new risk</a>
-                    </div>
-                    <a href="{% url 'dp:new_proj_risk' project.id %}" class="btn-gradient cyan"> Add new risk to
-                        project</a>
+                {% if project.state != '5' and project.state != '3' %}
+                    {% if user.is_superuser or user.employee.id == project.project_manager.id or project.portfolio is Null and user.employee.position == 'manager' or project.portfolio.portfolio_manager_id == user.employee.id %}
+                        <div style="float:right">
+                            If risk doesn't exist :
+                            <a href="{% url 'dp:new_risk' project.id %}" class="btn-gradient cyan">Create new risk</a>
+                        </div>
+                        <a href="{% url 'dp:new_proj_risk' project.id %}" class="btn-gradient cyan"> Add new risk to
+                            project</a>
+                    {% endif %}
                 {% endif %}
                 {% if actual_risks %}
 
@@ -203,8 +211,10 @@
                             <th class="column100 column7" data-column="column7">Probability</th>
                             <th class="column100 column8" data-column="column8">Impact</th>
                             <th class="column100 column8" data-column="column8">Risk value</th>
-                            {% if user.is_superuser or user.employee.id == project.project_manager.id or user.employee.id == project.portfolio.portfolio_manager.id or project.portfolio is Null and user.employee.position == 'manager' %}
-                                <th class="column100 column6" data-column="column6">Edit Risk</th>
+                            {% if project.state != '5' and project.state != '3' %}
+                                {% if user.is_superuser or user.employee.id == project.project_manager.id or user.employee.id == project.portfolio.portfolio_manager.id or project.portfolio is Null and user.employee.position == 'manager' %}
+                                    <th class="column100 column6" data-column="column6">Edit Risk</th>
+                                {% endif %}
                             {% endif %}
                         </tr>
                         </thead>
@@ -227,7 +237,7 @@
                                     {{ pr_risk.get_risk_impact_display }}
                                 </td>
 
-                            {% with pr_risk.get_risk_value|mul:125|divide:16 as tmp %}
+                                {% with pr_risk.get_risk_value|mul:125|divide:16 as tmp %}
                                     {% with 125|subtract:tmp as val %}
                                         <td class="column100 column9" style="">
                                             <div class="row">
@@ -239,13 +249,14 @@
                                         </td>
                                     {% endwith %}
                                 {% endwith %}
-
-                                {% if user.is_superuser or user.employee.id == project.project_manager.id or user.employee.id == project.portfolio.portfolio_manager.id or project.portfolio is Null and user.employee.position == 'manager' %}
-                                    <td class="column100 column6" data-column="column6">
-                                        <a href="{% url 'dp:projrisk_edit' pr_risk.id %}"><i
-                                                class="far fa-edit"></i>
-                                            Edit </a>
-                                    </td>
+                                {% if project.state != '5' and project.state != '3' %}
+                                    {% if user.is_superuser or user.employee.id == project.project_manager.id or user.employee.id == project.portfolio.portfolio_manager.id or project.portfolio is Null and user.employee.position == 'manager' %}
+                                        <td class="column100 column6" data-column="column6">
+                                            <a href="{% url 'dp:projrisk_edit' pr_risk.id %}"><i
+                                                    class="far fa-edit"></i>
+                                                Edit </a>
+                                        </td>
+                                    {% endif %}
                                 {% endif %}
                             </tr>
                         {% endfor %}
@@ -294,7 +305,7 @@
                                 <td class="column100 column8" data-column="column8">
                                     {{ pr_risk.get_risk_impact_display }}
                                 </td>
-                                  {% with pr_risk.get_risk_value|mul:125|divide:16 as tmp %}
+                                {% with pr_risk.get_risk_value|mul:125|divide:16 as tmp %}
                                     {% with 125|subtract:tmp as val %}
                                         <td class="column100 column9" style="">
                                             <div class="row">
@@ -327,13 +338,16 @@
                         <h2>Tasks</h2>
                         <span class="sexy_line"></span>
                     </div>
-                    {% if user.is_superuser or user.employee.id == project.project_manager.id or project.portfolio is Null and user.employee.position == 'manager' or project.portfolio.portfolio_manager_id == user.employee.id %}
-                        <a href="{% url 'dp:new_task' project.id %}" class="btn-gradient cyan">Create new
-                            task</a>
-                        <br>
-                        <br>
+                    {% if project.state != '5' and project.state != '3' %}
+                        {% if user.is_superuser or user.employee.id == project.project_manager.id or project.portfolio is Null and user.employee.position == 'manager' or project.portfolio.portfolio_manager_id == user.employee.id %}
+                            <a href="{% url 'dp:new_task' project.id %}" class="btn-gradient cyan">Create new
+                                task</a>
+                            <br>
+                            <br>
+                        {% endif %}
                     {% endif %}
-                    {% if actual_tasks %}
+
+                    {% if my_tasks %}
                         <table id="act_tasks">
                             <thead>
                             <tr class="row100 head">
@@ -344,44 +358,48 @@
                                 <th class="column100 column4" data-column="column3">Progress</th>
                                 <th class="column100 column4" data-column="column3">Start date</th>
                                 <th class="column100 column4" data-column="column3">Deadline</th>
+
                                 <th class="column100 column4" data-column="column3">Edit task</th>
 
                             </tr>
                             </thead>
                             <tbody>
-                            {% for act_task in actual_tasks %}
+                            {% for act_task in my_tasks %}
                                 <tr class="row100">
                                     <td class="column100 column1" data-column="column1">
-                                        {{ act_task.name }}
+                                        {{ act_task.obj.name }}
                                     </td>
                                     <td class="column100 column2" data-column="column2">
-                                        {{ act_task.description }}
+                                        {{ act_task.obj.description }}
                                     </td>
-                                    {% if act_task.assignedtask_set %}
+                                    {% if act_task.obj.assignedtask_set %}
                                         <td class="column100 column3" data-column="column3">
-                                            {% for emp in act_task.assignedtask_set.all %}
+                                            {% for emp in act_task.obj.assignedtask_set.all %}
 
                                                 <a href="{% url 'dp:employee_detail' emp.employee_id %}"> {{ emp.employee.user.last_name }}</a>
                                             {% endfor %}
                                         </td>
                                     {% endif %}
                                     <td class="column100 column4" data-column="column4">
-                                        {{ act_task.get_state_display }}
+                                        {{ act_task.obj.get_state_display }}
                                     </td>
                                     <td class="column100 column4" data-column="column4">
-                                        {{ act_task.progress }}
+                                        {{ act_task.obj.progress }}
                                     </td>
                                     <td class="column100 column4" data-column="column4">
-                                        {{ act_task.start_date }}
+                                        {{ act_task.obj.start_date }}
                                     </td>
                                     <td class="column100 column4" data-column="column4">
-                                        {{ act_task.deadline }}
+                                        {{ act_task.obj.deadline }}
                                     </td>
-                                    <td class="column100 column5" data-column="column5">
+                                    {% if act_task.isEditable or user.is_superuser or user.employee.id == project.project_manager.id %}
+                                        <td class="column100 column5" data-column="column5">
 
-                                        <a href="{% url 'dp:task_edit' act_task.id %}"><i class="far fa-edit"></i>
-                                            Edit</a>
-                                    </td>
+                                            <a href="{% url 'dp:task_edit' act_task.obj.id %}"><i
+                                                    class="far fa-edit"></i>
+                                                Edit</a>
+                                        </td>
+                                    {% endif %}
                                 </tr>
                             {% endfor %}
                             </tbody>
@@ -561,6 +579,7 @@
                 $('#fin_tasks').DataTable();
             {% endif %}
 
+
         });
 
 
@@ -625,7 +644,8 @@
         });
         bar.text.style.fontFamily = '"Raleway", Helvetica, sans-serif';
         bar.text.style.fontSize = '2rem';
-        optim_percentage = {{ project.optimalization }} /{{ max_attractivness }}
+        optim_percentage =
+        {{ project.optimalization }} /{{ max_attractivness }}
         bar.animate(optim_percentage);  // Number from 0.0 to 1.0
 
 

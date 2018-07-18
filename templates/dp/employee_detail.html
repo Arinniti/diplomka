@@ -229,25 +229,33 @@
 
 
                     <div class="table100 ver1 m-b-110">
-                        <table data-vertable="ver1">
+                        <table id="proj">
                             <thead>
                             <tr class="row100 head">
                                 <th class="column100 column1" data-column="column1">Project</th>
                                 <th class="column100 column2" data-column="column2">Position</th>
+                                <th class="column100 column2" data-column="column2">State</th>
                             </tr>
                             </thead>
                             <tbody>
 
                             <ul>
                                 {% for projectmember in employee.projectmember_set.all %}
-                                    <tr class="row100">
-                                        <td class="column100 column1" data-column="column1">
-                                            <a href="{% url 'dp:project_detail' projectmember.project_id %}">{{ projectmember.project.project_name }}</a>
-                                        </td>
-                                        <td class="column100 column1" data-column="column1">
-                                            {{ projectmember.position }}
-                                        </td>
-                                    </tr>
+                                    {% if projectmember.project.state == '5' or projectmember.project.state == '3' %}
+                                        <tr class="row100" style="opacity: 0.5">
+                                            {% else %}
+                                        <tr class="row100">
+                                    {% endif %}
+                                <td class="column100 column1" data-column="column1">
+                                    <a href="{% url 'dp:project_detail' projectmember.project_id %}">{{ projectmember.project.project_name }}</a>
+                                </td>
+                                <td class="column100 column1" data-column="column1">
+                                    {{ projectmember.position }}
+                                </td>
+                                <td class="column100 column1" data-column="column1">
+                                    {{ projectmember.project.get_state_display }}
+                                </td>
+                                </tr>
                                 {% endfor %}
                             </ul>
                             </tbody>
@@ -266,7 +274,7 @@
 
 
                         <div class="table100 ver1 m-b-110">
-                            <table data-vertable="ver1">
+                            <table id="task">
                                 <thead>
                                 <tr class="row100 head">
                                     <th class="column100 column1" data-column="column1">Task name</th>
@@ -280,21 +288,23 @@
 
                                 <ul>
                                     {% for asstask in employee.assignedtask_set.all %}
-                                        <tr class="row100">
-                                            <td class="column100 column1" data-column="column1">
-                                                {{ asstask.task.name }}
-                                            </td>
-                                            <td class="column100 column2" data-column="column2">
-                                                {{ asstask.task.description }}
-                                            </td>
-                                            <td class="column100 column3" data-column="column3">
-                                                {{ asstask.task.get_state_display }}
-                                            </td>
-                                            <td class="column100 column4" data-column="column4">
-                                                <a href="{% url 'dp:project_detail' asstask.task.in_project_id %}">{{ asstask.task.in_project.project_name }}</a>
-                                            </td>
+                                        {% if asstask.task.state != '3' %}
+                                            <tr class="row100">
+                                                <td class="column100 column1" data-column="column1">
+                                                    {{ asstask.task.name }}
+                                                </td>
+                                                <td class="column100 column2" data-column="column2">
+                                                    {{ asstask.task.description }}
+                                                </td>
+                                                <td class="column100 column3" data-column="column3">
+                                                    {{ asstask.task.get_state_display }}
+                                                </td>
+                                                <td class="column100 column4" data-column="column4">
+                                                    <a href="{% url 'dp:project_detail' asstask.task.in_project_id %}">{{ asstask.task.in_project.project_name }}</a>
+                                                </td>
 
-                                        </tr>
+                                            </tr>
+                                        {% endif %}
                                     {% endfor %}
                                 </ul>
                                 </tbody>
@@ -328,6 +338,38 @@
                     }
                 );
             {% endif %}
+
+            {% if proj_count < 10 %}
+                $('#proj').DataTable(
+                    {
+                        "paging": false,
+                        "info": false,
+                        "order": [[1, "desc"]]
+                    }
+                );
+            {% else %}
+                $('#proj').DataTable(
+                    {
+                        "order": [[1, "desc"]]
+                    }
+                );
+            {% endif %}
+        {% if task_count < 10 %}
+                $('#task').DataTable(
+                    {
+                        "paging": false,
+                        "info": false,
+                        "order": [[1, "desc"]]
+                    }
+                );
+            {% else %}
+                $('#task').DataTable(
+                    {
+                        "order": [[1, "desc"]]
+                    }
+                );
+            {% endif %}
+
         });
     </script>
 {% endblock %}
